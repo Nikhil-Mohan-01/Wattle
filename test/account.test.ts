@@ -20,3 +20,25 @@ describe("account deletion", () => {
     expect(await db.select().from(play).where(eq(play.userId, uid))).toHaveLength(0);
   });
 });
+
+describe("replay protection after deletion", () => {
+  it("stops a recreated account from starting a day the old account already played", async () => {
+    const { addTombstones } = await import("@/lib/tombstone");
+    const { startPlay } = await import("@/engine/engine");
+    const { GAME_MODULES } = await import("@/games/registry");
+    const today = "2030-01-08"; // a Tuesday no other test uses
+    process.env.WATTLE_DEV_DATE = today;
+    expect(GAME_MODULES.honk).toBeDefined();
+
+    // The old account played today, then was deleted.
+    await addTombstones("Replayer@uwaterloo.ca", [today], today);
+
+    // Same email signs up again.
+    const uid = await makePlayer("replayer");
+    await expect(startPlay(uid, today)).rejects.toMatchObject({ code: "already_done" });
+
+    // Someone else can still play.
+    const other = await makePlayer();
+    await expect(startPlay(other, today)).resolves.toMatchObject({ status: "playing" });
+  });
+});

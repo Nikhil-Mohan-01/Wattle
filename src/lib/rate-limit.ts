@@ -28,9 +28,7 @@ export async function consume(key: string, windowSec: number, max: number): Prom
     .returning({ count: rateLimitBucket.count, expiresAt: rateLimitBucket.expiresAt });
 
   // Occasionally clear out expired counters so the table stays small.
-  if (Math.random() < 0.01) {
-    await db.delete(rateLimitBucket).where(lt(rateLimitBucket.expiresAt, now));
-  }
+  if (Math.random() < 0.01) await pruneExpired(now);
 
   if (row.count <= max) return { allowed: true, retryAfter: null };
   return { allowed: false, retryAfter: Math.max(1, Math.ceil((row.expiresAt - now) / 1000)) };
@@ -39,4 +37,9 @@ export async function consume(key: string, windowSec: number, max: number): Prom
 /** Convenience wrapper: true if allowed. */
 export async function allow(key: string, max: number, windowSec: number): Promise<boolean> {
   return (await consume(key, windowSec, max)).allowed;
+}
+
+/** Deletes expired counters (some keys contain email addresses). */
+export async function pruneExpired(now = Date.now()): Promise<void> {
+  await db.delete(rateLimitBucket).where(lt(rateLimitBucket.expiresAt, now));
 }

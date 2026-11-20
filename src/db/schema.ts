@@ -150,3 +150,17 @@ export const rateLimitBucket = sqliteTable(
   },
   (t) => [index("rate_limit_bucket_expires_idx").on(t.expiresAt)],
 );
+
+/**
+ * Days a since-deleted account had already played, keyed by a keyed hash of
+ * its email (never the email itself). Stops someone deleting their account
+ * and signing back in to replay today's puzzle. Old rows are pruned.
+ */
+export const playTombstone = sqliteTable(
+  "play_tombstone",
+  {
+    emailHash: text("email_hash").notNull(),
+    date: text("date").notNull(),
+  },
+  (t) => [uniqueIndex("play_tombstone_idx").on(t.emailHash, t.date)],
+);

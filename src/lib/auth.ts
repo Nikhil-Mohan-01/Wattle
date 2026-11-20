@@ -15,7 +15,7 @@ import {
 } from "./auth-policy";
 import { clientIp, trustedIpHeader } from "./client-ip";
 import { EmailNotConfiguredError, sendEmail } from "./email";
-import { consume } from "./rate-limit";
+import { consume, pruneExpired } from "./rate-limit";
 
 // Email-link limits. IP limits only apply when the real client IP is known
 // (TRUSTED_IP_HEADER); the per-recipient and global caps always apply.
@@ -47,6 +47,9 @@ const emailLinkPlugins = emailLinkEnabled()
             const r = await consume(`ml:ip:${ip}`, LINK_LIMITS.perIp.windowSec, LINK_LIMITS.perIp.max);
             if (!r.allowed) tooMany(r.retryAfter);
           }
+
+          // Expired counters can hold email addresses; clear them on every send.
+          await pruneExpired();
 
           // 2. Only Waterloo addresses.
           const problem = emailProblem(email);

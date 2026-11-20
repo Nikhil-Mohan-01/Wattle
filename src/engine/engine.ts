@@ -2,13 +2,14 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
-import { play, puzzle } from "@/db/schema";
+import { play, puzzle, user } from "@/db/schema";
 import { gameModule } from "@/games/registry";
 import type { AnyGameModule } from "@/games/types";
 import { SCHEDULE, type GameId } from "@/lib/games";
 import { seededRng } from "@/lib/rng";
 import { weekdayOf } from "@/lib/time";
 import { currentPuzzleDate } from "@/lib/today";
+import { hasTombstone } from "@/lib/tombstone";
 
 export class GameError extends Error {
   constructor(
@@ -123,6 +124,14 @@ export async function startPlay(userId: string, date: string): Promise<Snapshot>
   const p = await getPuzzle(date);
   const mod = moduleFor(p.gameId as GameId);
   const now = Date.now();
+
+  // A deleted-and-recreated account doesn't get a second attempt at today.
+  if (!(await findPlay(userId, date))) {
+    const me = await db.query.user.findFirst({ where: eq(user.id, userId), columns: { email: true } });
+    if (me && (await hasTombstone(me.email, date))) {
+      throw new GameError("already_done", "This Waterloo account has already played today's game.", 409);
+    }
+  }
   await db
     .insert(play)
     .values({

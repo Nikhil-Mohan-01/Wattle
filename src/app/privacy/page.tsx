@@ -33,8 +33,9 @@ export default function PrivacyPage() {
           recorded with each session, to keep you signed in and to investigate abuse.
         </li>
         <li>
-          <strong>Short-lived rate-limit counters</strong> keyed by IP address or email address, which
-          expire within a day, to stop sign-in email abuse.
+          <strong>Short-lived rate-limit counters</strong> keyed by IP address or email address, to
+          stop sign-in email abuse. They expire within a day and are deleted at the next sign-in
+          email request, or straight away when you delete your account.
         </li>
       </ul>
 
@@ -51,7 +52,8 @@ export default function PrivacyPage() {
           account page
         </Link>
         . That permanently removes your profile, sessions and games, and takes you off every
-        leaderboard.
+        leaderboard. To stop today&apos;s game being replayed with a new account, we keep a one-way
+        hash of your email with the date until the next day, then delete it.
       </p>
     </article>
   );

@@ -8,12 +8,16 @@ import { GAMES, SCHEDULE, WEEKDAYS } from "@/lib/games";
 import { getCurrentUser } from "@/lib/session";
 import { addDays, weekdayOf, weekStart } from "@/lib/time";
 import { currentPuzzleDate } from "@/lib/today";
+import { DeletedNotice } from "./deleted-notice";
 
 type DayResult = { status: "playing" | "done"; rawScore: number | null };
 
 export default function Home() {
   return (
     <div className="space-y-8">
+      <Suspense>
+        <DeletedNotice />
+      </Suspense>
       <section className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">One game a day. One campus leaderboard.</h1>
         <p className="text-muted">
