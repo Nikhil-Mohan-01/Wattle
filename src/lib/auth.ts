@@ -13,7 +13,23 @@ import {
   normalizeEmail,
   waterlooTenantId,
 } from "./auth-policy";
-import { sendEmail } from "./email";
+import { clientIp, trustedIpHeader } from "./client-ip";
+import { EmailNotConfiguredError, sendEmail } from "./email";
+import { consume } from "./rate-limit";
+
+// Email-link limits. IP limits only apply when the real client IP is known
+// (TRUSTED_IP_HEADER); the per-recipient and global caps always apply.
+const LINK_LIMITS = {
+  perIp: { windowSec: 10 * 60, max: 20 }, // generous for students behind campus NAT
+  perRecipient: { windowSec: 10 * 60, max: 3 },
+  perRecipientDaily: { windowSec: 24 * 60 * 60, max: 10 },
+  global: { windowSec: 10 * 60, max: 500 },
+};
+
+function tooMany(retryAfter: number | null): never {
+  const wait = retryAfter ? ` Try again in ${Math.ceil(retryAfter / 60)} min.` : "";
+  throw new APIError("TOO_MANY_REQUESTS", { message: `Too many sign-in emails.${wait}` });
+}
 
 // Option B: emailed sign-in link to a Waterloo address.
 const emailLinkPlugins = emailLinkEnabled()
@@ -23,15 +39,46 @@ const emailLinkPlugins = emailLinkEnabled()
         storeToken: "hashed",
         // Checked before anything is sent, so the form can't be used to email
         // arbitrary addresses.
-        async sendMagicLink({ email, url }) {
+        async sendMagicLink({ email, url }, ctx) {
+          // 1. Per-IP, counted before validation so rejected addresses use up
+          //    the budget too. Keys are IPs only, never the rejected address.
+          const ip = clientIp(ctx?.headers ?? ctx?.request?.headers);
+          if (ip) {
+            const r = await consume(`ml:ip:${ip}`, LINK_LIMITS.perIp.windowSec, LINK_LIMITS.perIp.max);
+            if (!r.allowed) tooMany(r.retryAfter);
+          }
+
+          // 2. Only Waterloo addresses.
           const problem = emailProblem(email);
           if (problem) throw new APIError("BAD_REQUEST", { message: problem });
-          await sendEmail({
-            to: normalizeEmail(email),
-            subject: "Your Wattle sign-in link",
-            text: `Sign in to Wattle:\n\n${url}\n\nThis link expires in 10 minutes and works once. If you didn't request it, ignore this email.`,
-            html: `<p>Sign in to Wattle:</p><p><a href="${url}">Sign in</a></p><p>This link expires in 10 minutes and works once. If you didn't request it, ignore this email.</p>`,
-          });
+          const to = normalizeEmail(email);
+
+          // 3. Global cap (bounds total email volume and counter rows), then a
+          //    per-recipient cooldown so no inbox can be flooded, whatever the
+          //    number of sources.
+          const g = await consume("ml:global", LINK_LIMITS.global.windowSec, LINK_LIMITS.global.max);
+          if (!g.allowed) tooMany(g.retryAfter);
+          for (const [key, rule] of [
+            [`ml:to:${to}`, LINK_LIMITS.perRecipient],
+            [`ml:to-day:${to}`, LINK_LIMITS.perRecipientDaily],
+          ] as const) {
+            const r = await consume(key, rule.windowSec, rule.max);
+            if (!r.allowed) tooMany(r.retryAfter);
+          }
+
+          try {
+            await sendEmail({
+              to,
+              subject: "Your Wattle sign-in link",
+              text: `Sign in to Wattle:\n\n${url}\n\nThis link expires in 10 minutes and works once. If you didn't request it, ignore this email.`,
+              html: `<p>Sign in to Wattle:</p><p><a href="${url}">Sign in</a></p><p>This link expires in 10 minutes and works once. If you didn't request it, ignore this email.</p>`,
+            });
+          } catch (err) {
+            if (err instanceof EmailNotConfiguredError) {
+              throw new APIError("SERVICE_UNAVAILABLE", { message: "Email sign-in is unavailable." });
+            }
+            throw err;
+          }
         },
       }),
     ]
@@ -102,12 +149,29 @@ export const auth = betterAuth({
     updateAge: 60 * 60 * 24,
   },
 
+  // Better Auth's own per-IP limits, stored in the shared database table so
+  // they survive restarts and apply across server processes. When the client
+  // IP is unknown (no TRUSTED_IP_HEADER), these rules are skipped rather than
+  // putting every student into one shared bucket; the email-specific limits
+  // in sendMagicLink still apply.
   rateLimit: {
     enabled: true,
     window: 60,
-    max: 60,
+    max: 100,
+    customStorage: {
+      consume: (key, rule) => consume(`ba:${key}`, rule.window, rule.max),
+    },
     customRules: {
-      "/sign-in/magic-link": { window: 60 * 10, max: 3 },
+      "/sign-in/*": (req) => (clientIp(req.headers) ? { window: 60, max: 20 } : false),
+      "/magic-link/verify": (req) => (clientIp(req.headers) ? { window: 60, max: 30 } : false),
+    },
+  },
+
+  advanced: {
+    ipAddress: {
+      // Only trust the header our proxy sets. Without one, read no header at
+      // all, so a spoofed x-forwarded-for can't pick the rate-limit bucket.
+      ipAddressHeaders: [trustedIpHeader() ?? "x-wattle-no-trusted-ip-header"],
     },
   },
 

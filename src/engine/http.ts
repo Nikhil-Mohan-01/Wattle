@@ -34,7 +34,7 @@ export async function handleGameRequest(
   if (!user.handle || !user.faculty) {
     return json({ error: "setup_required", message: "Finish setting up your profile." }, 403);
   }
-  if (!allow(`game:${user.id}`, 60, 10_000)) {
+  if (!(await allow(`game:${user.id}`, 60, 10))) {
     return json({ error: "rate_limited", message: "Slow down a little." }, 429);
   }
   try {

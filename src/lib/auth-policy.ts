@@ -44,6 +44,12 @@ export function microsoftEnabled(): boolean {
   return Boolean(process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET);
 }
 
+/**
+ * Email links are on unless turned off, but only when email can actually be
+ * delivered: SMTP is configured, or this is local `next dev` (which prints
+ * links to the console). This fails closed in production without SMTP.
+ */
 export function emailLinkEnabled(): boolean {
-  return (process.env.AUTH_EMAIL_LINK_ENABLED ?? "true") === "true";
+  if ((process.env.AUTH_EMAIL_LINK_ENABLED ?? "true") !== "true") return false;
+  return Boolean(process.env.SMTP_URL) || process.env.NODE_ENV === "development";
 }

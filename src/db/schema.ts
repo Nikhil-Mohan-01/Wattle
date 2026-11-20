@@ -130,3 +130,23 @@ export const play = sqliteTable(
     index("play_date_idx").on(t.date, t.status),
   ],
 );
+
+// ---------------------------------------------------------------------------
+// Rate limiting
+// ---------------------------------------------------------------------------
+
+/**
+ * Fixed-window counters shared by every server process. Updated with a single
+ * atomic upsert (see lib/rate-limit.ts), so limits hold across restarts and
+ * workers and can't be bypassed with parallel requests.
+ */
+export const rateLimitBucket = sqliteTable(
+  "rate_limit_bucket",
+  {
+    key: text("key").primaryKey(),
+    windowStart: integer("window_start").notNull(), // ms
+    expiresAt: integer("expires_at").notNull(), // ms
+    count: integer("count").notNull(),
+  },
+  (t) => [index("rate_limit_bucket_expires_idx").on(t.expiresAt)],
+);
