@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+import { AccountMenu } from "@/components/account-menu";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -34,7 +36,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/leaderboard" className="text-sm text-muted hover:text-foreground">
               Leaderboard
             </Link>
-            <div id="account-slot" className="ml-auto" />
+            <div className="ml-auto">
+              <Suspense fallback={<div className="h-8 w-16" />}>
+                <AccountMenu />
+              </Suspense>
+            </div>
           </nav>
         </header>
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">{children}</main>
