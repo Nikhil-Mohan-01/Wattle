@@ -1,0 +1,110 @@
+[
+  {
+    "id": "q001",
+    "groups": [
+      { "category": "Shades of blue", "difficulty": 1, "words": ["NAVY", "TEAL", "COBALT", "AZURE"] },
+      { "category": "Chess pieces", "difficulty": 2, "words": ["KING", "BISHOP", "ROOK", "KNIGHT"] },
+      { "category": "Card games", "difficulty": 3, "words": ["SNAP", "HEARTS", "POKER", "RUMMY"] },
+      { "category": "___fish", "difficulty": 4, "words": ["SWORD", "STAR", "CAT", "GOLD"] }
+    ]
+  },
+  {
+    "id": "q002",
+    "groups": [
+      { "category": "Canadian provinces", "difficulty": 1, "words": ["ALBERTA", "MANITOBA", "ONTARIO", "QUEBEC"] },
+      { "category": "Hockey terms", "difficulty": 2, "words": ["PUCK", "CREASE", "ICING", "SLAPSHOT"] },
+      { "category": "Metals", "difficulty": 3, "words": ["COPPER", "TIN", "ZINC", "IRON"] },
+      { "category": "Canadian coins, informally", "difficulty": 4, "words": ["LOONIE", "TOONIE", "DIME", "NICKEL"] }
+    ]
+  },
+  {
+    "id": "q003",
+    "groups": [
+      { "category": "Fruits", "difficulty": 1, "words": ["MANGO", "PEACH", "LEMON", "PLUM"] },
+      { "category": "Keyboard keys", "difficulty": 2, "words": ["SHIFT", "ESCAPE", "TAB", "ENTER"] },
+      { "category": "Yoga poses", "difficulty": 3, "words": ["COBRA", "TREE", "BRIDGE", "WARRIOR"] },
+      { "category": "Hidden body parts", "difficulty": 4, "words": ["SHINDIG", "WHIPPET", "CHARM", "LEGEND"] }
+    ]
+  },
+  {
+    "id": "q004",
+    "groups": [
+      { "category": "UWaterloo faculties", "difficulty": 1, "words": ["ARTS", "HEALTH", "SCIENCE", "ENGINEERING"] },
+      { "category": "Coffee drinks", "difficulty": 2, "words": ["LATTE", "MOCHA", "AMERICANO", "CORTADO"] },
+      { "category": "Things a goose does", "difficulty": 3, "words": ["HONK", "HISS", "WADDLE", "MIGRATE"] },
+      { "category": "___ term", "difficulty": 4, "words": ["MID", "SHORT", "LONG", "WINTER"] }
+    ]
+  },
+  {
+    "id": "q005",
+    "groups": [
+      { "category": "Dog breeds", "difficulty": 1, "words": ["BOXER", "POODLE", "BEAGLE", "HUSKY"] },
+      { "category": "Breads", "difficulty": 2, "words": ["BAGEL", "NAAN", "PITA", "BRIOCHE"] },
+      { "category": "One-word musicals", "difficulty": 3, "words": ["CATS", "RENT", "HAIR", "CHICAGO"] },
+      { "category": "Things with shells", "difficulty": 4, "words": ["TACO", "EGG", "SNAIL", "PEANUT"] }
+    ]
+  },
+  {
+    "id": "q006",
+    "groups": [
+      { "category": "Damp weather", "difficulty": 1, "words": ["MIST", "SLEET", "FOG", "DRIZZLE"] },
+      { "category": "Greek letters", "difficulty": 2, "words": ["DELTA", "SIGMA", "OMEGA", "LAMBDA"] },
+      { "category": "___cake", "difficulty": 3, "words": ["CUP", "PAN", "CHEESE", "SPONGE"] },
+      { "category": "___storm", "difficulty": 4, "words": ["BRAIN", "FIRE", "SNOW", "BARN"] }
+    ]
+  },
+  {
+    "id": "q007",
+    "groups": [
+      { "category": "Kitchen utensils", "difficulty": 1, "words": ["WHISK", "LADLE", "SPATULA", "TONGS"] },
+      { "category": "Shakespeare title characters", "difficulty": 2, "words": ["HAMLET", "OTHELLO", "MACBETH", "LEAR"] },
+      { "category": "Ballet terms", "difficulty": 3, "words": ["PLIE", "POINTE", "ARABESQUE", "JETE"] },
+      { "category": "Hidden numbers", "difficulty": 4, "words": ["OFTEN", "WEIGHT", "STONE", "CANINE"] }
+    ]
+  },
+  {
+    "id": "q008",
+    "groups": [
+      { "category": "Planets", "difficulty": 1, "words": ["MARS", "VENUS", "MERCURY", "NEPTUNE"] },
+      { "category": "Chemical elements", "difficulty": 2, "words": ["NEON", "CARBON", "HELIUM", "SILVER"] },
+      { "category": "___line", "difficulty": 3, "words": ["DEAD", "PUNCH", "SKY", "HEAD"] },
+      { "category": "Things with rings", "difficulty": 4, "words": ["SATURN", "TREE", "CIRCUS", "PHONE"] }
+    ]
+  },
+  {
+    "id": "q009",
+    "groups": [
+      { "category": "Orchestra instruments", "difficulty": 1, "words": ["CELLO", "FLUTE", "OBOE", "TUBA"] },
+      { "category": "Pasta shapes", "difficulty": 2, "words": ["PENNE", "FUSILLI", "ORZO", "RIGATONI"] },
+      { "category": "___ bear", "difficulty": 3, "words": ["POLAR", "TEDDY", "GUMMY", "GRIZZLY"] },
+      { "category": "Sound like letters", "difficulty": 4, "words": ["SEA", "TEA", "EYE", "WHY"] }
+    ]
+  },
+  {
+    "id": "q010",
+    "groups": [
+      { "category": "Canadian dishes", "difficulty": 1, "words": ["POUTINE", "TOURTIERE", "BANNOCK", "PEAMEAL"] },
+      { "category": "Prairie and Atlantic capitals", "difficulty": 2, "words": ["REGINA", "HALIFAX", "EDMONTON", "WINNIPEG"] },
+      { "category": "Canoe trip terms", "difficulty": 3, "words": ["PADDLE", "PORTAGE", "GUNWALE", "THWART"] },
+      { "category": "Canadian holidays: ___ Day", "difficulty": 4, "words": ["BOXING", "CANADA", "VICTORIA", "LABOUR"] }
+    ]
+  },
+  {
+    "id": "q011",
+    "groups": [
+      { "category": "Sports played over a net", "difficulty": 1, "words": ["TENNIS", "VOLLEYBALL", "BADMINTON", "NETBALL"] },
+      { "category": "Snakes", "difficulty": 2, "words": ["COBRA", "VIPER", "ADDER", "MAMBA"] },
+      { "category": "Programming languages", "difficulty": 3, "words": ["PYTHON", "RUST", "RUBY", "SWIFT"] },
+      { "category": "___fall", "difficulty": 4, "words": ["RAIN", "WATER", "FREE", "NIGHT"] }
+    ]
+  },
+  {
+    "id": "q012",
+    "groups": [
+      { "category": "Stationery", "difficulty": 1, "words": ["ERASER", "STAPLER", "RULER", "HIGHLIGHTER"] },
+      { "category": "Pizza toppings", "difficulty": 2, "words": ["PEPPERONI", "OLIVE", "ONION", "PINEAPPLE"] },
+      { "category": "Noble titles", "difficulty": 3, "words": ["DUKE", "PRINCE", "EARL", "BARON"] },
+      { "category": "Bed sizes", "difficulty": 4, "words": ["TWIN", "DOUBLE", "KING", "QUEEN"] }
+    ]
+  }
+]
