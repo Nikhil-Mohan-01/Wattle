@@ -18,10 +18,10 @@ export async function AccountMenu() {
   return (
     <div className="flex items-center gap-3 text-sm">
       {user.handle ? (
-        <span>
+        <Link href="/account" className="hover:underline" title="Your account">
           <span className="font-semibold">{user.handle}</span>
           <span className="text-muted"> · {facultyName(user.faculty)}</span>
-        </span>
+        </Link>
       ) : (
         <Link href="/welcome" className="text-gold-deep underline">
           Finish setup

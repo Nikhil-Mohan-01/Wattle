@@ -48,7 +48,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </header>
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">{children}</main>
         <footer className="border-t border-line py-4 text-center text-xs text-muted">
-          Wattle is a student project and is not affiliated with the University of Waterloo.
+          Wattle is a student project and is not affiliated with the University of Waterloo. ·{" "}
+          <Link href="/privacy" className="underline">
+            Privacy
+          </Link>
         </footer>
       </body>
     </html>
