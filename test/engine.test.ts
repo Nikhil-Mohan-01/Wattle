@@ -29,7 +29,8 @@ const guessNumber: GameModule<P, S, M, { guesses: number[]; secret?: number }> =
   score: (p, s) => (s.guesses.includes(p.secret) ? 4 - s.guesses.length : 0),
 };
 
-const today = DATES.tue;
+// A date no other test file uses, so its puzzle is created by the stand-in game.
+const today = "2030-01-01"; // a Tuesday
 
 beforeAll(() => {
   GAME_MODULES.honk = guessNumber;
@@ -48,8 +49,14 @@ describe("puzzles", () => {
     expect(b.data).toEqual(a.data);
   });
 
-  it("refuses unbuilt games", async () => {
-    await expect(getPuzzle(DATES.wed)).rejects.toMatchObject({ code: "not_ready" });
+  it("refuses games without a module", async () => {
+    const saved = GAME_MODULES.quads;
+    delete GAME_MODULES.quads;
+    try {
+      await expect(getPuzzle(DATES.wed)).rejects.toMatchObject({ code: "not_ready" });
+    } finally {
+      GAME_MODULES.quads = saved;
+    }
   });
 });
 
