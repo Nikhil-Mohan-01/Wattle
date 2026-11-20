@@ -85,6 +85,15 @@ describe("distance", () => {
     expect(japanKorea).toBeLessThan(250);
   });
 
+  it("ignores small far-away territories but keeps large or nearby parts", () => {
+    // French Guiana would otherwise make France and Brazil neighbours.
+    expect(distanceKm(FRANCE, "076")).toBeGreaterThan(5000);
+    // Alaska is large, so the US still nearly touches Russia across the Bering Strait.
+    expect(distanceKm("840", "643")).toBeLessThan(200);
+    // Nearby islands and coasts still count: Spain to Morocco is the Strait of Gibraltar.
+    expect(distanceKm("724", "504")).toBeLessThan(50);
+  });
+
   it("is fast enough per guess once shapes are cached", () => {
     const big = ["643", CANADA, "840", "076", "156", AUSTRALIA, "360", "304", "554", "032"];
     for (const id of big) distanceKm(id, FRANCE); // warm the cache

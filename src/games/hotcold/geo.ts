@@ -2,6 +2,7 @@ import "server-only";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import { feature } from "topojson-client";
 import type { Geometry, Position } from "geojson";
+import { geoArea, geoCentroid, geoDistance } from "d3-geo";
 import world from "world-atlas/countries-50m.json";
 
 const EARTH_RADIUS_KM = 6371;
@@ -41,17 +42,44 @@ export function hasShape(id: string): boolean {
   return geometries().has(id);
 }
 
-function rings(g: Geometry): Position[][] {
+function polygons(g: Geometry): Position[][][] {
   switch (g.type) {
     case "Polygon":
-      return g.coordinates;
+      return [g.coordinates];
     case "MultiPolygon":
-      return g.coordinates.flat();
+      return g.coordinates;
     case "GeometryCollection":
-      return g.geometries.flatMap(rings);
+      return g.geometries.flatMap(polygons);
     default:
       return [];
   }
+}
+
+/** Overseas pieces this far (centroid to centroid) from the main landmass are ignored… */
+const OVERSEAS_KM = 1500;
+/**
+ * …unless they're big in their own right (km²). Alaska (~1.5M km²) is kept;
+ * French Guiana (~83k km²) and Svalbard (~61k km²) are dropped.
+ */
+const MAJOR_PART_KM2 = 400_000;
+
+/**
+ * The parts of a country that count for distances: the largest landmass plus
+ * anything near it or comparably large. Small, far-flung territories (French
+ * Guiana, Réunion, Hawaii, the Canaries…) are dropped so that, say, Brazil
+ * doesn't show 0 km from France.
+ */
+export function mainParts(geoms: Geometry[]): Position[][][] {
+  const all = geoms.flatMap(polygons).map((coords) => {
+    const poly = { type: "Polygon" as const, coordinates: coords };
+    return { coords, area: geoArea(poly), centroid: geoCentroid(poly) };
+  });
+  if (all.length <= 1) return all.map((p) => p.coords);
+  const main = all.reduce((a, b) => (b.area > a.area ? b : a));
+  const maxAngle = OVERSEAS_KM / EARTH_RADIUS_KM;
+  return all
+    .filter((p) => p === main || p.area * EARTH_RADIUS_KM ** 2 >= MAJOR_PART_KM2 || geoDistance(p.centroid, main.centroid) <= maxAngle)
+    .map((p) => p.coords);
 }
 
 function shape(id: string): Shape {
@@ -60,7 +88,7 @@ function shape(id: string): Shape {
   const geoms = geometries().get(id);
   if (!geoms) throw new Error(`No geometry for country ${id}`);
 
-  const allRings = geoms.flatMap(rings);
+  const allRings = mainParts(geoms).flat();
   const total = allRings.reduce((n, r) => n + r.length, 0);
   const xyz = new Float64Array(total * 3);
   const chunks: Shape["chunks"] = [];
