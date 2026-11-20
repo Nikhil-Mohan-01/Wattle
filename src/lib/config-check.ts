@@ -61,3 +61,16 @@ export function checkProductionConfig(env: Env, root = process.cwd()): ConfigRep
 
   return { errors, warnings };
 }
+
+/**
+ * Logs warnings and, if there are errors, exits so the host sees a failed
+ * start instead of a server that answers every request with a 500.
+ */
+export function enforceProductionConfig(): void {
+  const { errors, warnings } = checkProductionConfig(process.env);
+  for (const w of warnings) console.warn(`[config] ${w}`);
+  if (errors.length === 0) return;
+  for (const e of errors) console.error(`[config] ${e}`);
+  console.error(`[config] Wattle is misconfigured (${errors.length} problem(s)); exiting.`);
+  process.exit(1);
+}
