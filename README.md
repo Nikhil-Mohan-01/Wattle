@@ -48,9 +48,23 @@ After the first sign-in, players pick a leaderboard name and their faculty. The 
 
 The app only asks for `openid profile email`. If Waterloo blocks students from approving outside apps, Microsoft shows an "admin approval required" screen. In that case, the email link is the fallback.
 
+## How the games stay fair
+
+Every game runs on the server; the browser only sends moves.
+
+- **Puzzles:** each date's puzzle is picked with a server-only `PUZZLE_SECRET`, created on first request, then frozen in the `puzzle` table. Answers never reach the browser until a player finishes.
+- **One attempt per day:** each player gets one row in the `play` table per date. Progress, timers and scores are computed on the server from server time.
+- **Moves:** each move is validated by the game (shape, legality, limits) and written with an optimistic version check, so parallel or repeated requests can't apply twice.
+- **Requests:** game APIs require a signed-in player with a finished profile, reject cross-site POSTs, and are rate-limited per player.
+- **Content:** real puzzle content with answers goes in `content/private/` (gitignored). `content/examples/` is public sample content for development only.
+- **Review flags:** plays finished implausibly fast are flagged and left off leaderboards.
+
+To test another weekday's game locally, set `WATTLE_DEV_DATE=YYYY-MM-DD` in `.env.local`. The play page also has a dev-only "reset my play" button.
+
 ## Scripts
 
 - `npm run dev`: start the dev server
 - `npm run build`: production build
+- `npm test`: run the test suite
 - `npm run db:push`: sync the schema to the database
 - `npm run db:studio`: browse the database

@@ -46,3 +46,6 @@ next-env.d.ts
 
 # local tooling
 /.claude/
+
+# real puzzle content (answers) - never commit
+/content/private/

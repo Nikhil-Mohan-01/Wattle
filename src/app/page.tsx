@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { GAMES, SCHEDULE, WEEKDAYS } from "@/lib/games";
@@ -12,6 +13,20 @@ export default function Home() {
           A different daily game every weekday. Sign in with your Waterloo account, play once, and
           see how you stack up against the rest of campus.
         </p>
+        <div className="flex gap-3 pt-2">
+          <Link
+            href="/play"
+            className="rounded-lg bg-gold px-5 py-2.5 font-semibold text-black hover:opacity-90"
+          >
+            Play today&apos;s game
+          </Link>
+          <Link
+            href="/leaderboard"
+            className="rounded-lg border border-line bg-card px-5 py-2.5 font-semibold hover:border-gold"
+          >
+            Leaderboard
+          </Link>
+        </div>
       </section>
 
       <Suspense fallback={<WeekSchedule today={null} />}>

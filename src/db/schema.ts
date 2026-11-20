@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 const timestamps = {
   createdAt: integer("created_at", { mode: "timestamp_ms" })
@@ -78,4 +78,55 @@ export const verification = sqliteTable(
     ...timestamps,
   },
   (t) => [index("verification_identifier_idx").on(t.identifier)],
+);
+
+// ---------------------------------------------------------------------------
+// Games
+// ---------------------------------------------------------------------------
+
+/**
+ * One puzzle per day. Created the first time anyone asks for that day, then
+ * frozen. `data` holds the full puzzle including answers and is never sent to
+ * the browser as-is.
+ */
+export const puzzle = sqliteTable(
+  "puzzle",
+  {
+    date: text("date").primaryKey(), // YYYY-MM-DD, Toronto time
+    gameId: text("game_id").notNull(),
+    contentId: text("content_id").notNull(),
+    data: text("data", { mode: "json" }).notNull(),
+    createdAt: timestamps.createdAt,
+  },
+  (t) => [index("puzzle_game_idx").on(t.gameId, t.date)],
+);
+
+/**
+ * A player's single attempt at a day's puzzle. All progress lives here on the
+ * server; the browser only ever sends moves.
+ */
+export const play = sqliteTable(
+  "play",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    date: text("date").notNull(),
+    gameId: text("game_id").notNull(),
+    status: text("status", { enum: ["playing", "done"] }).notNull(),
+    state: text("state", { mode: "json" }).notNull(),
+    rawScore: real("raw_score"),
+    moveCount: integer("move_count").notNull().default(0),
+    // Bumped on every write; a write only succeeds against the version it read,
+    // so two simultaneous moves can't both apply.
+    version: integer("version").notNull().default(0),
+    flags: text("flags", { mode: "json" }).$type<string[]>(),
+    startedAt: integer("started_at", { mode: "timestamp_ms" }).notNull(),
+    finishedAt: integer("finished_at", { mode: "timestamp_ms" }),
+  },
+  (t) => [
+    uniqueIndex("play_user_date_idx").on(t.userId, t.date),
+    index("play_date_idx").on(t.date, t.status),
+  ],
 );
