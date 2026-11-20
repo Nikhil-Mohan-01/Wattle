@@ -55,19 +55,38 @@ function polygons(g: Geometry): Position[][][] {
   }
 }
 
-/** Overseas pieces this far (centroid to centroid) from the main landmass are ignored… */
-const OVERSEAS_KM = 1500;
+/** Parts of a country more than this far from its main landmass are ignored… */
+const OVERSEAS_KM = 1000;
 /**
  * …unless they're big in their own right (km²). Alaska (~1.5M km²) is kept;
- * French Guiana (~83k km²) and Svalbard (~61k km²) are dropped.
+ * French Guiana (~83k km²) and Hawaii (~17k km²) are dropped.
  */
 const MAJOR_PART_KM2 = 400_000;
 
+function toXyz([lon, lat]: Position): [number, number, number] {
+  const λ = (lon * Math.PI) / 180;
+  const φ = (lat * Math.PI) / 180;
+  return [Math.cos(φ) * Math.cos(λ), Math.cos(φ) * Math.sin(λ), Math.sin(φ)];
+}
+
+/** Whether any vertex of `part` is within `maxAngle` of any vertex of `main`. */
+function within(part: Position[][], main: [number, number, number][], maxAngle: number): boolean {
+  const minDot = Math.cos(maxAngle);
+  for (const ring of part) {
+    for (const pos of ring) {
+      const [x, y, z] = toXyz(pos);
+      for (const [mx, my, mz] of main) if (x * mx + y * my + z * mz >= minDot) return true;
+    }
+  }
+  return false;
+}
+
 /**
  * The parts of a country that count for distances: the largest landmass plus
- * anything near it or comparably large. Small, far-flung territories (French
- * Guiana, Réunion, Hawaii, the Canaries…) are dropped so that, say, Brazil
- * doesn't show 0 km from France.
+ * anything within OVERSEAS_KM of its border or comparably large. Far-flung
+ * territories (French Guiana, Réunion, Hawaii…) are dropped so that, say,
+ * Brazil doesn't show 0 km from France, while exclaves and coastal islands
+ * (Kaliningrad, Sakhalin, Corsica) still count.
  */
 export function mainParts(geoms: Geometry[]): Position[][][] {
   const all = geoms.flatMap(polygons).map((coords) => {
@@ -77,8 +96,16 @@ export function mainParts(geoms: Geometry[]): Position[][][] {
   if (all.length <= 1) return all.map((p) => p.coords);
   const main = all.reduce((a, b) => (b.area > a.area ? b : a));
   const maxAngle = OVERSEAS_KM / EARTH_RADIUS_KM;
+  // Every 4th border vertex of the main landmass is plenty for a 1,000 km test.
+  const mainPoints = main.coords[0].filter((_, i) => i % 4 === 0).map(toXyz);
   return all
-    .filter((p) => p === main || p.area * EARTH_RADIUS_KM ** 2 >= MAJOR_PART_KM2 || geoDistance(p.centroid, main.centroid) <= maxAngle)
+    .filter(
+      (p) =>
+        p === main ||
+        p.area * EARTH_RADIUS_KM ** 2 >= MAJOR_PART_KM2 ||
+        geoDistance(p.centroid, main.centroid) <= maxAngle ||
+        within(p.coords, mainPoints, maxAngle),
+    )
     .map((p) => p.coords);
 }
 

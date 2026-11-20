@@ -90,6 +90,10 @@ describe("distance", () => {
     expect(distanceKm(FRANCE, "076")).toBeGreaterThan(5000);
     // Alaska is large, so the US still nearly touches Russia across the Bering Strait.
     expect(distanceKm("840", "643")).toBeLessThan(200);
+    // Exclaves and islands near the main landmass still count.
+    expect(distanceKm("643", "616")).toBe(0); // Russia–Poland via Kaliningrad
+    expect(distanceKm("643", "440")).toBe(0); // Russia–Lithuania via Kaliningrad
+    expect(distanceKm("643", "392")).toBeLessThan(100); // Russia–Japan via Sakhalin/Kurils
     // Nearby islands and coasts still count: Spain to Morocco is the Strait of Gibraltar.
     expect(distanceKm("724", "504")).toBeLessThan(50);
   });
