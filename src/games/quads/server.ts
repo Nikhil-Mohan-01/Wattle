@@ -63,7 +63,11 @@ function validatePuzzle(raw: unknown, index: number): ContentPuzzle {
 
 /** Loads and validates every puzzle. Exported for tests. */
 export function loadQuadsContent(): ContentPuzzle[] {
-  const raw = loadContent<unknown>("quads.json");
+  return validateQuadsContent(loadContent<unknown>("quads.json"));
+}
+
+/** Validates a parsed quads.json. Throws with a clear message on bad data. */
+export function validateQuadsContent(raw: unknown): ContentPuzzle[] {
   if (!Array.isArray(raw) || raw.length === 0) throw new Error("[quads] quads.json must be a non-empty array.");
   const puzzles = raw.map(validatePuzzle);
   const ids = new Set<string>();
