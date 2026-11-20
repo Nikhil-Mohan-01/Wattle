@@ -47,6 +47,13 @@ export interface GameModule<P = unknown, S = unknown, M = unknown, V = unknown> 
   /** Raw score for a finished play; higher is better. */
   score(puzzle: P, state: S, ctx: { date: string }): Awaitable<number>;
 
+  /**
+   * Review flags the game has raised for this play (e.g. implausible timings).
+   * Merged into the play's flags after every move; flagged plays are left off
+   * leaderboards.
+   */
+  flags?(puzzle: P, state: S): string[];
+
   /** Finishing faster than this (ms) flags the play for review. */
   minPlausibleMs?: number;
 }

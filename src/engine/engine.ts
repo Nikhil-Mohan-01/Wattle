@@ -164,10 +164,11 @@ export async function submitMove(userId: string, date: string, rawMove: unknown)
 
   const finished = outcome.done;
   const rawScore = finished ? await mod.score(p.data, outcome.state, { date }) : null;
-  const flags: string[] = [...(row.flags ?? [])];
+  const flagSet = new Set<string>([...(row.flags ?? []), ...(mod.flags?.(p.data, outcome.state) ?? [])]);
   if (finished && mod.minPlausibleMs && now - row.startedAt.getTime() < mod.minPlausibleMs) {
-    flags.push("too_fast");
+    flagSet.add("too_fast");
   }
+  const flags = [...flagSet];
 
   const updated = await db
     .update(play)
