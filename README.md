@@ -48,6 +48,10 @@ After the first sign-in, players pick a leaderboard name and their faculty. The 
 
 The app only asks for `openid profile email`. If Waterloo blocks students from approving outside apps, Microsoft shows an "admin approval required" screen. In that case, the email link is the fallback.
 
+## Deploying
+
+See [docs/deploy.md](docs/deploy.md). In production the server checks its settings on startup and refuses to start if something unsafe is missing, such as secrets, an https URL or a sign-in method.
+
 ## How the games stay fair
 
 Every game runs on the server; the browser only sends moves.
@@ -66,5 +70,7 @@ To test another weekday's game locally, set `WATTLE_DEV_DATE=YYYY-MM-DD` in `.en
 - `npm run dev`: start the dev server
 - `npm run build`: production build
 - `npm test`: run the test suite
-- `npm run db:push`: sync the schema to the database
+- `npm run db:push`: sync the schema to the local database
+- `npm run db:generate`: create a migration after changing `src/db/schema.ts`
+- `npm run db:migrate`: apply migrations (production)
 - `npm run db:studio`: browse the database
