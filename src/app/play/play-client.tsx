@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { GAME_CLIENTS } from "@/games/clients";
 import { useGame } from "@/games/use-game";
-import { GAMES } from "@/lib/games";
+import { GAMES, nextGame } from "@/lib/games";
 
 export function PlayClient({ devTools }: { devTools: boolean }) {
   const { today, start, move, busy, error, reload } = useGame();
@@ -37,6 +38,8 @@ export function PlayClient({ devTools }: { devTools: boolean }) {
         <p className="text-muted">{info.name} is coming soon.</p>
       )}
 
+      {today.status === "done" && <AfterGame date={today.date} />}
+
       {devTools && (
         <button
           onClick={async () => {
@@ -48,6 +51,24 @@ export function PlayClient({ devTools }: { devTools: boolean }) {
           Dev: reset my play for today
         </button>
       )}
+    </div>
+  );
+}
+
+function AfterGame({ date }: { date: string }) {
+  const { game, dayLabel } = nextGame(date);
+  return (
+    <div className="flex flex-col items-center gap-3 rounded-xl border border-line bg-card p-5 text-center sm:flex-row sm:justify-between sm:text-left">
+      <p className="text-sm text-muted">
+        {dayLabel}: <span aria-hidden>{game.emoji}</span>{" "}
+        <span className="font-semibold text-foreground">{game.name}</span> ({game.familiarAs.toLowerCase()})
+      </p>
+      <Link
+        href="/leaderboard?tab=today"
+        className="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-black hover:opacity-90"
+      >
+        See where you placed
+      </Link>
     </div>
   );
 }

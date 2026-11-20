@@ -68,3 +68,13 @@ export const WEEKDAYS = [
   { day: 4, label: "Thu" },
   { day: 5, label: "Fri" },
 ] as const;
+
+/** The next weekday's game after a YYYY-MM-DD date (Friday → Monday). */
+export function nextGame(date: string): { game: GameInfo; dayLabel: string } {
+  const [y, m, d] = date.split("-").map(Number);
+  const wd = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+  let next = (wd + 1) % 7;
+  while (SCHEDULE[next] === null) next = (next + 1) % 7;
+  const dayLabel = next === (wd + 1) % 7 ? "Tomorrow" : "Monday";
+  return { game: GAMES[SCHEDULE[next]!], dayLabel };
+}

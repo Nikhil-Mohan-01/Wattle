@@ -33,6 +33,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/" className="text-lg font-bold tracking-tight">
               <span className="text-gold-deep">W</span>attle
             </Link>
+            <Link href="/play" className="text-sm text-muted hover:text-foreground">
+              Play
+            </Link>
             <Link href="/leaderboard" className="text-sm text-muted hover:text-foreground">
               Leaderboard
             </Link>

@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { connection } from "next/server";
+import { and, eq, gte, lte } from "drizzle-orm";
+import { db } from "@/db/client";
+import { play } from "@/db/schema";
 import { GAMES, SCHEDULE, WEEKDAYS } from "@/lib/games";
-import { puzzleDate, weekdayOf } from "@/lib/time";
+import { getCurrentUser } from "@/lib/session";
+import { addDays, weekdayOf, weekStart } from "@/lib/time";
+import { currentPuzzleDate } from "@/lib/today";
+
+type DayResult = { status: "playing" | "done"; rawScore: number | null };
 
 export default function Home() {
   return (
@@ -39,10 +46,29 @@ export default function Home() {
 async function TodaySchedule() {
   // Today's date depends on the request time, so render it at request time.
   await connection();
-  return <WeekSchedule today={weekdayOf(puzzleDate())} />;
+  const date = currentPuzzleDate();
+  const user = await getCurrentUser();
+
+  // The signed-in player's own results for this week, keyed by weekday.
+  const results = new Map<number, DayResult>();
+  if (user) {
+    const monday = weekStart(date);
+    const rows = await db
+      .select({ date: play.date, status: play.status, rawScore: play.rawScore })
+      .from(play)
+      .where(and(eq(play.userId, user.id), gte(play.date, monday), lte(play.date, addDays(monday, 4))));
+    for (const r of rows) results.set(weekdayOf(r.date), { status: r.status, rawScore: r.rawScore });
+  }
+  return <WeekSchedule today={weekdayOf(date)} results={results} />;
 }
 
-function WeekSchedule({ today }: { today: number | null }) {
+function WeekSchedule({
+  today,
+  results = new Map(),
+}: {
+  today: number | null;
+  results?: Map<number, DayResult>;
+}) {
   return (
     <section className="space-y-3">
       <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">This week</h2>
@@ -72,6 +98,7 @@ function WeekSchedule({ today }: { today: number | null }) {
                 </div>
                 <div className="text-sm text-muted">{game.tagline}</div>
               </div>
+              <ResultBadge result={results.get(day)} isToday={isToday} />
             </li>
           );
         })}
@@ -81,4 +108,25 @@ function WeekSchedule({ today }: { today: number | null }) {
       )}
     </section>
   );
+}
+
+function ResultBadge({ result, isToday }: { result?: DayResult; isToday: boolean }) {
+  if (result?.status === "done") {
+    return (
+      <span className="rounded-full border border-line px-2.5 py-1 text-xs font-semibold">
+        ✓ {result.rawScore ?? 0}
+      </span>
+    );
+  }
+  if (result?.status === "playing") {
+    return <span className="text-xs font-semibold text-gold-deep">In progress</span>;
+  }
+  if (isToday) {
+    return (
+      <Link href="/play" className="rounded-lg bg-gold px-3 py-1.5 text-xs font-bold text-black">
+        Play
+      </Link>
+    );
+  }
+  return null;
 }
