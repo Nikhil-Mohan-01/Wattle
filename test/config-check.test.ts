@@ -14,6 +14,7 @@ const good = {
   AUTH_EMAIL_LINK_ENABLED: "false",
   TRUSTED_IP_HEADER: "cf-connecting-ip",
   DATABASE_URL: "postgresql://u:p@db.example:6543/postgres",
+  CRON_SECRET: "z".repeat(32),
 };
 
 function rootWithContent() {
@@ -50,13 +51,14 @@ describe("production config check", () => {
 
   it("warns about risky but workable settings", () => {
     const { errors, warnings } = checkProductionConfig(
-      { ...good, TRUSTED_IP_HEADER: "", AUTH_EMAIL_LINK_ENABLED: "true" },
+      { ...good, TRUSTED_IP_HEADER: "", AUTH_EMAIL_LINK_ENABLED: "true", CRON_SECRET: "" },
       mkdtempSync(path.join(tmpdir(), "wattle-cfg-")),
     );
     expect(errors).toEqual([]);
     const all = warnings.join("\n");
     expect(all).toMatch(/TRUSTED_IP_HEADER/);
     expect(all).toMatch(/SMTP_URL/);
+    expect(all).toMatch(/CRON_SECRET/);
     expect(all).toMatch(/content\/private\/quads.json/);
   });
 });

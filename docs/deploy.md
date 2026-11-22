@@ -1,47 +1,57 @@
 # Deploying Wattle
 
-Wattle is a Next.js app (`npm run build`, then `npm start`) with a Postgres database. The planned setup is Vercel for hosting and Supabase for the database; any Node.js host with any Postgres also works.
+Wattle runs on **Vercel** (hosting) with **Supabase** (Postgres database). Both free plans are enough to start. Vercel's free Hobby plan is for non-commercial projects, which a student project with no ads is.
 
 ## 1. Database (Supabase)
 
-1. Create a project at [supabase.com](https://supabase.com) (the free plan is enough).
-2. Under **Project Settings → Database → Connection string**, copy two URLs:
-   - **Transaction pooler** (port 6543): the app's `DATABASE_URL`. It suits serverless hosts like Vercel.
-   - **Direct connection** (port 5432): for running migrations.
-3. Create the tables from the committed migrations:
+1. Create a project at [supabase.com](https://supabase.com). Pick the region closest to your Vercel region, e.g. Canada (Central) or US East.
+2. Under **Project Settings → Database → Connection string**, copy two URLs and replace `[YOUR-PASSWORD]` in each:
+   - **Transaction pooler** (port 6543): becomes `DATABASE_URL`, which the app uses.
+   - **Direct connection** (port 5432): becomes `DATABASE_MIGRATION_URL`, used only to create and update tables.
 
-```bash
-DATABASE_URL="postgresql://postgres:<password>@db.<ref>.supabase.co:5432/postgres" npm run db:migrate
-```
+You don't run migrations by hand: every **production** deploy on Vercel applies any new files in `drizzle/` first (`scripts/migrate.mjs`). Preview deploys never touch the database.
 
-Run `npm run db:migrate` again (with the direct URL) after pulling changes that add files to `drizzle/`. After changing `src/db/schema.ts`, create a new migration with `npm run db:generate` and commit it.
+## 2. Vercel
 
-Free Supabase projects pause after about a week without database activity; the daily puzzle job keeps it active.
+1. At [vercel.com/new](https://vercel.com/new), import the `Wattle` GitHub repository. The defaults are right (framework Next.js; Vercel runs `npm run vercel-build`, which migrates and then builds).
+2. Before the first deploy, add these **Environment Variables** (Production):
 
-## 2. Environment variables
+| Variable | Value |
+| --- | --- |
+| `DATABASE_URL` | Supabase transaction pooler URL (port 6543) |
+| `DATABASE_MIGRATION_URL` | Supabase direct connection URL (port 5432) |
+| `BETTER_AUTH_URL` | Your public URL, e.g. `https://wattle.example`. No trailing slash. |
+| `BETTER_AUTH_SECRET` | Output of `openssl rand -base64 32` |
+| `PUZZLE_SECRET` | Output of `openssl rand -base64 32`. Keep it stable: changing it changes future puzzles. |
+| `CRON_SECRET` | Output of `openssl rand -base64 32`. Vercel sends it to the daily job. |
+| `TRUSTED_IP_HEADER` | `x-real-ip` (Vercel sets this to the real client IP) |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET`, `MICROSOFT_TENANT_ID` | For Microsoft sign-in; see the README. Tenant: `723a5a87-f39a-4a22-9247-3fc240c01396` |
+| `SMTP_URL`, `EMAIL_FROM` | For emailed sign-in, from an email provider such as Resend |
 
-| Variable | Required | Notes |
-| --- | --- | --- |
-| `BETTER_AUTH_URL` | yes | Public URL, `https://…`, no trailing slash |
-| `BETTER_AUTH_SECRET` | yes | `openssl rand -base64 32` |
-| `PUZZLE_SECRET` | yes | `openssl rand -base64 32`. Changing it changes future puzzles, so keep it stable. |
-| `DATABASE_URL` | yes | Supabase transaction pooler URL (see above) |
-| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | for Microsoft sign-in | From the Azure app registration |
-| `MICROSOFT_TENANT_ID` | with Microsoft | Waterloo's tenant: `723a5a87-f39a-4a22-9247-3fc240c01396` |
-| `SMTP_URL`, `EMAIL_FROM` | for email links | e.g. a transactional email provider's SMTP. Without it, email links are off. |
-| `AUTH_EMAIL_LINK_ENABLED` | no | `false` to offer Microsoft sign-in only |
-| `TRUSTED_IP_HEADER` | recommended | The header your host's proxy sets to the client IP and overwrites (Cloudflare: `cf-connecting-ip`, Fly.io: `fly-client-ip`). Leave it empty if unsure; never use a header clients can set themselves. |
-| `ALLOWED_EMAIL_DOMAINS` | no | Defaults to `uwaterloo.ca` |
+3. Deploy. The build log should show `[migrate] Database is up to date.`
 
-At least one sign-in method must be configured. On startup, the server checks these settings (`src/instrumentation.ts`). It refuses to start on errors such as a missing or short secret, a non-https URL, no sign-in method, or Microsoft sign-in without the tenant, and it logs warnings for risky settings.
+On startup, the server checks these settings (`src/lib/config-check.ts`). It refuses to start on errors (a missing or short secret, a non-https URL, a non-Postgres database, no sign-in method) and logs warnings for risky ones. Check **Logs** in Vercel after the first deploy.
 
-## 3. Microsoft sign-in
+### Daily job
 
-In the Azure app registration (see the README), add the production redirect URI:
+`vercel.json` schedules `/api/cron/daily` every day at 05:15 UTC (shortly after midnight Toronto time; Hobby plans may run it any time within that hour). It:
+- creates the day's puzzle before the first player arrives,
+- clears expired rate-limit counters, and
+- keeps the Supabase free-tier database active so it never pauses.
+
+It only runs when called with `CRON_SECRET`, so nobody else can trigger it. To check it, open **Settings → Cron Jobs** in Vercel and click **Run**.
+
+## 3. Domain
+
+1. Buy a domain and add it under **Settings → Domains** in Vercel; it shows you the DNS records to set.
+2. Update `BETTER_AUTH_URL` to `https://<your-domain>` and redeploy.
+3. In the Azure app registration, add the redirect URI:
 
 ```
 https://<your-domain>/api/auth/callback/microsoft
 ```
+
+Sign-in only works on the production domain, not on preview deployment URLs.
 
 ## 4. Puzzle content
 
@@ -50,29 +60,14 @@ The example puzzles in `content/examples/` are public on GitHub. For real use, p
 - `content/private/quads.json`
 - `content/private/deepcut.json`
 
-They use the same format as the examples. Check them before deploying:
-
-```bash
-npm run content:check
-```
-
-Honk, Hot & Cold and Sharp need no private content: their answers come from public lists, with the daily pick decided by `PUZZLE_SECRET`.
-
-## 5. Build and run
-
-```bash
-npm ci
-npm run build
-npm start
-```
-
-`npm start` listens on port 3000 by default (`PORT` changes it). Put the host's HTTPS proxy in front. The app sends security headers itself (CSP, HSTS, frame blocking).
+Check them before deploying with `npm run content:check`. Honk, Hot & Cold and Sharp need no private content.
 
 ## Checklist before inviting students
 
-- [ ] `npm start` logs no `[config]` errors, and you've reviewed any warnings.
+- [ ] The first production deploy logs `[migrate] Database is up to date.` and no `[config]` errors.
+- [ ] Running the daily job from **Settings → Cron Jobs** returns the day's puzzle as ready.
 - [ ] Microsoft sign-in works with a Waterloo account, and a personal Microsoft account is rejected.
-- [ ] If email links are enabled, a link arrives in a `@uwaterloo.ca` inbox and not in junk.
-- [ ] Real puzzle content is in `content/private/`, and `npm run content:check` passes.
-- [ ] You have a database backup plan (Supabase's free plan has no automatic backups; `pg_dump` with the direct connection URL works).
+- [ ] If email sign-in is enabled, the email arrives in a `@uwaterloo.ca` inbox and not in junk.
+- [ ] Real puzzle content is in place, and `npm run content:check` passes.
+- [ ] You have a backup plan: Supabase's free plan has no automatic backups, but `pg_dump` with the direct connection URL works.
 - [ ] The security reviewer has retested the open findings.

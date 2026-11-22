@@ -35,6 +35,11 @@ const nextConfig: NextConfig = {
   // The embedded dev/test database ships WebAssembly files; load it from
   // node_modules at runtime rather than bundling it.
   serverExternalPackages: ["@electric-sql/pglite"],
+  // Files the game servers read from disk at runtime; make sure serverless
+  // deployments (Vercel) ship them with the functions that need them.
+  outputFileTracingIncludes: {
+    "/api/**": ["./node_modules/word-list/words.txt", "./content/**/*.json"],
+  },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

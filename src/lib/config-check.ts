@@ -51,6 +51,9 @@ export function checkProductionConfig(env: Env, root = process.cwd()): ConfigRep
   if (!/^postgres(ql)?:\/\//.test(env.DATABASE_URL ?? "")) {
     errors.push("DATABASE_URL must be a postgres:// URL (e.g. Supabase) in production.");
   }
+  if ((env.CRON_SECRET ?? "").length < 16) {
+    warnings.push("CRON_SECRET is not set (16+ characters), so the daily job is refused and Supabase may pause.");
+  }
   if (env.WATTLE_DEV_DATE) warnings.push("WATTLE_DEV_DATE is set but ignored in production.");
 
   for (const file of PRIVATE_CONTENT) {

@@ -13,7 +13,8 @@
     "db:migrate": "drizzle-kit migrate",
     "content:check": "vitest run test/content.test.ts",
     "db:server": "node scripts/migrate-local.mjs && pglite-server --db=./data/pglite --port=5433 --max-connections=10",
-    "db:migrate:local": "node scripts/migrate-local.mjs"
+    "db:migrate:local": "node scripts/migrate-local.mjs",
+    "vercel-build": "node scripts/migrate.mjs && next build"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.17",
