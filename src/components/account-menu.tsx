@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getCurrentUser, isPlayer } from "@/lib/session";
-import { facultyName } from "@/lib/faculties";
+import { universityById } from "@/lib/universities";
 import { SignOutButton } from "./sign-out-button";
 
 export async function AccountMenu() {
@@ -20,7 +20,7 @@ export async function AccountMenu() {
       {isPlayer(user) ? (
         <Link href="/account" className="hover:underline" title="Your account">
           <span className="font-semibold">{user.handle}</span>
-          <span className="text-muted"> · {facultyName(user.faculty)}</span>
+          <span className="text-muted"> · {universityById(user.university)?.shortName}</span>
         </Link>
       ) : (
         <Link href="/welcome" className="text-gold-deep underline">

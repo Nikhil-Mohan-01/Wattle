@@ -8,11 +8,13 @@ export type CurrentUser = {
   email: string;
   /** Verified student email; null until the player confirms one with a code. */
   studentEmail: string | null;
+  /** University id (lib/universities.ts), set with the student email. */
+  university: string | null;
   handle: string | null;
   faculty: string | null;
 };
 
-export type Player = CurrentUser & { studentEmail: string; handle: string; faculty: string };
+export type Player = CurrentUser & { studentEmail: string; university: string; handle: string; faculty: string };
 
 /** The signed-in user, or null. Reads the request, so call it inside <Suspense>. */
 export async function getCurrentUser(): Promise<CurrentUser | null> {
@@ -24,6 +26,7 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     id: u.id,
     email: u.email,
     studentEmail: str(u.studentEmail),
+    university: str(u.university),
     handle: str(u.handle),
     faculty: str(u.faculty),
   };
@@ -31,7 +34,7 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
 
 /** True once the user has a verified student email and a profile. */
 export function isPlayer(user: CurrentUser | null): user is Player {
-  return Boolean(user?.studentEmail && user.handle && user.faculty);
+  return Boolean(user?.studentEmail && user.university && user.handle && user.faculty);
 }
 
 /** Requires a signed-in user who has finished the welcome steps. */

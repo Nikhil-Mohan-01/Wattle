@@ -1,6 +1,6 @@
 # Wattle
 
-Daily games for Waterloo students, with a campus-wide leaderboard. One game each weekday:
+Daily games for university students, with leaderboards for each campus and campus vs campus. One game each weekday:
 
 | Day | Game | Mechanic |
 | --- | --- | --- |
@@ -37,13 +37,17 @@ Wattle is for university students: every player verifies a student email with a 
 - **Continue with Microsoft** or **Continue with Google:** any account, personal or school. Afterwards you enter your student email and type the code once.
 
 Rules, all enforced on the server:
-- Only addresses on `ALLOWED_EMAIL_DOMAINS` are student emails, and `+` aliases are rejected.
+- Only student emails of participating universities count, and `+` aliases are rejected. The email's domain decides the player's university.
 - Each student email can belong to only one Wattle account.
 - Accounts are never merged by matching email addresses: each sign-in method is its own account. This closes a known attack where an OAuth provider lets someone set an email address they don't own.
 - Codes expire after 10 minutes and are limited per inbox, per IP and overall. Sign-in codes allow 3 tries; student-email codes allow 5.
 - Without `SMTP_URL`, `npm run dev` prints codes to the console. Production requires SMTP.
 
-After verifying, players pick a leaderboard name and their faculty. The faculty can't be changed later.
+After verifying, players pick a leaderboard name and a faculty from their university's list. The faculty can't be changed later.
+
+### Universities
+
+Participating universities, with their student email domains and faculties, are listed in `src/lib/universities.ts`. To add one, add an entry and deploy. Every university plays the same daily puzzles, so scores compare fairly. To open only some of them, set `ENABLED_UNIVERSITIES`, e.g. `uwaterloo,utoronto`.
 
 ### Setting up Microsoft sign-in (optional)
 

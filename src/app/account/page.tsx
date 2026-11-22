@@ -3,7 +3,7 @@ import { count, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { db } from "@/db/client";
 import { play } from "@/db/schema";
-import { facultyName } from "@/lib/faculties";
+import { facultyName, universityById } from "@/lib/universities";
 import { getCurrentUser } from "@/lib/session";
 import { DeleteAccountForm } from "./delete-form";
 
@@ -33,8 +33,10 @@ async function AccountDetails() {
         <dd>{me.studentEmail ?? "Not verified"}</dd>
         <dt className="text-muted">Leaderboard name</dt>
         <dd>{me.handle ?? "Not set"}</dd>
+        <dt className="text-muted">University</dt>
+        <dd>{universityById(me.university)?.name ?? "—"}</dd>
         <dt className="text-muted">Faculty</dt>
-        <dd>{facultyName(me.faculty)}</dd>
+        <dd>{facultyName(me.university, me.faculty)}</dd>
         <dt className="text-muted">Games played</dt>
         <dd>{plays}</dd>
       </dl>

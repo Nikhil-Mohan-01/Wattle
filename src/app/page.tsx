@@ -21,7 +21,7 @@ export default function Home() {
       <section className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">One game a day. One campus leaderboard.</h1>
         <p className="text-muted">
-          A different daily game every weekday. Sign in with your Waterloo account, play once, and
+          A different daily game every weekday. Sign in with your student email, play once, and
           see how you stack up against the rest of campus.
         </p>
         <div className="flex gap-3 pt-2">

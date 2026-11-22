@@ -1,5 +1,6 @@
 import { Suspense } from "react";
-import { allowedDomains, emailEnabled, googleEnabled, microsoftEnabled } from "@/lib/auth-policy";
+import { emailEnabled, googleEnabled, microsoftEnabled } from "@/lib/auth-policy";
+import { enabledUniversities } from "@/lib/universities";
 import { SignInForm } from "./sign-in-form";
 
 export default function SignInPage() {
@@ -14,9 +15,12 @@ export default function SignInPage() {
           microsoft={microsoftEnabled()}
           google={googleEnabled()}
           email={emailEnabled()}
-          example={`you@${allowedDomains()[0]}`}
+          example="you@uwaterloo.ca"
         />
       </Suspense>
+      <p className="text-center text-xs text-muted">
+        Open to: {enabledUniversities().map((u) => u.shortName).join(", ")}.
+      </p>
     </div>
   );
 }

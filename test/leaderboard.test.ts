@@ -226,7 +226,7 @@ describe("faculty board", () => {
     // Tue: one engineer alone → 100.
     await addPlay(eng[0], tue, 3);
 
-    const rows = await facultyBoard(weekRange(mon));
+    const rows = await facultyBoard(weekRange(mon), "uwaterloo");
     expect(rows).toHaveLength(6);
     const byId = Object.fromEntries(rows.map((r) => [r.faculty, r]));
 

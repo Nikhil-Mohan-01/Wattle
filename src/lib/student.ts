@@ -5,6 +5,7 @@ import { db } from "@/db/client";
 import { studentCode, user } from "@/db/schema";
 import { normalizeEmail } from "./auth-policy";
 import { sendCodeEmail } from "./email-code";
+import { universityForEmail } from "./universities";
 
 const CODE_TTL_MS = 10 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
@@ -98,7 +99,12 @@ export async function finishStudentVerification(userId: string, rawCode: string)
   try {
     const updated = await db
       .update(user)
-      .set({ studentEmail: pending.email, studentVerifiedAt: new Date(), updatedAt: new Date() })
+      .set({
+        studentEmail: pending.email,
+        studentVerifiedAt: new Date(),
+        university: universityForEmail(pending.email)?.id ?? null,
+        updatedAt: new Date(),
+      })
       .where(and(eq(user.id, userId), isNull(user.studentEmail)))
       .returning({ id: user.id });
     if (updated.length === 0) throw new StudentVerifyError("already_verified", "Your student email is already verified.");

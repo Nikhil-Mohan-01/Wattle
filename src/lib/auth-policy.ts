@@ -1,11 +1,9 @@
 // Which email addresses count as student emails, and which sign-in methods are on.
+import { enabledUniversities, universityForEmail } from "./universities";
 
-/** Student email domains, e.g. "uwaterloo.ca". Exact match only. */
+/** Student email domains of every enabled university. Exact match only. */
 export function allowedDomains(): string[] {
-  return (process.env.ALLOWED_EMAIL_DOMAINS ?? "uwaterloo.ca")
-    .split(",")
-    .map((d) => d.trim().toLowerCase())
-    .filter(Boolean);
+  return enabledUniversities().flatMap((u) => u.domains);
 }
 
 export function normalizeEmail(email: string): string {
@@ -26,8 +24,8 @@ export function emailProblem(rawEmail: string): string | null {
   if (at <= 0) return "Enter a valid email address.";
   const local = email.slice(0, at);
   const domain = email.slice(at + 1);
-  if (!allowedDomains().includes(domain)) {
-    return `Use your student email (@${allowedDomains()[0]}).`;
+  if (!universityForEmail(`x@${domain}`)) {
+    return "Use the student email from a participating university.";
   }
   if (local.includes("+")) {
     return "Email aliases with '+' aren't allowed. Use your plain student address.";

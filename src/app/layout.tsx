@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Wattle — daily games for Waterloo students",
+  title: "Wattle — daily games for university students",
   description:
-    "A new daily game every weekday, with a campus-wide leaderboard for Waterloo students.",
+    "A new daily game every weekday, with leaderboards for every campus and campus vs campus.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </header>
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">{children}</main>
         <footer className="border-t border-line py-4 text-center text-xs text-muted">
-          Wattle is a student project and is not affiliated with the University of Waterloo. ·{" "}
+          Wattle is a student project and is not affiliated with any university. ·{" "}
           <Link href="/privacy" className="underline">
             Privacy
           </Link>

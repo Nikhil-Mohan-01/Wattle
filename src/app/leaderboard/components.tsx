@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { Board, DailyRow, FacultyRow, PeriodRow } from "@/engine/leaderboard";
-import { facultyName } from "@/lib/faculties";
+import { facultyName, universityById } from "@/lib/universities";
 import { GAMES, type GameId } from "@/lib/games";
 import { addDays } from "@/lib/time";
 
@@ -92,7 +92,9 @@ export function WeekNav({
 
 type Column<Row> = { label: string; className?: string; cell: (r: Row) => ReactNode };
 
-function PlayerTable<Row extends { userId: string; rank: number; handle: string; faculty: string | null }>({
+function PlayerTable<
+  Row extends { userId: string; rank: number; handle: string; university: string | null; faculty: string | null },
+>({
   board,
   viewerId,
   columns,
@@ -116,9 +118,9 @@ function PlayerTable<Row extends { userId: string; rank: number; handle: string;
             {r.handle}
             {mine && <span className="ml-1 text-xs font-normal text-gold-deep">(you)</span>}
           </div>
-          <div className="truncate text-xs font-normal text-muted sm:hidden">{facultyName(r.faculty)}</div>
+          <div className="truncate text-xs font-normal text-muted sm:hidden">{universityById(r.university)?.shortName ?? "—"}</div>
         </td>
-        <td className="hidden py-2 pr-2 text-muted sm:table-cell">{facultyName(r.faculty)}</td>
+        <td className="hidden py-2 pr-2 text-muted sm:table-cell">{universityById(r.university)?.shortName ?? "—"}</td>
         {columns.map((c) => (
           <td key={c.label} className={`py-2 pr-3 text-right tabular-nums ${c.className ?? ""}`}>
             {c.cell(r)}
@@ -137,7 +139,7 @@ function PlayerTable<Row extends { userId: string; rank: number; handle: string;
             <tr>
               <th className="py-2 pl-3 pr-2 font-medium">#</th>
               <th className="py-2 pr-2 font-medium">Player</th>
-              <th className="hidden py-2 pr-2 font-medium sm:table-cell">Faculty</th>
+              <th className="hidden py-2 pr-2 font-medium sm:table-cell">University</th>
               {columns.map((c) => (
                 <th key={c.label} className={`py-2 pr-3 text-right font-medium ${c.className ?? ""}`}>
                   {c.label}
@@ -218,7 +220,15 @@ export function PeriodTable({ board, viewerId }: { board: Board<PeriodRow>; view
 // Faculty table
 // ---------------------------------------------------------------------------
 
-export function FacultyTable({ rows, viewerFaculty }: { rows: FacultyRow[]; viewerFaculty: string | null }) {
+export function FacultyTable({
+  rows,
+  universityId,
+  viewerFaculty,
+}: {
+  rows: FacultyRow[];
+  universityId: string;
+  viewerFaculty: string | null;
+}) {
   return (
     <div className="overflow-hidden rounded-xl border border-line bg-card">
       <table className="w-full text-sm">
@@ -242,7 +252,7 @@ export function FacultyTable({ rows, viewerFaculty }: { rows: FacultyRow[]; view
               <tr key={r.faculty} className={`border-t border-line ${mine ? "bg-gold/15 font-semibold" : ""}`}>
                 <td className="py-2 pl-3 pr-2 tabular-nums text-muted">{r.players ? r.rank : "–"}</td>
                 <td className="py-2 pr-2">
-                  {facultyName(r.faculty)}
+                  {facultyName(universityId, r.faculty)}
                   <div className="text-xs font-normal text-muted sm:hidden">avg {r.avgPoints}</div>
                 </td>
                 <td className="py-2 pr-2 text-right tabular-nums">

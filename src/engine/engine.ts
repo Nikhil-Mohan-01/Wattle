@@ -133,7 +133,7 @@ export async function startPlay(userId: string, date: string): Promise<Snapshot>
       columns: { email: true, studentEmail: true },
     });
     if (me && (await hasTombstone(me.studentEmail ?? me.email, date))) {
-      throw new GameError("already_done", "This Waterloo account has already played today's game.", 409);
+      throw new GameError("already_done", "This student email has already played today's game.", 409);
     }
   }
   await db

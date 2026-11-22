@@ -1,3 +1,4 @@
+import { universityById } from "@/lib/universities";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -80,7 +81,13 @@ async function Leaderboard({ searchParams }: { searchParams: SearchParams }) {
       {tab === "term" && <TermBoard today={today} viewerId={viewerId} />}
 
       {tab === "faculty" && (
-        <FacultyBoards week={week} thisWeek={thisWeek} today={today} viewerFaculty={viewer?.faculty ?? null} />
+        <FacultyBoards
+          week={week}
+          thisWeek={thisWeek}
+          today={today}
+          universityId={viewer?.university ?? "uwaterloo"}
+          viewerFaculty={viewer?.faculty ?? null}
+        />
       )}
 
       {!viewer && (
@@ -127,27 +134,30 @@ async function FacultyBoards({
   week,
   thisWeek,
   today,
+  universityId,
   viewerFaculty,
 }: {
   week: string;
   thisWeek: string;
   today: string;
+  universityId: string;
   viewerFaculty: string | null;
 }) {
   const term = termOf(today);
   const [weekRows, termRows] = await Promise.all([
-    facultyBoard(weekRange(week)),
-    facultyBoard(term),
+    facultyBoard(weekRange(week), universityId),
+    facultyBoard(term, universityId),
   ]);
   return (
     <div className="space-y-8">
+      <p className="text-sm text-muted">Faculties at {universityById(universityId)?.name}.</p>
       <section className="space-y-3">
         <WeekNav tab="faculty" week={week} thisWeek={thisWeek} label={weekLabel(week, thisWeek)} />
-        <FacultyTable rows={weekRows} viewerFaculty={viewerFaculty} />
+        <FacultyTable rows={weekRows} universityId={universityId} viewerFaculty={viewerFaculty} />
       </section>
       <section className="space-y-3">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">{term.name}</h2>
-        <FacultyTable rows={termRows} viewerFaculty={viewerFaculty} />
+        <FacultyTable rows={termRows} universityId={universityId} viewerFaculty={viewerFaculty} />
       </section>
       <BoardNote>
         Faculty score = average points per play × min(1, players ÷ 10). A faculty needs at least 10

@@ -5,7 +5,7 @@ import { refresh } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db/client";
 import { user } from "@/db/schema";
-import { isFacultyId } from "@/lib/faculties";
+import { isFaculty } from "@/lib/universities";
 import { getCurrentUser } from "@/lib/session";
 
 export type WelcomeState = { error: string | null };
@@ -24,7 +24,7 @@ export async function saveProfile(_prev: WelcomeState, form: FormData): Promise<
   if (!HANDLE_RE.test(handle)) {
     return { error: "Names are 3–20 characters: letters, numbers and underscores." };
   }
-  if (!isFacultyId(faculty)) return { error: "Pick your faculty." };
+  if (!isFaculty(current.university, faculty)) return { error: "Pick your faculty." };
 
   const taken = await db
     .select({ id: user.id })

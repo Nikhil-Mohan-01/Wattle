@@ -78,6 +78,7 @@ describe("email-code sign-in", () => {
     const { eq } = await import("drizzle-orm");
     const row = await db.query.user.findFirst({ where: eq(user.email, email) });
     expect(row?.studentEmail).toBe(email);
+    expect(row?.university).toBe("uwaterloo");
   });
 
   it("rejects wrong codes and burns the code after 3 tries", async () => {

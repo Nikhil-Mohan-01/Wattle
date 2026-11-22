@@ -11,6 +11,7 @@ import { emailEnabled, emailProblem, googleEnabled, microsoftEnabled, normalizeE
 import { clientIp, trustedIpHeader } from "./client-ip";
 import { checkCodeEmail, deliverCode, EmailCodeError } from "./email-code";
 import { consume } from "./rate-limit";
+import { universityForEmail } from "./universities";
 
 /**
  * Sign-in methods:
@@ -108,6 +109,7 @@ export const auth = betterAuth({
       faculty: { type: "string", required: false, input: false },
       studentEmail: { type: "string", required: false, input: false },
       studentVerifiedAt: { type: "date", required: false, input: false },
+      university: { type: "string", required: false, input: false },
     },
     // Code sign-in must be with a student email (the send step checks this
     // too). OAuth sign-ins can use any account.
@@ -127,7 +129,8 @@ export const auth = betterAuth({
           if (ctx?.path !== "/sign-in/email-otp") return;
           const email = normalizeEmail(user.email);
           if (emailProblem(email)) return false;
-          return { data: { ...user, studentEmail: email, studentVerifiedAt: new Date() } };
+          const university = universityForEmail(email)?.id;
+          return { data: { ...user, studentEmail: email, studentVerifiedAt: new Date(), university } };
         },
       },
     },

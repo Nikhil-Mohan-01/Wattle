@@ -12,6 +12,7 @@ export async function makePlayer(handle = `p_${randomUUID().slice(0, 8)}`) {
     emailVerified: true,
     studentEmail: `${handle}@uwaterloo.ca`,
     studentVerifiedAt: new Date(),
+    university: "uwaterloo",
     handle,
     faculty: "math",
   });

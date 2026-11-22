@@ -8,7 +8,7 @@ export default function PrivacyPage() {
     <article className="mx-auto max-w-2xl space-y-5 py-4 text-sm leading-relaxed [&_h2]:pt-2 [&_h2]:text-base [&_h2]:font-semibold [&_li]:ml-5 [&_li]:list-disc">
       <h1 className="text-2xl font-bold">Privacy</h1>
       <p className="text-muted">
-        Wattle is a student project, not a University of Waterloo service. This page explains what
+        Wattle is a student project, not a service of any university. This page explains what
         it stores and why.
       </p>
 

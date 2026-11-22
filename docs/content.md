@@ -53,4 +53,4 @@ Seven prompts per Monday. An array of:
 - List as many correct answers as you can. A correct answer missing from the list is marked wrong, which frustrates players.
 - Prompt `id`s must be unique and stable.
 
-Every answer and the per-prompt timing are stored, so rarity can later be recalculated from what Waterloo students actually answered.
+Every answer and the per-prompt timing are stored, so rarity can later be recalculated from what students actually answered.

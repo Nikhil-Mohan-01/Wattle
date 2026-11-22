@@ -39,9 +39,14 @@ export const user = pgTable(
     // one account per student email. Never accepted from the auth client.
     studentEmail: text("student_email").unique(),
     studentVerifiedAt: ts("student_verified_at"),
+    // University id (lib/universities.ts), from the student email's domain.
+    university: text("university"),
     ...timestamps,
   },
-  (t) => [uniqueIndex("user_handle_lower_idx").on(sql`lower(${t.handle})`)],
+  (t) => [
+    uniqueIndex("user_handle_lower_idx").on(sql`lower(${t.handle})`),
+    index("user_university_idx").on(t.university, t.faculty),
+  ],
 );
 
 /**

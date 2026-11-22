@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-import { allowedDomains } from "@/lib/auth-policy";
-import { FACULTIES } from "@/lib/faculties";
+import { enabledUniversities, universityById } from "@/lib/universities";
 import { getCurrentUser, isPlayer } from "@/lib/session";
 import { StudentForm } from "./student-form";
 import { WelcomeForm } from "./welcome-form";
@@ -29,7 +28,8 @@ async function WelcomeGate() {
           title="Confirm you're a student"
           text="Wattle is for university students. Enter your student email and we'll send a 6-digit code. It's never shown publicly."
         />
-        <StudentForm example={`you@${allowedDomains()[0]}`} />
+        <StudentForm example="you@uwaterloo.ca" />
+        <Participating />
       </>
     );
   }
@@ -39,10 +39,18 @@ async function WelcomeGate() {
       <Header
         step="Step 2 of 2"
         title="Welcome to Wattle"
-        text="Pick the name shown on the leaderboard and the faculty you play for."
+        text={`You're playing for ${universityById(user.university)?.name ?? "your university"}. Pick the name shown on the leaderboard and your faculty.`}
       />
-      <WelcomeForm faculties={FACULTIES.map((f) => ({ id: f.id, name: f.name }))} />
+      <WelcomeForm faculties={universityById(user.university)?.faculties ?? []} />
     </>
+  );
+}
+
+function Participating() {
+  return (
+    <p className="text-center text-xs text-muted">
+      Open to: {enabledUniversities().map((u) => u.shortName).join(", ")}.
+    </p>
   );
 }
 
