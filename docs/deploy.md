@@ -25,12 +25,13 @@ You don't run migrations by hand: every **production** deploy on Vercel applies 
 | `PUZZLE_SECRET` | Output of `openssl rand -base64 32`. Keep it stable: changing it changes future puzzles. |
 | `CRON_SECRET` | Output of `openssl rand -base64 32`. Vercel sends it to the daily job. |
 | `TRUSTED_IP_HEADER` | `x-real-ip` (Vercel sets this to the real client IP) |
-| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET`, `MICROSOFT_TENANT_ID` | For Microsoft sign-in; see the README. Tenant: `723a5a87-f39a-4a22-9247-3fc240c01396` |
-| `SMTP_URL`, `EMAIL_FROM` | For emailed sign-in, from an email provider such as Resend |
+| `SMTP_URL`, `EMAIL_FROM` | **Required.** Students verify their email with a code. Use an email provider such as Resend, sending from your domain. |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | Optional "Continue with Microsoft"; see the README |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Optional "Continue with Google"; see the README |
 
 3. Deploy. The build log should show `[migrate] Database is up to date.`
 
-On startup, the server checks these settings (`src/lib/config-check.ts`). It refuses to start on errors (a missing or short secret, a non-https URL, a non-Postgres database, no sign-in method) and logs warnings for risky ones. Check **Logs** in Vercel after the first deploy.
+On startup, the server checks these settings (`src/lib/config-check.ts`). It refuses to start on errors (a missing or short secret, a non-https URL, a non-Postgres database, no `SMTP_URL`) and logs warnings for risky ones. Check **Logs** in Vercel after the first deploy.
 
 ### Daily job
 
@@ -45,11 +46,10 @@ It only runs when called with `CRON_SECRET`, so nobody else can trigger it. To c
 
 1. Buy a domain and add it under **Settings → Domains** in Vercel; it shows you the DNS records to set.
 2. Update `BETTER_AUTH_URL` to `https://<your-domain>` and redeploy.
-3. In the Azure app registration, add the redirect URI:
-
-```
-https://<your-domain>/api/auth/callback/microsoft
-```
+3. Add the production redirect URIs, if you use these sign-in options:
+   - Azure app registration: `https://<your-domain>/api/auth/callback/microsoft`
+   - Google OAuth client: `https://<your-domain>/api/auth/callback/google`
+4. With your email provider, verify the domain (it gives you DNS records), so codes come from your domain and don't land in junk.
 
 Sign-in only works on the production domain, not on preview deployment URLs.
 
@@ -66,8 +66,8 @@ Check them before deploying with `npm run content:check`. Honk, Hot & Cold and S
 
 - [ ] The first production deploy logs `[migrate] Database is up to date.` and no `[config]` errors.
 - [ ] Running the daily job from **Settings → Cron Jobs** returns the day's puzzle as ready.
-- [ ] Microsoft sign-in works with a Waterloo account, and a personal Microsoft account is rejected.
-- [ ] If email sign-in is enabled, the email arrives in a `@uwaterloo.ca` inbox and not in junk.
+- [ ] A code email arrives in a `@uwaterloo.ca` inbox (not junk), and signing in with it works.
+- [ ] Microsoft and Google sign-in (if enabled) work, and then ask for a student email.
 - [ ] Real puzzle content is in place, and `npm run content:check` passes.
 - [ ] You have a backup plan: Supabase's free plan has no automatic backups, but `pg_dump` with the direct connection URL works.
 - [ ] The security reviewer has retested the open findings.

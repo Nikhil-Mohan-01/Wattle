@@ -25,9 +25,12 @@ async function AccountDetails() {
 
   return (
     <>
+      <p className="text-sm text-muted">Your emails are never shown to other players.</p>
       <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 rounded-xl border border-line bg-card p-5 text-sm">
-        <dt className="text-muted">Email</dt>
-        <dd>{me.email} (never shown publicly)</dd>
+        <dt className="text-muted">Signed in as</dt>
+        <dd>{me.email}</dd>
+        <dt className="text-muted">Student email</dt>
+        <dd>{me.studentEmail ?? "Not verified"}</dd>
         <dt className="text-muted">Leaderboard name</dt>
         <dd>{me.handle ?? "Not set"}</dd>
         <dt className="text-muted">Faculty</dt>

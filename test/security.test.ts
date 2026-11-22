@@ -58,12 +58,12 @@ describe("email sending", () => {
     err.mockRestore();
   });
 
-  it("disables email-link sign-in in production without SMTP", async () => {
+  it("disables email codes in production without SMTP", async () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv("SMTP_URL", "");
-    const { emailLinkEnabled } = await import("@/lib/auth-policy");
-    expect(emailLinkEnabled()).toBe(false);
+    const { emailEnabled } = await import("@/lib/auth-policy");
+    expect(emailEnabled()).toBe(false);
     vi.stubEnv("SMTP_URL", "smtps://u:p@smtp.example.com:465");
-    expect(emailLinkEnabled()).toBe(true);
+    expect(emailEnabled()).toBe(true);
   });
 });

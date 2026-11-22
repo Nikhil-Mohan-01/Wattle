@@ -1,9 +1,9 @@
 import "server-only";
 import { GameError } from "./engine";
-import { getCurrentUser, type CurrentUser } from "@/lib/session";
+import { getCurrentUser, isPlayer, type Player } from "@/lib/session";
 import { allow } from "@/lib/rate-limit";
 
-export type Player = CurrentUser & { handle: string; faculty: string };
+export type { Player };
 
 export function json(data: unknown, status = 200) {
   return Response.json(data, { status, headers: { "Cache-Control": "no-store" } });
@@ -31,14 +31,14 @@ export async function handleGameRequest(
   }
   const user = await getCurrentUser();
   if (!user) return json({ error: "unauthorized", message: "Sign in to play." }, 401);
-  if (!user.handle || !user.faculty) {
-    return json({ error: "setup_required", message: "Finish setting up your profile." }, 403);
+  if (!isPlayer(user)) {
+    return json({ error: "setup_required", message: "Verify your student email and finish setup first." }, 403);
   }
   if (!(await allow(`game:${user.id}`, 60, 10))) {
     return json({ error: "rate_limited", message: "Slow down a little." }, 429);
   }
   try {
-    return json(await fn(user as Player));
+    return json(await fn(user));
   } catch (err) {
     if (err instanceof GameError) return json({ error: err.code, message: err.message }, err.status);
     console.error(err);

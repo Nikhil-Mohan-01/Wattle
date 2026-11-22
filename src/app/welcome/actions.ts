@@ -15,6 +15,8 @@ const HANDLE_RE = /^[A-Za-z0-9_]{3,20}$/;
 export async function saveProfile(_prev: WelcomeState, form: FormData): Promise<WelcomeState> {
   const current = await getCurrentUser();
   if (!current) redirect("/sign-in");
+  // The profile step comes after the student email is verified.
+  if (!current.studentEmail) redirect("/welcome");
 
   const handle = String(form.get("handle") ?? "").trim();
   const faculty = String(form.get("faculty") ?? "");

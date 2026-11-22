@@ -127,8 +127,12 @@ export async function startPlay(userId: string, date: string): Promise<Snapshot>
 
   // A deleted-and-recreated account doesn't get a second attempt at today.
   if (!(await findPlay(userId, date))) {
-    const me = await db.query.user.findFirst({ where: eq(user.id, userId), columns: { email: true } });
-    if (me && (await hasTombstone(me.email, date))) {
+    // Keyed on the verified student email: that's the one-per-person identity.
+    const me = await db.query.user.findFirst({
+      where: eq(user.id, userId),
+      columns: { email: true, studentEmail: true },
+    });
+    if (me && (await hasTombstone(me.studentEmail ?? me.email, date))) {
       throw new GameError("already_done", "This Waterloo account has already played today's game.", 409);
     }
   }

@@ -31,23 +31,34 @@ Then open http://localhost:3000.
 
 ## Sign-in
 
-Only Waterloo accounts can sign in. There are two methods, and both are enforced on the server:
+Wattle is for university students: every player verifies a student email with a 6-digit code. Students can sign in three ways:
 
-- **Microsoft (Option A):** "Continue with Waterloo". Pinned to Waterloo's Microsoft Entra tenant, so personal and other-school Microsoft accounts are rejected. Shown only when `MICROSOFT_CLIENT_ID` and `MICROSOFT_CLIENT_SECRET` are set.
-- **Email link (Option B):** a one-time link sent to an `@uwaterloo.ca` address. Addresses with `+` are rejected. Turn it off with `AUTH_EMAIL_LINK_ENABLED=false`. Without `SMTP_URL`, links are printed to the dev server console.
+- **Student email + code:** enter your student email and type the 6-digit code from your inbox. This also verifies the student email. Codes are used instead of links because university mail scanners open links, which would use up one-time links.
+- **Continue with Microsoft** or **Continue with Google:** any account, personal or school. Afterwards you enter your student email and type the code once.
 
-After the first sign-in, players pick a leaderboard name and their faculty. The faculty can't be changed later.
+Rules, all enforced on the server:
+- Only addresses on `ALLOWED_EMAIL_DOMAINS` are student emails, and `+` aliases are rejected.
+- Each student email can belong to only one Wattle account.
+- Accounts are never merged by matching email addresses: each sign-in method is its own account. This closes a known attack where an OAuth provider lets someone set an email address they don't own.
+- Codes expire after 10 minutes and are limited per inbox, per IP and overall. Sign-in codes allow 3 tries; student-email codes allow 5.
+- Without `SMTP_URL`, `npm run dev` prints codes to the console. Production requires SMTP.
 
-### Setting up Microsoft sign-in
+After verifying, players pick a leaderboard name and their faculty. The faculty can't be changed later.
+
+### Setting up Microsoft sign-in (optional)
 
 1. Sign in to the [Azure portal](https://portal.azure.com) with a personal Microsoft account. Open **Microsoft Entra ID → App registrations → New registration**.
-2. Name: `Wattle`. Supported account types: **Accounts in any organizational directory (multitenant)**.
+2. Name: `Wattle`. Supported account types: **Accounts in any organizational directory and personal Microsoft accounts**.
 3. Redirect URI: platform **Web**, value `http://localhost:3000/api/auth/callback/microsoft`. Add the production URL later.
-4. Copy the **Application (client) ID** into `MICROSOFT_CLIENT_ID`.
-5. Under **Certificates & secrets → New client secret**, copy the secret **Value** into `MICROSOFT_CLIENT_SECRET`.
-6. Leave `MICROSOFT_TENANT_ID` as Waterloo's tenant ID from `.env.example`.
+4. Copy the **Application (client) ID** into `MICROSOFT_CLIENT_ID`, and a new client secret's **Value** (under **Certificates & secrets**) into `MICROSOFT_CLIENT_SECRET`.
 
-The app only asks for `openid profile email`. If Waterloo blocks students from approving outside apps, Microsoft shows an "admin approval required" screen. In that case, the email link is the fallback.
+### Setting up Google sign-in (optional)
+
+1. In the [Google Cloud console](https://console.cloud.google.com), create a project, then open **APIs & Services → OAuth consent screen**. Choose **External** and add your app name and email.
+2. Under **Credentials → Create credentials → OAuth client ID**, choose **Web application**. Add the redirect URI `http://localhost:3000/api/auth/callback/google`, plus the production one later.
+3. Copy the client ID and secret into `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
+
+Both only request basic profile and email access.
 
 ## Deploying
 

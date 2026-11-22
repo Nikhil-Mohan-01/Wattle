@@ -1,6 +1,6 @@
-// Who is allowed to sign in. Shared by both sign-in methods.
+// Which email addresses count as student emails, and which sign-in methods are on.
 
-/** Email domains allowed to sign in, e.g. "uwaterloo.ca". Exact match only. */
+/** Student email domains, e.g. "uwaterloo.ca". Exact match only. */
 export function allowedDomains(): string[] {
   return (process.env.ALLOWED_EMAIL_DOMAINS ?? "uwaterloo.ca")
     .split(",")
@@ -13,11 +13,12 @@ export function normalizeEmail(email: string): string {
 }
 
 /**
- * Returns an error message if the email can't be used, otherwise null.
+ * Returns an error message if the address can't be used as a student email,
+ * otherwise null.
  *
- * Plus-addressing (name+anything@uwaterloo.ca) is rejected because Exchange
- * delivers it to the same inbox, which would let one student create many
- * accounts.
+ * Plus-addressing (name+anything@uwaterloo.ca) is rejected because university
+ * mail servers deliver it to the same inbox, which would let one student
+ * create many accounts.
  */
 export function emailProblem(rawEmail: string): string | null {
   const email = normalizeEmail(rawEmail);
@@ -26,30 +27,28 @@ export function emailProblem(rawEmail: string): string | null {
   const local = email.slice(0, at);
   const domain = email.slice(at + 1);
   if (!allowedDomains().includes(domain)) {
-    return `Use your Waterloo email (@${allowedDomains()[0]}).`;
+    return `Use your student email (@${allowedDomains()[0]}).`;
   }
   if (local.includes("+")) {
-    return "Email aliases with '+' aren't allowed. Use your plain Waterloo address.";
+    return "Email aliases with '+' aren't allowed. Use your plain student address.";
   }
   if (!/^[a-z0-9._-]+$/.test(local)) return "Enter a valid email address.";
   return null;
-}
-
-/** Waterloo's Microsoft Entra tenant. Sign-ins from any other tenant are rejected. */
-export function waterlooTenantId(): string | undefined {
-  return process.env.MICROSOFT_TENANT_ID || undefined;
 }
 
 export function microsoftEnabled(): boolean {
   return Boolean(process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET);
 }
 
+export function googleEnabled(): boolean {
+  return Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
+}
+
 /**
- * Email links are on unless turned off, but only when email can actually be
- * delivered: SMTP is configured, or this is local `next dev` (which prints
- * links to the console). This fails closed in production without SMTP.
+ * Email codes need a way to deliver email: SMTP, or local `next dev` (which
+ * prints them to the console). Without it, nobody can verify a student
+ * email, so production requires SMTP (see config-check).
  */
-export function emailLinkEnabled(): boolean {
-  if ((process.env.AUTH_EMAIL_LINK_ENABLED ?? "true") !== "true") return false;
+export function emailEnabled(): boolean {
   return Boolean(process.env.SMTP_URL) || process.env.NODE_ENV === "development";
 }

@@ -15,9 +15,12 @@ export default function PrivacyPage() {
       <h2>What we store</h2>
       <ul>
         <li>
-          <strong>Your Waterloo email and name</strong> from Microsoft sign-in or the email you
-          entered. Used only to sign you in and make sure players are Waterloo students. Never shown
-          to other players.
+          <strong>Your sign-in email and name</strong> from Microsoft, Google, or the student email
+          you entered, used only to sign you in.
+        </li>
+        <li>
+          <strong>Your verified student email</strong>, used to confirm you&apos;re a student and to
+          allow one account per student. Never shown to other players.
         </li>
         <li>
           <strong>The leaderboard name and faculty you choose.</strong> These are public on the
@@ -42,7 +45,7 @@ export default function PrivacyPage() {
       <h2>What we don&apos;t do</h2>
       <ul>
         <li>No ads, no tracking scripts and no analytics cookies.</li>
-        <li>We don&apos;t sell or share your data. Microsoft sign-in only gives us your basic profile (name and email).</li>
+        <li>We don&apos;t sell or share your data. Microsoft and Google sign-in only give us your basic profile (name and email).</li>
       </ul>
 
       <h2>Your choices</h2>

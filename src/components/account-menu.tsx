@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/session";
+import { getCurrentUser, isPlayer } from "@/lib/session";
 import { facultyName } from "@/lib/faculties";
 import { SignOutButton } from "./sign-out-button";
 
@@ -17,7 +17,7 @@ export async function AccountMenu() {
   }
   return (
     <div className="flex items-center gap-3 text-sm">
-      {user.handle ? (
+      {isPlayer(user) ? (
         <Link href="/account" className="hover:underline" title="Your account">
           <span className="font-semibold">{user.handle}</span>
           <span className="text-muted"> · {facultyName(user.faculty)}</span>

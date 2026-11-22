@@ -31,14 +31,16 @@ export async function deleteAccount(_prev: DeleteState, form: FormData): Promise
   // Keep only a hashed record of today's attempt, so deleting the account and
   // signing back in can't be used to replay today's puzzle.
   const played = await db.select({ date: play.date }).from(play).where(eq(play.userId, current.id));
-  await addTombstones(current.email, played.map((p) => p.date), currentPuzzleDate());
+  // Keyed on the student email, so a new account with it can't replay today.
+  await addTombstones(current.studentEmail ?? current.email, played.map((p) => p.date), currentPuzzleDate());
 
   // Sign out first so the session cookie is cleared, then delete everything.
   await auth.api.signOut({ headers: await headers() });
   await db.delete(user).where(eq(user.id, current.id));
 
-  // Drop sign-in rate-limit counters that contain the email address.
-  const email = normalizeEmail(current.email);
-  await db.delete(rateLimitBucket).where(inArray(rateLimitBucket.key, [`ml:to:${email}`, `ml:to-day:${email}`]));
+  // Drop rate-limit counters that contain the email addresses.
+  const emails = [...new Set([current.email, current.studentEmail].filter(Boolean).map((e) => normalizeEmail(e!)))];
+  const keys = emails.flatMap((e) => [`ml:to:${e}`, `ml:to-day:${e}`]);
+  await db.delete(rateLimitBucket).where(inArray(rateLimitBucket.key, keys));
   redirect("/?deleted=1");
 }

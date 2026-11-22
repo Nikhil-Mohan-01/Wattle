@@ -35,10 +35,29 @@ export const user = pgTable(
     // auth client (see `input: false` in lib/auth.ts).
     handle: text("handle"),
     faculty: text("faculty"),
+    // The verified student email that makes this a player. One per account and
+    // one account per student email. Never accepted from the auth client.
+    studentEmail: text("student_email").unique(),
+    studentVerifiedAt: ts("student_verified_at"),
     ...timestamps,
   },
   (t) => [uniqueIndex("user_handle_lower_idx").on(sql`lower(${t.handle})`)],
 );
+
+/**
+ * A pending 6-digit code proving the player owns a student email. One per
+ * user; only a keyed hash of the code is stored.
+ */
+export const studentCode = pgTable("student_code", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  email: text("email").notNull(),
+  codeHash: text("code_hash").notNull(),
+  attempts: integer("attempts").notNull().default(0),
+  expiresAt: ts("expires_at").notNull(),
+  createdAt: ts("created_at").notNull().defaultNow(),
+});
 
 export const session = pgTable(
   "session",

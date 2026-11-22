@@ -10,8 +10,7 @@ const good = {
   PUZZLE_SECRET: "y".repeat(32),
   MICROSOFT_CLIENT_ID: "id",
   MICROSOFT_CLIENT_SECRET: "secret",
-  MICROSOFT_TENANT_ID: "tenant",
-  AUTH_EMAIL_LINK_ENABLED: "false",
+  SMTP_URL: "smtps://u:p@smtp.example.com:465",
   TRUSTED_IP_HEADER: "cf-connecting-ip",
   DATABASE_URL: "postgresql://u:p@db.example:6543/postgres",
   CRON_SECRET: "z".repeat(32),
@@ -34,7 +33,7 @@ describe("production config check", () => {
     expect(errors.join("\n")).toMatch(/BETTER_AUTH_SECRET/);
     expect(errors.join("\n")).toMatch(/BETTER_AUTH_URL/);
     expect(errors.join("\n")).toMatch(/PUZZLE_SECRET/);
-    expect(errors.join("\n")).toMatch(/No sign-in method/);
+    expect(errors.join("\n")).toMatch(/SMTP_URL/);
     const http = checkProductionConfig({ ...good, BETTER_AUTH_URL: "http://wattle.example" }, rootWithContent());
     expect(http.errors).toContain("BETTER_AUTH_URL must use https.");
   });
@@ -44,20 +43,19 @@ describe("production config check", () => {
     expect(errors.join()).toMatch(/postgres:\/\//);
   });
 
-  it("requires the Waterloo tenant when Microsoft sign-in is on", () => {
-    const { errors } = checkProductionConfig({ ...good, MICROSOFT_TENANT_ID: "" }, rootWithContent());
-    expect(errors.join()).toMatch(/MICROSOFT_TENANT_ID/);
+  it("requires sign-in provider credentials in pairs", () => {
+    const { errors } = checkProductionConfig({ ...good, GOOGLE_CLIENT_ID: "id" }, rootWithContent());
+    expect(errors.join()).toMatch(/GOOGLE_CLIENT_SECRET/);
   });
 
   it("warns about risky but workable settings", () => {
     const { errors, warnings } = checkProductionConfig(
-      { ...good, TRUSTED_IP_HEADER: "", AUTH_EMAIL_LINK_ENABLED: "true", CRON_SECRET: "" },
+      { ...good, TRUSTED_IP_HEADER: "", CRON_SECRET: "" },
       mkdtempSync(path.join(tmpdir(), "wattle-cfg-")),
     );
     expect(errors).toEqual([]);
     const all = warnings.join("\n");
     expect(all).toMatch(/TRUSTED_IP_HEADER/);
-    expect(all).toMatch(/SMTP_URL/);
     expect(all).toMatch(/CRON_SECRET/);
     expect(all).toMatch(/content\/private\/quads.json/);
   });

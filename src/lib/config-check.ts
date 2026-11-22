@@ -32,17 +32,15 @@ export function checkProductionConfig(env: Env, root = process.cwd()): ConfigRep
     errors.push("PUZZLE_SECRET must be set to at least 16 characters (it decides each day's puzzle).");
   }
 
-  const microsoft = Boolean(env.MICROSOFT_CLIENT_ID && env.MICROSOFT_CLIENT_SECRET);
-  const emailWanted = (env.AUTH_EMAIL_LINK_ENABLED ?? "true") === "true";
-  const email = emailWanted && Boolean(env.SMTP_URL);
-  if (microsoft && !env.MICROSOFT_TENANT_ID) {
-    errors.push("MICROSOFT_TENANT_ID must be set so only Waterloo accounts can sign in.");
+  // Every player verifies a student email with a code, so email must work.
+  if (!env.SMTP_URL) {
+    errors.push("SMTP_URL must be set: students verify their email with a code.");
   }
-  if (!microsoft && !email) {
-    errors.push("No sign-in method is configured: set the MICROSOFT_* variables and/or SMTP_URL.");
+  if (Boolean(env.MICROSOFT_CLIENT_ID) !== Boolean(env.MICROSOFT_CLIENT_SECRET)) {
+    errors.push("Set both MICROSOFT_CLIENT_ID and MICROSOFT_CLIENT_SECRET, or neither.");
   }
-  if (emailWanted && !env.SMTP_URL) {
-    warnings.push("Email-link sign-in is switched off because SMTP_URL is not set.");
+  if (Boolean(env.GOOGLE_CLIENT_ID) !== Boolean(env.GOOGLE_CLIENT_SECRET)) {
+    errors.push("Set both GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET, or neither.");
   }
 
   if (!env.TRUSTED_IP_HEADER) {
