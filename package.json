@@ -3,25 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/migrate-local.mjs && pglite-server --db=./data/pglite --port=5433 --max-connections=10 --run 'next dev'",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",
     "test": "vitest run",
     "db:migrate": "drizzle-kit migrate",
-    "content:check": "vitest run test/content.test.ts"
+    "content:check": "vitest run test/content.test.ts",
+    "db:server": "node scripts/migrate-local.mjs && pglite-server --db=./data/pglite --port=5433 --max-connections=10",
+    "db:migrate:local": "node scripts/migrate-local.mjs"
   },
   "dependencies": {
-    "@libsql/client": "^0.18.0",
+    "@electric-sql/pglite": "^0.5.17",
     "better-auth": "^1.7.26",
     "d3-geo": "^3.1.2",
     "drizzle-orm": "^0.45.4",
     "i18n-iso-countries": "^7.14.0",
     "next": "16.4.6",
     "nodemailer": "^10.6.0",
+    "postgres": "^4.1.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "server-only": "^0.0.1",
@@ -30,6 +32,7 @@
     "world-atlas": "^2.0.2"
   },
   "devDependencies": {
+    "@electric-sql/pglite-socket": "^0.2.20",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/d3-geo": "^3.1.1",
     "@types/node": "^24.19.2",

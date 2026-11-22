@@ -20,9 +20,9 @@ export async function consume(key: string, windowSec: number, max: number): Prom
       target: rateLimitBucket.key,
       set: {
         // Start a new window if the old one has expired, otherwise count the hit.
-        count: sql`CASE WHEN ${rateLimitBucket.expiresAt} <= ${now} THEN 1 ELSE ${rateLimitBucket.count} + 1 END`,
-        windowStart: sql`CASE WHEN ${rateLimitBucket.expiresAt} <= ${now} THEN ${now} ELSE ${rateLimitBucket.windowStart} END`,
-        expiresAt: sql`CASE WHEN ${rateLimitBucket.expiresAt} <= ${now} THEN ${now + windowMs} ELSE ${rateLimitBucket.expiresAt} END`,
+        count: sql`CASE WHEN ${rateLimitBucket.expiresAt} <= ${now}::bigint THEN 1 ELSE ${rateLimitBucket.count} + 1 END`,
+        windowStart: sql`CASE WHEN ${rateLimitBucket.expiresAt} <= ${now}::bigint THEN ${now}::bigint ELSE ${rateLimitBucket.windowStart} END`,
+        expiresAt: sql`CASE WHEN ${rateLimitBucket.expiresAt} <= ${now}::bigint THEN ${now + windowMs}::bigint ELSE ${rateLimitBucket.expiresAt} END`,
       },
     })
     .returning({ count: rateLimitBucket.count, expiresAt: rateLimitBucket.expiresAt });

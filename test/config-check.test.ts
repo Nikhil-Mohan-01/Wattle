@@ -13,7 +13,7 @@ const good = {
   MICROSOFT_TENANT_ID: "tenant",
   AUTH_EMAIL_LINK_ENABLED: "false",
   TRUSTED_IP_HEADER: "cf-connecting-ip",
-  DATABASE_URL: "libsql://db.example",
+  DATABASE_URL: "postgresql://u:p@db.example:6543/postgres",
 };
 
 function rootWithContent() {
@@ -38,6 +38,11 @@ describe("production config check", () => {
     expect(http.errors).toContain("BETTER_AUTH_URL must use https.");
   });
 
+  it("requires a Postgres database", () => {
+    const { errors } = checkProductionConfig({ ...good, DATABASE_URL: "pglite://./data/pglite" }, rootWithContent());
+    expect(errors.join()).toMatch(/postgres:\/\//);
+  });
+
   it("requires the Waterloo tenant when Microsoft sign-in is on", () => {
     const { errors } = checkProductionConfig({ ...good, MICROSOFT_TENANT_ID: "" }, rootWithContent());
     expect(errors.join()).toMatch(/MICROSOFT_TENANT_ID/);
@@ -45,13 +50,12 @@ describe("production config check", () => {
 
   it("warns about risky but workable settings", () => {
     const { errors, warnings } = checkProductionConfig(
-      { ...good, TRUSTED_IP_HEADER: "", DATABASE_URL: "file:./x.db", AUTH_EMAIL_LINK_ENABLED: "true" },
+      { ...good, TRUSTED_IP_HEADER: "", AUTH_EMAIL_LINK_ENABLED: "true" },
       mkdtempSync(path.join(tmpdir(), "wattle-cfg-")),
     );
     expect(errors).toEqual([]);
     const all = warnings.join("\n");
     expect(all).toMatch(/TRUSTED_IP_HEADER/);
-    expect(all).toMatch(/local SQLite/);
     expect(all).toMatch(/SMTP_URL/);
     expect(all).toMatch(/content\/private\/quads.json/);
   });

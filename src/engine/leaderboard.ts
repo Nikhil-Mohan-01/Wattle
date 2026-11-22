@@ -1,6 +1,6 @@
 import "server-only";
 import { sql, type SQL } from "drizzle-orm";
-import { db } from "@/db/client";
+import { queryRows } from "@/db/client";
 import { FACULTIES } from "@/lib/faculties";
 import { addDays, weekdayOf, weekStart } from "@/lib/time";
 
@@ -90,7 +90,7 @@ function dailyPoints({ from, to }: Range): SQL {
       where p.date between ${from} and ${to}
         and p.status = 'done'
         and p.raw_score is not null
-        and (p.flags is null or p.flags = 'null' or json_array_length(p.flags) = 0)
+        and (p.flags is null or jsonb_typeof(p.flags) <> 'array' or jsonb_array_length(p.flags) = 0)
     ),
     scored as (
       select e.*,
@@ -110,7 +110,7 @@ function dailyPoints({ from, to }: Range): SQL {
 
 /** Daily board for one puzzle date, ranked by raw score (equal scores share a rank). */
 export async function dailyBoard(date: string, viewerId: string | null): Promise<Board<DailyRow>> {
-  const rows = await db.all<{
+  const rows = await queryRows<{
     rnk: number;
     user_id: string;
     handle: string | null;
@@ -126,7 +126,7 @@ export async function dailyBoard(date: string, viewerId: string | null): Promise
         rank() over (order by pts.raw_score desc) as rnk,
         row_number() over (order by pts.raw_score desc, pts.finished_at asc, pts.user_id) as pos,
         count(*) over () as total
-      from pts join user u on u.id = pts.user_id
+      from pts join "user" u on u.id = pts.user_id
     )
     select rnk, user_id, handle, faculty, game_id, raw_score, points, total
     from ranked
@@ -147,7 +147,7 @@ export async function dailyBoard(date: string, viewerId: string | null): Promise
 
 /** Sum of daily points over a date range (a week or a term). */
 export async function periodBoard(range: Range, viewerId: string | null): Promise<Board<PeriodRow>> {
-  const rows = await db.all<{
+  const rows = await queryRows<{
     rnk: number;
     user_id: string;
     handle: string | null;
@@ -166,7 +166,7 @@ export async function periodBoard(range: Range, viewerId: string | null): Promis
         rank() over (order by t.points desc, t.days desc, t.last_finish asc) as rnk,
         row_number() over (order by t.points desc, t.days desc, t.last_finish asc, t.user_id) as pos,
         count(*) over () as total
-      from totals t join user u on u.id = t.user_id
+      from totals t join "user" u on u.id = t.user_id
     )
     select rnk, user_id, handle, faculty, points, days, total
     from ranked
@@ -192,17 +192,17 @@ export async function periodBoard(range: Range, viewerId: string | null): Promis
 /** Faculty standings over a date range. Every faculty is listed, even with no plays. */
 export async function facultyBoard(range: Range): Promise<FacultyRow[]> {
   const [stats, members] = await Promise.all([
-    db.all<{ faculty: string; players: number; plays: number; avg_points: number }>(sql`
+    queryRows<{ faculty: string; players: number; plays: number; avg_points: number }>(sql`
       ${dailyPoints(range)}
       select u.faculty as faculty,
         count(distinct pts.user_id) as players,
         count(*) as plays,
         avg(pts.points) as avg_points
-      from pts join user u on u.id = pts.user_id
+      from pts join "user" u on u.id = pts.user_id
       where u.faculty is not null
       group by u.faculty`),
-    db.all<{ faculty: string; members: number }>(sql`
-      select faculty, count(*) as members from user
+    queryRows<{ faculty: string; members: number }>(sql`
+      select faculty, count(*) as members from "user"
       where faculty is not null and handle is not null
       group by faculty`),
   ]);

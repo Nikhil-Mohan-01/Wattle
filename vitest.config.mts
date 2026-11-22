@@ -1,8 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
-const testDb = `file:${fileURLToPath(new URL("./data/test.db", import.meta.url))}`;
-
 export default defineConfig({
   resolve: {
     alias: {
@@ -12,9 +10,9 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    globalSetup: ["./test/global-setup.ts"],
-    env: { DATABASE_URL: testDb, PUZZLE_SECRET: "test-secret" },
-    // Tests share one SQLite file.
-    fileParallelism: false,
+    // Each test file gets its own in-memory Postgres, migrated from drizzle/.
+    setupFiles: ["./test/setup-db.ts"],
+    env: { DATABASE_URL: "memory://", PUZZLE_SECRET: "test-secret" },
+    testTimeout: 20_000,
   },
 });

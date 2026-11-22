@@ -1,26 +1,35 @@
 import { sql } from "drizzle-orm";
-import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import {
+  bigint,
+  boolean,
+  doublePrecision,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+} from "drizzle-orm/pg-core";
+
+const ts = (name: string) => timestamp(name, { withTimezone: true, mode: "date" });
 
 const timestamps = {
-  createdAt: integer("created_at", { mode: "timestamp_ms" })
-    .notNull()
-    .default(sql`(unixepoch() * 1000)`),
-  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-    .notNull()
-    .default(sql`(unixepoch() * 1000)`),
+  createdAt: ts("created_at").notNull().defaultNow(),
+  updatedAt: ts("updated_at").notNull().defaultNow(),
 };
 
 // ---------------------------------------------------------------------------
 // Auth tables (shape required by Better Auth)
 // ---------------------------------------------------------------------------
 
-export const user = sqliteTable(
+export const user = pgTable(
   "user",
   {
     id: text("id").primaryKey(),
     name: text("name").notNull(),
     email: text("email").notNull().unique(),
-    emailVerified: integer("email_verified", { mode: "boolean" }).notNull().default(false),
+    emailVerified: boolean("email_verified").notNull().default(false),
     image: text("image"),
     // Wattle profile. Set once on the welcome screen; never accepted from the
     // auth client (see `input: false` in lib/auth.ts).
@@ -31,11 +40,11 @@ export const user = sqliteTable(
   (t) => [uniqueIndex("user_handle_lower_idx").on(sql`lower(${t.handle})`)],
 );
 
-export const session = sqliteTable(
+export const session = pgTable(
   "session",
   {
     id: text("id").primaryKey(),
-    expiresAt: integer("expires_at", { mode: "timestamp_ms" }).notNull(),
+    expiresAt: ts("expires_at").notNull(),
     token: text("token").notNull().unique(),
     ipAddress: text("ip_address"),
     userAgent: text("user_agent"),
@@ -47,7 +56,7 @@ export const session = sqliteTable(
   (t) => [index("session_user_idx").on(t.userId)],
 );
 
-export const account = sqliteTable(
+export const account = pgTable(
   "account",
   {
     id: text("id").primaryKey(),
@@ -59,8 +68,8 @@ export const account = sqliteTable(
     accessToken: text("access_token"),
     refreshToken: text("refresh_token"),
     idToken: text("id_token"),
-    accessTokenExpiresAt: integer("access_token_expires_at", { mode: "timestamp_ms" }),
-    refreshTokenExpiresAt: integer("refresh_token_expires_at", { mode: "timestamp_ms" }),
+    accessTokenExpiresAt: ts("access_token_expires_at"),
+    refreshTokenExpiresAt: ts("refresh_token_expires_at"),
     scope: text("scope"),
     password: text("password"),
     ...timestamps,
@@ -68,13 +77,13 @@ export const account = sqliteTable(
   (t) => [index("account_user_idx").on(t.userId)],
 );
 
-export const verification = sqliteTable(
+export const verification = pgTable(
   "verification",
   {
     id: text("id").primaryKey(),
     identifier: text("identifier").notNull(),
     value: text("value").notNull(),
-    expiresAt: integer("expires_at", { mode: "timestamp_ms" }).notNull(),
+    expiresAt: ts("expires_at").notNull(),
     ...timestamps,
   },
   (t) => [index("verification_identifier_idx").on(t.identifier)],
@@ -89,13 +98,13 @@ export const verification = sqliteTable(
  * frozen. `data` holds the full puzzle including answers and is never sent to
  * the browser as-is.
  */
-export const puzzle = sqliteTable(
+export const puzzle = pgTable(
   "puzzle",
   {
     date: text("date").primaryKey(), // YYYY-MM-DD, Toronto time
     gameId: text("game_id").notNull(),
     contentId: text("content_id").notNull(),
-    data: text("data", { mode: "json" }).notNull(),
+    data: jsonb("data").notNull(),
     createdAt: timestamps.createdAt,
   },
   (t) => [index("puzzle_game_idx").on(t.gameId, t.date)],
@@ -105,7 +114,7 @@ export const puzzle = sqliteTable(
  * A player's single attempt at a day's puzzle. All progress lives here on the
  * server; the browser only ever sends moves.
  */
-export const play = sqliteTable(
+export const play = pgTable(
   "play",
   {
     id: text("id").primaryKey(),
@@ -115,15 +124,15 @@ export const play = sqliteTable(
     date: text("date").notNull(),
     gameId: text("game_id").notNull(),
     status: text("status", { enum: ["playing", "done"] }).notNull(),
-    state: text("state", { mode: "json" }).notNull(),
-    rawScore: real("raw_score"),
+    state: jsonb("state").notNull(),
+    rawScore: doublePrecision("raw_score"),
     moveCount: integer("move_count").notNull().default(0),
     // Bumped on every write; a write only succeeds against the version it read,
     // so two simultaneous moves can't both apply.
     version: integer("version").notNull().default(0),
-    flags: text("flags", { mode: "json" }).$type<string[]>(),
-    startedAt: integer("started_at", { mode: "timestamp_ms" }).notNull(),
-    finishedAt: integer("finished_at", { mode: "timestamp_ms" }),
+    flags: jsonb("flags").$type<string[]>(),
+    startedAt: ts("started_at").notNull(),
+    finishedAt: ts("finished_at"),
   },
   (t) => [
     uniqueIndex("play_user_date_idx").on(t.userId, t.date),
@@ -140,12 +149,12 @@ export const play = sqliteTable(
  * atomic upsert (see lib/rate-limit.ts), so limits hold across restarts and
  * workers and can't be bypassed with parallel requests.
  */
-export const rateLimitBucket = sqliteTable(
+export const rateLimitBucket = pgTable(
   "rate_limit_bucket",
   {
     key: text("key").primaryKey(),
-    windowStart: integer("window_start").notNull(), // ms
-    expiresAt: integer("expires_at").notNull(), // ms
+    windowStart: bigint("window_start", { mode: "number" }).notNull(), // ms
+    expiresAt: bigint("expires_at", { mode: "number" }).notNull(), // ms
     count: integer("count").notNull(),
   },
   (t) => [index("rate_limit_bucket_expires_idx").on(t.expiresAt)],
@@ -156,7 +165,7 @@ export const rateLimitBucket = sqliteTable(
  * its email (never the email itself). Stops someone deleting their account
  * and signing back in to replay today's puzzle. Old rows are pruned.
  */
-export const playTombstone = sqliteTable(
+export const playTombstone = pgTable(
   "play_tombstone",
   {
     emailHash: text("email_hash").notNull(),

@@ -1,26 +1,22 @@
 # Deploying Wattle
 
-Wattle is a standard Next.js server (`npm run build`, then `npm start`) with a libSQL database. Any host that runs a Node.js server works, e.g. Render, Railway, Fly.io or a small VPS. Serverless-only hosts also work, but then the database must be hosted (Turso) rather than a file.
+Wattle is a Next.js app (`npm run build`, then `npm start`) with a Postgres database. The planned setup is Vercel for hosting and Supabase for the database; any Node.js host with any Postgres also works.
 
-## 1. Database
+## 1. Database (Supabase)
 
-Use a hosted libSQL database, e.g. [Turso](https://turso.tech):
-
-```bash
-turso db create wattle
-turso db show wattle --url
-turso db tokens create wattle
-```
-
-Set `DATABASE_URL` (the `libsql://…` URL) and `DATABASE_AUTH_TOKEN`, then create the tables from the committed migrations:
+1. Create a project at [supabase.com](https://supabase.com) (the free plan is enough).
+2. Under **Project Settings → Database → Connection string**, copy two URLs:
+   - **Transaction pooler** (port 6543): the app's `DATABASE_URL`. It suits serverless hosts like Vercel.
+   - **Direct connection** (port 5432): for running migrations.
+3. Create the tables from the committed migrations:
 
 ```bash
-DATABASE_URL=libsql://… DATABASE_AUTH_TOKEN=… npm run db:migrate
+DATABASE_URL="postgresql://postgres:<password>@db.<ref>.supabase.co:5432/postgres" npm run db:migrate
 ```
 
-Run `npm run db:migrate` again after pulling changes that add files to `drizzle/`. After changing `src/db/schema.ts`, create a new migration with `npm run db:generate` and commit it. Local development can keep using `npm run db:push`.
+Run `npm run db:migrate` again (with the direct URL) after pulling changes that add files to `drizzle/`. After changing `src/db/schema.ts`, create a new migration with `npm run db:generate` and commit it.
 
-A single server with a SQLite file (`DATABASE_URL=file:/data/wattle.db` on a persistent disk) also works for a small test. The startup check warns about it, since it can't be shared between instances.
+Free Supabase projects pause after about a week without database activity; the daily puzzle job keeps it active.
 
 ## 2. Environment variables
 
@@ -29,7 +25,7 @@ A single server with a SQLite file (`DATABASE_URL=file:/data/wattle.db` on a per
 | `BETTER_AUTH_URL` | yes | Public URL, `https://…`, no trailing slash |
 | `BETTER_AUTH_SECRET` | yes | `openssl rand -base64 32` |
 | `PUZZLE_SECRET` | yes | `openssl rand -base64 32`. Changing it changes future puzzles, so keep it stable. |
-| `DATABASE_URL`, `DATABASE_AUTH_TOKEN` | yes | See above |
+| `DATABASE_URL` | yes | Supabase transaction pooler URL (see above) |
 | `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | for Microsoft sign-in | From the Azure app registration |
 | `MICROSOFT_TENANT_ID` | with Microsoft | Waterloo's tenant: `723a5a87-f39a-4a22-9247-3fc240c01396` |
 | `SMTP_URL`, `EMAIL_FROM` | for email links | e.g. a transactional email provider's SMTP. Without it, email links are off. |
@@ -78,5 +74,5 @@ npm start
 - [ ] Microsoft sign-in works with a Waterloo account, and a personal Microsoft account is rejected.
 - [ ] If email links are enabled, a link arrives in a `@uwaterloo.ca` inbox and not in junk.
 - [ ] Real puzzle content is in `content/private/`, and `npm run content:check` passes.
-- [ ] The database is backed up (Turso keeps backups on paid plans; otherwise copy the file).
+- [ ] You have a database backup plan (Supabase's free plan has no automatic backups; `pg_dump` with the direct connection URL works).
 - [ ] The security reviewer has retested the open findings.

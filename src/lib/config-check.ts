@@ -48,8 +48,8 @@ export function checkProductionConfig(env: Env, root = process.cwd()): ConfigRep
   if (!env.TRUSTED_IP_HEADER) {
     warnings.push("TRUSTED_IP_HEADER is not set, so per-IP rate limits are skipped.");
   }
-  if (!env.DATABASE_URL || env.DATABASE_URL.startsWith("file:")) {
-    warnings.push("DATABASE_URL points at a local SQLite file; use a hosted database for multiple instances.");
+  if (!/^postgres(ql)?:\/\//.test(env.DATABASE_URL ?? "")) {
+    errors.push("DATABASE_URL must be a postgres:// URL (e.g. Supabase) in production.");
   }
   if (env.WATTLE_DEV_DATE) warnings.push("WATTLE_DEV_DATE is set but ignored in production.");
 

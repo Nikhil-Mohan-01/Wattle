@@ -15,16 +15,17 @@ Puzzle days roll over at midnight Toronto time. No games on weekends.
 ## Stack
 
 - Next.js 16 (App Router, Cache Components) + Tailwind CSS 4
-- Drizzle ORM on libSQL (a local SQLite file in dev, Turso or another libSQL host in production)
+- Drizzle ORM on Postgres: Supabase in production, an embedded Postgres (PGlite) for local development and tests, so nothing needs installing
 
 ## Running locally
 
 ```bash
 npm install
 cp .env.example .env.local
-npm run db:push
 npm run dev
 ```
+
+`npm run dev` applies migrations to the local database in `data/pglite`, starts it as a Postgres server on port 5433, then starts Next.js. To use another port, run `PORT=3001 npm run dev`.
 
 Then open http://localhost:3000.
 
@@ -70,7 +71,8 @@ To test another weekday's game locally, set `WATTLE_DEV_DATE=YYYY-MM-DD` in `.en
 - `npm run dev`: start the dev server
 - `npm run build`: production build
 - `npm test`: run the test suite
-- `npm run db:push`: sync the schema to the local database
 - `npm run db:generate`: create a migration after changing `src/db/schema.ts`
-- `npm run db:migrate`: apply migrations (production)
+- `npm run db:migrate:local`: apply migrations to the local database (`npm run dev` does this for you)
+- `npm run db:migrate`: apply migrations to `DATABASE_URL` (Supabase)
+- `npm run db:server`: run only the local database server, e.g. for `npm run db:studio`
 - `npm run db:studio`: browse the database

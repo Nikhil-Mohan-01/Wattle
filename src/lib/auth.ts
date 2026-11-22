@@ -91,7 +91,7 @@ export const auth = betterAuth({
   appName: "Wattle",
   baseURL: process.env.BETTER_AUTH_URL,
   secret: process.env.BETTER_AUTH_SECRET,
-  database: drizzleAdapter(db, { provider: "sqlite", schema }),
+  database: drizzleAdapter(db, { provider: "pg", schema }),
 
   // Option A: Microsoft sign-in, pinned to Waterloo's Entra tenant. Pinning
   // the tenant makes Better Auth validate the token issuer for that tenant.
