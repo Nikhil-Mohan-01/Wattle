@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import type { Board, DailyRow, FacultyRow, PeriodRow } from "@/engine/leaderboard";
-import { facultyName, universityById } from "@/lib/universities";
+import type { Board, DailyRow, FacultyRow, PeriodRow, UniversityRow } from "@/engine/leaderboard";
+import { facultyName, universityById, type University } from "@/lib/universities";
 import { GAMES, type GameId } from "@/lib/games";
 import { addDays } from "@/lib/time";
 
@@ -9,28 +9,35 @@ export const TABS = [
   { id: "today", label: "Today" },
   { id: "week", label: "This week" },
   { id: "term", label: "This term" },
+  { id: "universities", label: "Universities" },
   { id: "faculty", label: "Faculties" },
 ] as const;
 
 export type Tab = (typeof TABS)[number]["id"];
 
-function href(tab: Tab, week: string | null): string {
+/** Tabs whose boards can be filtered to one university. */
+export const SCOPED_TABS: Tab[] = ["today", "week", "term", "faculty"];
+const WEEK_TABS: Tab[] = ["week", "universities", "faculty"];
+
+export function href(tab: Tab, week: string | null, uni: string | null = null): string {
   const q = new URLSearchParams({ tab });
   if (week) q.set("week", week);
+  if (uni) q.set("uni", uni);
   return `/leaderboard?${q}`;
 }
 
-export function Tabs({ active, week }: { active: Tab; week: string | null }) {
+export function Tabs({ active, week, uni }: { active: Tab; week: string | null; uni: string | null }) {
   return (
     <nav aria-label="Leaderboards" className="flex gap-1 overflow-x-auto rounded-xl border border-line bg-card p-1">
       {TABS.map((t) => {
         const isActive = t.id === active;
-        // Keep the selected week when switching between the week-based tabs.
-        const keepWeek = t.id === "week" || t.id === "faculty" ? week : null;
+        // Keep the selected week and university when switching tabs.
+        const keepWeek = WEEK_TABS.includes(t.id) ? week : null;
+        const keepUni = SCOPED_TABS.includes(t.id) ? uni : null;
         return (
           <Link
             key={t.id}
-            href={href(t.id, keepWeek)}
+            href={href(t.id, keepWeek, keepUni)}
             aria-current={isActive ? "page" : undefined}
             className={`flex-1 whitespace-nowrap rounded-lg px-3 py-1.5 text-center text-sm font-medium ${
               isActive ? "bg-gold text-black" : "text-muted hover:text-foreground"
@@ -49,18 +56,20 @@ export function WeekNav({
   week,
   thisWeek,
   label,
+  uni = null,
 }: {
   tab: Tab;
   week: string;
   thisWeek: string;
   label: string;
+  uni?: string | null;
 }) {
   const prev = addDays(week, -7);
   const next = addDays(week, 7);
   const linkClass = "rounded-lg border border-line px-2.5 py-1 text-sm hover:border-gold";
   return (
     <div className="flex items-center justify-between gap-2">
-      <Link href={href(tab, prev)} className={linkClass} aria-label="Previous week">
+      <Link href={href(tab, prev, uni)} className={linkClass} aria-label="Previous week">
         ←
       </Link>
       <h2 className="text-center text-sm font-semibold uppercase tracking-wide text-muted">
@@ -71,7 +80,7 @@ export function WeekNav({
       </h2>
       {week < thisWeek ? (
         <Link
-          href={href(tab, next === thisWeek ? null : next)}
+          href={href(tab, next === thisWeek ? null : next, uni)}
           className={linkClass}
           aria-label="Next week"
         >
@@ -262,6 +271,95 @@ export function FacultyTable({
                 <td className="hidden py-2 pr-2 text-right tabular-nums text-muted sm:table-cell">
                   {r.avgPoints}
                 </td>
+                <td className="py-2 pr-3 text-right tabular-nums">{r.score}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// University filter and campus table
+// ---------------------------------------------------------------------------
+
+/** Pick which university a board shows. `allowAll` adds "All universities". */
+export function ScopeChips({
+  tab,
+  week,
+  selected,
+  universities,
+  viewerUniversity,
+  allowAll,
+}: {
+  tab: Tab;
+  week: string | null;
+  selected: string | null;
+  universities: University[];
+  viewerUniversity: string | null;
+  allowAll: boolean;
+}) {
+  const chip = (active: boolean) =>
+    `whitespace-nowrap rounded-full border px-3 py-1 text-xs font-medium ${
+      active ? "border-gold bg-gold/20 text-foreground" : "border-line text-muted hover:text-foreground"
+    }`;
+  return (
+    <div className="flex gap-1.5 overflow-x-auto pb-1" aria-label="University">
+      {allowAll && (
+        <Link href={href(tab, week, null)} className={chip(selected === null)} aria-current={selected === null ? "true" : undefined}>
+          All universities
+        </Link>
+      )}
+      {universities.map((u) => (
+        <Link
+          key={u.id}
+          href={href(tab, week, u.id)}
+          className={chip(selected === u.id)}
+          aria-current={selected === u.id ? "true" : undefined}
+        >
+          {u.shortName}
+          {u.id === viewerUniversity && <span aria-label="your university"> ★</span>}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export function UniversityTable({ rows, viewerUniversity }: { rows: UniversityRow[]; viewerUniversity: string | null }) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-line bg-card">
+      <table className="w-full text-sm">
+        <thead className="text-left text-xs uppercase tracking-wide text-muted">
+          <tr>
+            <th className="py-2 pl-3 pr-2 font-medium">#</th>
+            <th className="py-2 pr-2 font-medium">University</th>
+            <th className="py-2 pr-2 text-right font-medium" title="Players this period / members">
+              Players
+            </th>
+            <th className="hidden py-2 pr-2 text-right font-medium sm:table-cell" title="Average points per play">
+              Avg
+            </th>
+            <th className="py-2 pr-3 text-right font-medium">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => {
+            const mine = r.university === viewerUniversity;
+            const uni = universityById(r.university);
+            return (
+              <tr key={r.university} className={`border-t border-line ${mine ? "bg-gold/15 font-semibold" : ""}`}>
+                <td className="py-2 pl-3 pr-2 tabular-nums text-muted">{r.players ? r.rank : "–"}</td>
+                <td className="py-2 pr-2">
+                  {uni?.name ?? r.university}
+                  <div className="text-xs font-normal text-muted sm:hidden">avg {r.avgPoints}</div>
+                </td>
+                <td className="py-2 pr-2 text-right tabular-nums">
+                  {r.players}
+                  <span className="text-muted"> / {r.members}</span>
+                </td>
+                <td className="hidden py-2 pr-2 text-right tabular-nums text-muted sm:table-cell">{r.avgPoints}</td>
                 <td className="py-2 pr-3 text-right tabular-nums">{r.score}</td>
               </tr>
             );

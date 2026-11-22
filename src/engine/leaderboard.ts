@@ -1,7 +1,7 @@
 import "server-only";
 import { sql, type SQL } from "drizzle-orm";
 import { queryRows } from "@/db/client";
-import { universityById } from "@/lib/universities";
+import { enabledUniversities, universityById } from "@/lib/universities";
 import { addDays, weekdayOf, weekStart } from "@/lib/time";
 
 // ---------------------------------------------------------------------------
@@ -32,9 +32,16 @@ import { addDays, weekdayOf, weekStart } from "@/lib/time";
 //   facultyScore = avgPoints * min(1, players / FACULTY_FULL_STRENGTH)
 // so a faculty needs FACULTY_FULL_STRENGTH active players before its average
 // counts in full — a couple of strong players can't top the board alone.
+//
+// University boards (campus vs campus) use the same formula with
+// UNIVERSITY_FULL_STRENGTH, since campuses are much bigger than faculties.
+//
+// Daily points are always computed against everyone who played that day, so a
+// board filtered to one university ranks its players on the global scale.
 // ---------------------------------------------------------------------------
 
 export const FACULTY_FULL_STRENGTH = 10;
+export const UNIVERSITY_FULL_STRENGTH = 25;
 export const BOARD_LIMIT = 50;
 
 export type Range = { from: string; to: string }; // inclusive YYYY-MM-DD
@@ -67,6 +74,16 @@ export type Board<Row> = {
   me: Row | null;
   /** Number of ranked players. */
   total: number;
+};
+
+export type UniversityRow = {
+  rank: number;
+  university: string;
+  members: number;
+  players: number;
+  plays: number;
+  avgPoints: number;
+  score: number;
 };
 
 export type FacultyRow = {
@@ -111,7 +128,11 @@ function dailyPoints({ from, to }: Range): SQL {
 }
 
 /** Daily board for one puzzle date, ranked by raw score (equal scores share a rank). */
-export async function dailyBoard(date: string, viewerId: string | null): Promise<Board<DailyRow>> {
+export async function dailyBoard(
+  date: string,
+  viewerId: string | null,
+  universityId: string | null = null,
+): Promise<Board<DailyRow>> {
   const rows = await queryRows<{
     rnk: number;
     user_id: string;
@@ -130,6 +151,7 @@ export async function dailyBoard(date: string, viewerId: string | null): Promise
         row_number() over (order by pts.raw_score desc, pts.finished_at asc, pts.user_id) as pos,
         count(*) over () as total
       from pts join "user" u on u.id = pts.user_id
+      where ${universityId}::text is null or u.university = ${universityId}
     )
     select rnk, user_id, handle, university, faculty, game_id, raw_score, points, total
     from ranked
@@ -150,7 +172,11 @@ export async function dailyBoard(date: string, viewerId: string | null): Promise
 }
 
 /** Sum of daily points over a date range (a week or a term). */
-export async function periodBoard(range: Range, viewerId: string | null): Promise<Board<PeriodRow>> {
+export async function periodBoard(
+  range: Range,
+  viewerId: string | null,
+  universityId: string | null = null,
+): Promise<Board<PeriodRow>> {
   const rows = await queryRows<{
     rnk: number;
     user_id: string;
@@ -172,6 +198,7 @@ export async function periodBoard(range: Range, viewerId: string | null): Promis
         row_number() over (order by t.points desc, t.days desc, t.last_finish asc, t.user_id) as pos,
         count(*) over () as total
       from totals t join "user" u on u.id = t.user_id
+      where ${universityId}::text is null or u.university = ${universityId}
     )
     select rnk, user_id, handle, university, faculty, points, days, total
     from ranked
@@ -234,12 +261,60 @@ export async function facultyBoard(range: Range, universityId: string): Promise<
     };
   });
 
-  rows.sort((a, b) => b.score - a.score || b.players - a.players || a.faculty.localeCompare(b.faculty));
+  rankByScore(rows, (r) => r.faculty);
+  return rows;
+}
+
+/** Campus vs campus over a date range. Every enabled university is listed. */
+export async function universityBoard(range: Range): Promise<UniversityRow[]> {
+  const [stats, members] = await Promise.all([
+    queryRows<{ university: string; players: number; plays: number; avg_points: number }>(sql`
+      ${dailyPoints(range)}
+      select u.university as university,
+        count(distinct pts.user_id) as players,
+        count(*) as plays,
+        avg(pts.points) as avg_points
+      from pts join "user" u on u.id = pts.user_id
+      where u.university is not null
+      group by u.university`),
+    queryRows<{ university: string; members: number }>(sql`
+      select university, count(*) as members from "user"
+      where university is not null and handle is not null
+      group by university`),
+  ]);
+
+  const byUni = new Map(stats.map((s) => [s.university, s]));
+  const memberCount = new Map(members.map((m) => [m.university, Number(m.members)]));
+  const rows = enabledUniversities().map((u) => {
+    const s = byUni.get(u.id);
+    const players = Number(s?.players ?? 0);
+    const avgPoints = Number(s?.avg_points ?? 0);
+    return {
+      rank: 0,
+      university: u.id,
+      members: memberCount.get(u.id) ?? 0,
+      players,
+      plays: Number(s?.plays ?? 0),
+      avgPoints: round1(avgPoints),
+      score: round1(universityScore(avgPoints, players)),
+    };
+  });
+  rankByScore(rows, (r) => r.university);
+  return rows;
+}
+
+/** Campus score: average points scaled by participation (see the top of this file). */
+export function universityScore(avgPoints: number, players: number): number {
+  return avgPoints * Math.min(1, players / UNIVERSITY_FULL_STRENGTH);
+}
+
+/** Sorts by score (then players, then name) and assigns shared ranks for ties. */
+function rankByScore<R extends { rank: number; score: number; players: number }>(rows: R[], name: (r: R) => string) {
+  rows.sort((a, b) => b.score - a.score || b.players - a.players || name(a).localeCompare(name(b)));
   rows.forEach((r, i) => {
     const prev = rows[i - 1];
     r.rank = prev && prev.score === r.score ? prev.rank : i + 1;
   });
-  return rows;
 }
 
 /** Average points scaled by participation; see the formula at the top of this file. */

@@ -96,3 +96,53 @@ describe("faculty standings", () => {
     expect(ubc.find((r) => r.faculty === "sci")?.players).toBe(1);
   });
 });
+
+describe("university leaderboards", () => {
+  async function scored(date: string, university: string, raw: number) {
+    const id = randomUUID();
+    await db.insert(user).values({
+      id, name: id, email: `${id}@x.ca`, emailVerified: true,
+      studentEmail: `${id}@x.ca`, university, faculty: "other", handle: `h${id.slice(0, 8)}`,
+    });
+    await db.insert(play).values({
+      id: randomUUID(), userId: id, date, gameId: "honk", status: "done",
+      state: {}, rawScore: raw, startedAt: new Date(), finishedAt: new Date(),
+    });
+    return id;
+  }
+
+  it("filters a daily board to one campus but keeps global points", async () => {
+    const { dailyBoard } = await import("@/engine/leaderboard");
+    const date = "2031-03-04";
+    const top = await scored(date, "ubc", 6);
+    const mid = await scored(date, "uwaterloo", 4);
+    const low = await scored(date, "uwaterloo", 1);
+
+    const all = await dailyBoard(date, null);
+    expect(all.rows.map((r) => r.userId)).toEqual([top, mid, low]);
+
+    const waterloo = await dailyBoard(date, mid, "uwaterloo");
+    expect(waterloo.rows.map((r) => r.userId)).toEqual([mid, low]);
+    expect(waterloo.total).toBe(2);
+    // Ranked 1st at Waterloo, but still 50 points: halfway among all 3 players.
+    expect(waterloo.rows[0]).toMatchObject({ rank: 1, points: 50, university: "uwaterloo" });
+    expect(waterloo.me?.userId).toBe(mid);
+  });
+
+  it("ranks campuses by average points scaled by participation", async () => {
+    const { universityBoard, universityScore, UNIVERSITY_FULL_STRENGTH } = await import("@/engine/leaderboard");
+    expect(universityScore(80, UNIVERSITY_FULL_STRENGTH)).toBe(80);
+    expect(universityScore(80, UNIVERSITY_FULL_STRENGTH / 2)).toBe(40);
+
+    const date = "2031-03-05";
+    await scored(date, "queens", 9);
+    await scored(date, "western", 1);
+    const rows = await universityBoard({ from: date, to: date });
+
+    // Every enabled university is listed, with or without players.
+    expect(rows.map((r) => r.university).sort()).toEqual(enabledUniversities().map((u) => u.id).sort());
+    expect(rows[0]).toMatchObject({ university: "queens", rank: 1, players: 1, avgPoints: 100 });
+    expect(rows.find((r) => r.university === "western")).toMatchObject({ rank: 2, avgPoints: 0 });
+    expect(rows.find((r) => r.university === "ubc")?.players).toBe(0);
+  });
+});
