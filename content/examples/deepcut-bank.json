@@ -1,0 +1,6876 @@
+{
+ "datasets": {
+  "provinces": [
+   {
+    "name": "Ontario",
+    "tier": 1,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "Quebec",
+    "aliases": [
+     "Québec"
+    ],
+    "tier": 1,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "British Columbia",
+    "aliases": [
+     "BC"
+    ],
+    "tier": 1,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "Alberta",
+    "tier": 2,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "Manitoba",
+    "tier": 2,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "Saskatchewan",
+    "tier": 3,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "Nova Scotia",
+    "tier": 2,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "New Brunswick",
+    "tier": 3,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "Newfoundland and Labrador",
+    "aliases": [
+     "Newfoundland",
+     "NL"
+    ],
+    "tier": 3,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "Prince Edward Island",
+    "aliases": [
+     "PEI"
+    ],
+    "tier": 4,
+    "attrs": {
+     "kind": "province"
+    }
+   },
+   {
+    "name": "Yukon",
+    "tier": 4,
+    "attrs": {
+     "kind": "territory"
+    }
+   },
+   {
+    "name": "Northwest Territories",
+    "aliases": [
+     "NWT"
+    ],
+    "tier": 5,
+    "attrs": {
+     "kind": "territory"
+    }
+   },
+   {
+    "name": "Nunavut",
+    "tier": 5,
+    "attrs": {
+     "kind": "territory"
+    }
+   }
+  ]
+ },
+ "templates": [
+  {
+   "id": "provinces-territories",
+   "dataset": "provinces",
+   "prompt": "Name a Canadian province or territory"
+  }
+ ],
+ "prompts": [
+  {
+   "id": "planets",
+   "prompt": "Name a planet in our solar system",
+   "answers": [
+    {
+     "text": "Earth",
+     "tier": 1
+    },
+    {
+     "text": "Mars",
+     "tier": 1
+    },
+    {
+     "text": "Jupiter",
+     "tier": 1
+    },
+    {
+     "text": "Saturn",
+     "tier": 1
+    },
+    {
+     "text": "Venus",
+     "tier": 2
+    },
+    {
+     "text": "Neptune",
+     "tier": 2
+    },
+    {
+     "text": "Mercury",
+     "tier": 3
+    },
+    {
+     "text": "Uranus",
+     "tier": 3
+    }
+   ]
+  },
+  {
+   "id": "chess-pieces",
+   "prompt": "Name a chess piece",
+   "answers": [
+    {
+     "text": "King",
+     "tier": 1
+    },
+    {
+     "text": "Queen",
+     "tier": 1
+    },
+    {
+     "text": "Pawn",
+     "tier": 1
+    },
+    {
+     "text": "Knight",
+     "tier": 2,
+     "aliases": [
+      "Horse"
+     ]
+    },
+    {
+     "text": "Bishop",
+     "tier": 2
+    },
+    {
+     "text": "Rook",
+     "tier": 3,
+     "aliases": [
+      "Castle"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ca-provinces",
+   "prompt": "Name a Canadian province or territory",
+   "answers": [
+    {
+     "text": "Ontario",
+     "tier": 1
+    },
+    {
+     "text": "Quebec",
+     "tier": 1
+    },
+    {
+     "text": "British Columbia",
+     "tier": 1,
+     "aliases": [
+      "BC"
+     ]
+    },
+    {
+     "text": "Alberta",
+     "tier": 2
+    },
+    {
+     "text": "Nova Scotia",
+     "tier": 2
+    },
+    {
+     "text": "Manitoba",
+     "tier": 3
+    },
+    {
+     "text": "Saskatchewan",
+     "tier": 3
+    },
+    {
+     "text": "New Brunswick",
+     "tier": 3
+    },
+    {
+     "text": "Newfoundland and Labrador",
+     "tier": 3,
+     "aliases": [
+      "Newfoundland",
+      "Labrador",
+      "NL"
+     ]
+    },
+    {
+     "text": "Prince Edward Island",
+     "tier": 4,
+     "aliases": [
+      "PEI"
+     ]
+    },
+    {
+     "text": "Yukon",
+     "tier": 4
+    },
+    {
+     "text": "Northwest Territories",
+     "tier": 4,
+     "aliases": [
+      "NWT"
+     ]
+    },
+    {
+     "text": "Nunavut",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "continents",
+   "prompt": "Name a continent",
+   "answers": [
+    {
+     "text": "Asia",
+     "tier": 1
+    },
+    {
+     "text": "Africa",
+     "tier": 1
+    },
+    {
+     "text": "North America",
+     "tier": 1
+    },
+    {
+     "text": "Europe",
+     "tier": 1
+    },
+    {
+     "text": "South America",
+     "tier": 2
+    },
+    {
+     "text": "Australia",
+     "tier": 2,
+     "aliases": [
+      "Oceania"
+     ]
+    },
+    {
+     "text": "Antarctica",
+     "tier": 3
+    }
+   ]
+  },
+  {
+   "id": "noble-gases",
+   "prompt": "Name a noble gas",
+   "answers": [
+    {
+     "text": "Helium",
+     "tier": 1
+    },
+    {
+     "text": "Neon",
+     "tier": 1
+    },
+    {
+     "text": "Argon",
+     "tier": 2
+    },
+    {
+     "text": "Krypton",
+     "tier": 3
+    },
+    {
+     "text": "Xenon",
+     "tier": 3
+    },
+    {
+     "text": "Radon",
+     "tier": 4
+    },
+    {
+     "text": "Oganesson",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "rainbow",
+   "prompt": "Name a colour of the rainbow",
+   "answers": [
+    {
+     "text": "Red",
+     "tier": 1
+    },
+    {
+     "text": "Blue",
+     "tier": 1
+    },
+    {
+     "text": "Green",
+     "tier": 1
+    },
+    {
+     "text": "Yellow",
+     "tier": 2
+    },
+    {
+     "text": "Orange",
+     "tier": 2
+    },
+    {
+     "text": "Violet",
+     "tier": 3,
+     "aliases": [
+      "Purple"
+     ]
+    },
+    {
+     "text": "Indigo",
+     "tier": 4
+    }
+   ]
+  },
+  {
+   "id": "oceans",
+   "prompt": "Name one of the world's oceans",
+   "answers": [
+    {
+     "text": "Pacific",
+     "tier": 1
+    },
+    {
+     "text": "Atlantic",
+     "tier": 1
+    },
+    {
+     "text": "Indian",
+     "tier": 2
+    },
+    {
+     "text": "Arctic",
+     "tier": 3
+    },
+    {
+     "text": "Southern",
+     "tier": 4,
+     "aliases": [
+      "Antarctic"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "great-lakes",
+   "prompt": "Name one of the Great Lakes",
+   "answers": [
+    {
+     "text": "Ontario",
+     "tier": 1,
+     "aliases": [
+      "Lake Ontario"
+     ]
+    },
+    {
+     "text": "Superior",
+     "tier": 1,
+     "aliases": [
+      "Lake Superior"
+     ]
+    },
+    {
+     "text": "Michigan",
+     "tier": 1,
+     "aliases": [
+      "Lake Michigan"
+     ]
+    },
+    {
+     "text": "Erie",
+     "tier": 2,
+     "aliases": [
+      "Lake Erie"
+     ]
+    },
+    {
+     "text": "Huron",
+     "tier": 2,
+     "aliases": [
+      "Lake Huron"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hogwarts",
+   "prompt": "Name a Hogwarts house",
+   "answers": [
+    {
+     "text": "Gryffindor",
+     "tier": 1
+    },
+    {
+     "text": "Slytherin",
+     "tier": 1
+    },
+    {
+     "text": "Hufflepuff",
+     "tier": 2
+    },
+    {
+     "text": "Ravenclaw",
+     "tier": 3
+    }
+   ]
+  },
+  {
+   "id": "beatles",
+   "prompt": "Name a member of the Beatles (past or present)",
+   "answers": [
+    {
+     "text": "John Lennon",
+     "tier": 1,
+     "aliases": [
+      "Lennon"
+     ]
+    },
+    {
+     "text": "Paul McCartney",
+     "tier": 1,
+     "aliases": [
+      "McCartney"
+     ]
+    },
+    {
+     "text": "Ringo Starr",
+     "tier": 2,
+     "aliases": [
+      "Ringo",
+      "Starr"
+     ]
+    },
+    {
+     "text": "George Harrison",
+     "tier": 3,
+     "aliases": [
+      "Harrison"
+     ]
+    },
+    {
+     "text": "Pete Best",
+     "tier": 5
+    },
+    {
+     "text": "Stuart Sutcliffe",
+     "tier": 5,
+     "aliases": [
+      "Sutcliffe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nhl-canada",
+   "prompt": "Name an NHL team based in Canada",
+   "answers": [
+    {
+     "text": "Toronto Maple Leafs",
+     "tier": 1,
+     "aliases": [
+      "Maple Leafs",
+      "Leafs"
+     ]
+    },
+    {
+     "text": "Montreal Canadiens",
+     "tier": 1,
+     "aliases": [
+      "Canadiens",
+      "Habs"
+     ]
+    },
+    {
+     "text": "Vancouver Canucks",
+     "tier": 2,
+     "aliases": [
+      "Canucks"
+     ]
+    },
+    {
+     "text": "Edmonton Oilers",
+     "tier": 2,
+     "aliases": [
+      "Oilers"
+     ]
+    },
+    {
+     "text": "Calgary Flames",
+     "tier": 3,
+     "aliases": [
+      "Flames"
+     ]
+    },
+    {
+     "text": "Ottawa Senators",
+     "tier": 3,
+     "aliases": [
+      "Senators",
+      "Sens"
+     ]
+    },
+    {
+     "text": "Winnipeg Jets",
+     "tier": 4,
+     "aliases": [
+      "Jets"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ca-capitals",
+   "prompt": "Name a provincial or territorial capital in Canada",
+   "answers": [
+    {
+     "text": "Toronto",
+     "tier": 1
+    },
+    {
+     "text": "Quebec City",
+     "tier": 2,
+     "aliases": [
+      "Quebec"
+     ]
+    },
+    {
+     "text": "Edmonton",
+     "tier": 2
+    },
+    {
+     "text": "Winnipeg",
+     "tier": 2
+    },
+    {
+     "text": "Halifax",
+     "tier": 2
+    },
+    {
+     "text": "Victoria",
+     "tier": 3
+    },
+    {
+     "text": "Regina",
+     "tier": 3
+    },
+    {
+     "text": "Fredericton",
+     "tier": 4
+    },
+    {
+     "text": "St. John's",
+     "tier": 4,
+     "aliases": [
+      "Saint John's"
+     ]
+    },
+    {
+     "text": "Charlottetown",
+     "tier": 4
+    },
+    {
+     "text": "Whitehorse",
+     "tier": 4
+    },
+    {
+     "text": "Yellowknife",
+     "tier": 4
+    },
+    {
+     "text": "Iqaluit",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "languages",
+   "prompt": "Name a programming language",
+   "answers": [
+    {
+     "text": "Python",
+     "tier": 1
+    },
+    {
+     "text": "Java",
+     "tier": 1
+    },
+    {
+     "text": "JavaScript",
+     "tier": 1,
+     "aliases": [
+      "JS"
+     ]
+    },
+    {
+     "text": "C++",
+     "tier": 1,
+     "aliases": [
+      "cpp"
+     ]
+    },
+    {
+     "text": "C",
+     "tier": 2
+    },
+    {
+     "text": "C#",
+     "tier": 2,
+     "aliases": [
+      "C sharp"
+     ]
+    },
+    {
+     "text": "TypeScript",
+     "tier": 2,
+     "aliases": [
+      "TS"
+     ]
+    },
+    {
+     "text": "SQL",
+     "tier": 2
+    },
+    {
+     "text": "Go",
+     "tier": 3,
+     "aliases": [
+      "Golang"
+     ]
+    },
+    {
+     "text": "Rust",
+     "tier": 3
+    },
+    {
+     "text": "Ruby",
+     "tier": 3
+    },
+    {
+     "text": "PHP",
+     "tier": 3
+    },
+    {
+     "text": "Swift",
+     "tier": 3
+    },
+    {
+     "text": "Kotlin",
+     "tier": 3
+    },
+    {
+     "text": "R",
+     "tier": 3
+    },
+    {
+     "text": "MATLAB",
+     "tier": 3
+    },
+    {
+     "text": "Racket",
+     "tier": 3
+    },
+    {
+     "text": "Bash",
+     "tier": 3,
+     "aliases": [
+      "Shell"
+     ]
+    },
+    {
+     "text": "Haskell",
+     "tier": 4
+    },
+    {
+     "text": "Scala",
+     "tier": 4
+    },
+    {
+     "text": "Perl",
+     "tier": 4
+    },
+    {
+     "text": "Lisp",
+     "tier": 4,
+     "aliases": [
+      "Common Lisp"
+     ]
+    },
+    {
+     "text": "Scheme",
+     "tier": 4
+    },
+    {
+     "text": "Fortran",
+     "tier": 4
+    },
+    {
+     "text": "COBOL",
+     "tier": 4
+    },
+    {
+     "text": "Julia",
+     "tier": 4
+    },
+    {
+     "text": "Lua",
+     "tier": 4
+    },
+    {
+     "text": "Dart",
+     "tier": 4
+    },
+    {
+     "text": "Assembly",
+     "tier": 4,
+     "aliases": [
+      "ASM"
+     ]
+    },
+    {
+     "text": "Pascal",
+     "tier": 4
+    },
+    {
+     "text": "BASIC",
+     "tier": 4
+    },
+    {
+     "text": "Visual Basic",
+     "tier": 4,
+     "aliases": [
+      "VB"
+     ]
+    },
+    {
+     "text": "Objective-C",
+     "tier": 4,
+     "aliases": [
+      "ObjC"
+     ]
+    },
+    {
+     "text": "OCaml",
+     "tier": 5
+    },
+    {
+     "text": "Erlang",
+     "tier": 5
+    },
+    {
+     "text": "Elixir",
+     "tier": 5
+    },
+    {
+     "text": "Prolog",
+     "tier": 5
+    },
+    {
+     "text": "Zig",
+     "tier": 5
+    },
+    {
+     "text": "Clojure",
+     "tier": 5
+    },
+    {
+     "text": "F#",
+     "tier": 5,
+     "aliases": [
+      "F sharp"
+     ]
+    },
+    {
+     "text": "Smalltalk",
+     "tier": 5
+    },
+    {
+     "text": "Ada",
+     "tier": 5
+    },
+    {
+     "text": "Nim",
+     "tier": 5
+    },
+    {
+     "text": "Elm",
+     "tier": 5
+    },
+    {
+     "text": "Crystal",
+     "tier": 5
+    },
+    {
+     "text": "APL",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "shakespeare",
+   "prompt": "Name a play by Shakespeare",
+   "answers": [
+    {
+     "text": "Romeo and Juliet",
+     "tier": 1
+    },
+    {
+     "text": "Hamlet",
+     "tier": 1
+    },
+    {
+     "text": "Macbeth",
+     "tier": 1
+    },
+    {
+     "text": "Othello",
+     "tier": 2
+    },
+    {
+     "text": "King Lear",
+     "tier": 2,
+     "aliases": [
+      "Lear"
+     ]
+    },
+    {
+     "text": "A Midsummer Night's Dream",
+     "tier": 2,
+     "aliases": [
+      "Midsummer Night's Dream"
+     ]
+    },
+    {
+     "text": "Julius Caesar",
+     "tier": 2
+    },
+    {
+     "text": "The Tempest",
+     "tier": 2
+    },
+    {
+     "text": "Much Ado About Nothing",
+     "tier": 3
+    },
+    {
+     "text": "Twelfth Night",
+     "tier": 3
+    },
+    {
+     "text": "The Merchant of Venice",
+     "tier": 3
+    },
+    {
+     "text": "As You Like It",
+     "tier": 3
+    },
+    {
+     "text": "The Taming of the Shrew",
+     "tier": 3
+    },
+    {
+     "text": "Richard III",
+     "tier": 3,
+     "aliases": [
+      "Richard the Third"
+     ]
+    },
+    {
+     "text": "Antony and Cleopatra",
+     "tier": 4
+    },
+    {
+     "text": "Henry V",
+     "tier": 4,
+     "aliases": [
+      "Henry the Fifth"
+     ]
+    },
+    {
+     "text": "Titus Andronicus",
+     "tier": 4
+    },
+    {
+     "text": "The Winter's Tale",
+     "tier": 4
+    },
+    {
+     "text": "Measure for Measure",
+     "tier": 4
+    },
+    {
+     "text": "Richard II",
+     "tier": 4,
+     "aliases": [
+      "Richard the Second"
+     ]
+    },
+    {
+     "text": "Henry IV",
+     "tier": 4,
+     "aliases": [
+      "Henry the Fourth"
+     ]
+    },
+    {
+     "text": "All's Well That Ends Well",
+     "tier": 4
+    },
+    {
+     "text": "The Comedy of Errors",
+     "tier": 4
+    },
+    {
+     "text": "The Merry Wives of Windsor",
+     "tier": 4
+    },
+    {
+     "text": "Coriolanus",
+     "tier": 5
+    },
+    {
+     "text": "Henry VI",
+     "tier": 5,
+     "aliases": [
+      "Henry the Sixth"
+     ]
+    },
+    {
+     "text": "Henry VIII",
+     "tier": 5,
+     "aliases": [
+      "Henry the Eighth"
+     ]
+    },
+    {
+     "text": "King John",
+     "tier": 5
+    },
+    {
+     "text": "Timon of Athens",
+     "tier": 5
+    },
+    {
+     "text": "Pericles",
+     "tier": 5
+    },
+    {
+     "text": "Cymbeline",
+     "tier": 5
+    },
+    {
+     "text": "Troilus and Cressida",
+     "tier": 5
+    },
+    {
+     "text": "The Two Gentlemen of Verona",
+     "tier": 5
+    },
+    {
+     "text": "Love's Labour's Lost",
+     "tier": 5,
+     "aliases": [
+      "Love's Labor's Lost"
+     ]
+    },
+    {
+     "text": "The Two Noble Kinsmen",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "bones",
+   "prompt": "Name a bone in the human body",
+   "answers": [
+    {
+     "text": "Femur",
+     "tier": 1,
+     "aliases": [
+      "Thigh bone"
+     ]
+    },
+    {
+     "text": "Skull",
+     "tier": 1,
+     "aliases": [
+      "Cranium"
+     ]
+    },
+    {
+     "text": "Rib",
+     "tier": 1,
+     "aliases": [
+      "Ribs"
+     ]
+    },
+    {
+     "text": "Vertebra",
+     "tier": 2,
+     "aliases": [
+      "Vertebrae",
+      "Spine",
+      "Backbone"
+     ]
+    },
+    {
+     "text": "Tibia",
+     "tier": 2,
+     "aliases": [
+      "Shin bone"
+     ]
+    },
+    {
+     "text": "Fibula",
+     "tier": 2
+    },
+    {
+     "text": "Humerus",
+     "tier": 2
+    },
+    {
+     "text": "Pelvis",
+     "tier": 2,
+     "aliases": [
+      "Hip bone"
+     ]
+    },
+    {
+     "text": "Clavicle",
+     "tier": 2,
+     "aliases": [
+      "Collarbone",
+      "Collar bone"
+     ]
+    },
+    {
+     "text": "Radius",
+     "tier": 3
+    },
+    {
+     "text": "Ulna",
+     "tier": 3
+    },
+    {
+     "text": "Scapula",
+     "tier": 3,
+     "aliases": [
+      "Shoulder blade"
+     ]
+    },
+    {
+     "text": "Patella",
+     "tier": 3,
+     "aliases": [
+      "Kneecap",
+      "Knee cap"
+     ]
+    },
+    {
+     "text": "Sternum",
+     "tier": 3,
+     "aliases": [
+      "Breastbone"
+     ]
+    },
+    {
+     "text": "Mandible",
+     "tier": 3,
+     "aliases": [
+      "Jawbone",
+      "Jaw"
+     ]
+    },
+    {
+     "text": "Coccyx",
+     "tier": 3,
+     "aliases": [
+      "Tailbone"
+     ]
+    },
+    {
+     "text": "Phalanges",
+     "tier": 3,
+     "aliases": [
+      "Phalanx"
+     ]
+    },
+    {
+     "text": "Sacrum",
+     "tier": 4
+    },
+    {
+     "text": "Maxilla",
+     "tier": 4
+    },
+    {
+     "text": "Metacarpals",
+     "tier": 4,
+     "aliases": [
+      "Metacarpal"
+     ]
+    },
+    {
+     "text": "Metatarsals",
+     "tier": 4,
+     "aliases": [
+      "Metatarsal"
+     ]
+    },
+    {
+     "text": "Carpals",
+     "tier": 4,
+     "aliases": [
+      "Carpal"
+     ]
+    },
+    {
+     "text": "Tarsals",
+     "tier": 4,
+     "aliases": [
+      "Tarsal"
+     ]
+    },
+    {
+     "text": "Stapes",
+     "tier": 4,
+     "aliases": [
+      "Stirrup"
+     ]
+    },
+    {
+     "text": "Calcaneus",
+     "tier": 4,
+     "aliases": [
+      "Heel bone"
+     ]
+    },
+    {
+     "text": "Incus",
+     "tier": 5,
+     "aliases": [
+      "Anvil"
+     ]
+    },
+    {
+     "text": "Malleus",
+     "tier": 5,
+     "aliases": [
+      "Hammer"
+     ]
+    },
+    {
+     "text": "Hyoid",
+     "tier": 5
+    },
+    {
+     "text": "Talus",
+     "tier": 5
+    },
+    {
+     "text": "Ilium",
+     "tier": 5
+    },
+    {
+     "text": "Ischium",
+     "tier": 5
+    },
+    {
+     "text": "Pubis",
+     "tier": 5
+    },
+    {
+     "text": "Sphenoid",
+     "tier": 5
+    },
+    {
+     "text": "Ethmoid",
+     "tier": 5
+    },
+    {
+     "text": "Zygomatic",
+     "tier": 5,
+     "aliases": [
+      "Cheekbone"
+     ]
+    },
+    {
+     "text": "Occipital",
+     "tier": 5
+    },
+    {
+     "text": "Parietal",
+     "tier": 5
+    },
+    {
+     "text": "Temporal bone",
+     "tier": 5
+    },
+    {
+     "text": "Frontal bone",
+     "tier": 5
+    },
+    {
+     "text": "Lacrimal",
+     "tier": 5
+    },
+    {
+     "text": "Vomer",
+     "tier": 5
+    },
+    {
+     "text": "Scaphoid",
+     "tier": 5
+    },
+    {
+     "text": "Hamate",
+     "tier": 5
+    },
+    {
+     "text": "Lunate",
+     "tier": 5
+    },
+    {
+     "text": "Navicular",
+     "tier": 5
+    },
+    {
+     "text": "Cuboid",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "one-letter-elements",
+   "prompt": "Name a chemical element whose symbol is a single letter",
+   "answers": [
+    {
+     "text": "Hydrogen",
+     "tier": 1
+    },
+    {
+     "text": "Oxygen",
+     "tier": 1
+    },
+    {
+     "text": "Carbon",
+     "tier": 1
+    },
+    {
+     "text": "Nitrogen",
+     "tier": 2
+    },
+    {
+     "text": "Sulfur",
+     "tier": 2,
+     "aliases": [
+      "Sulphur"
+     ]
+    },
+    {
+     "text": "Fluorine",
+     "tier": 3
+    },
+    {
+     "text": "Phosphorus",
+     "tier": 3
+    },
+    {
+     "text": "Potassium",
+     "tier": 3
+    },
+    {
+     "text": "Iodine",
+     "tier": 3
+    },
+    {
+     "text": "Uranium",
+     "tier": 3
+    },
+    {
+     "text": "Boron",
+     "tier": 4
+    },
+    {
+     "text": "Tungsten",
+     "tier": 4,
+     "aliases": [
+      "Wolfram"
+     ]
+    },
+    {
+     "text": "Vanadium",
+     "tier": 5
+    },
+    {
+     "text": "Yttrium",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "pixar",
+   "prompt": "Name a Pixar feature film (sequels count as their original)",
+   "answers": [
+    {
+     "text": "Toy Story",
+     "tier": 1,
+     "aliases": [
+      "Toy Story 2",
+      "Toy Story 3",
+      "Toy Story 4"
+     ]
+    },
+    {
+     "text": "Finding Nemo",
+     "tier": 1,
+     "aliases": [
+      "Finding Dory"
+     ]
+    },
+    {
+     "text": "Cars",
+     "tier": 1,
+     "aliases": [
+      "Cars 2",
+      "Cars 3"
+     ]
+    },
+    {
+     "text": "Up",
+     "tier": 1
+    },
+    {
+     "text": "Monsters, Inc.",
+     "tier": 1,
+     "aliases": [
+      "Monsters Inc",
+      "Monsters University"
+     ]
+    },
+    {
+     "text": "The Incredibles",
+     "tier": 1,
+     "aliases": [
+      "Incredibles",
+      "Incredibles 2"
+     ]
+    },
+    {
+     "text": "Inside Out",
+     "tier": 2,
+     "aliases": [
+      "Inside Out 2"
+     ]
+    },
+    {
+     "text": "Coco",
+     "tier": 2
+    },
+    {
+     "text": "WALL-E",
+     "tier": 2,
+     "aliases": [
+      "Wall-E",
+      "Walle"
+     ]
+    },
+    {
+     "text": "Ratatouille",
+     "tier": 2
+    },
+    {
+     "text": "Brave",
+     "tier": 3
+    },
+    {
+     "text": "A Bug's Life",
+     "tier": 3
+    },
+    {
+     "text": "Luca",
+     "tier": 3
+    },
+    {
+     "text": "Soul",
+     "tier": 3
+    },
+    {
+     "text": "Turning Red",
+     "tier": 3
+    },
+    {
+     "text": "Onward",
+     "tier": 4
+    },
+    {
+     "text": "Elemental",
+     "tier": 4
+    },
+    {
+     "text": "The Good Dinosaur",
+     "tier": 4
+    },
+    {
+     "text": "Lightyear",
+     "tier": 4
+    },
+    {
+     "text": "Elio",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "germany-borders",
+   "prompt": "Name a country that borders Germany",
+   "answers": [
+    {
+     "text": "France",
+     "tier": 1
+    },
+    {
+     "text": "Poland",
+     "tier": 1
+    },
+    {
+     "text": "Austria",
+     "tier": 1
+    },
+    {
+     "text": "Switzerland",
+     "tier": 2
+    },
+    {
+     "text": "Netherlands",
+     "tier": 2,
+     "aliases": [
+      "Holland"
+     ]
+    },
+    {
+     "text": "Belgium",
+     "tier": 2
+    },
+    {
+     "text": "Denmark",
+     "tier": 3
+    },
+    {
+     "text": "Czech Republic",
+     "tier": 3,
+     "aliases": [
+      "Czechia"
+     ]
+    },
+    {
+     "text": "Luxembourg",
+     "tier": 4
+    }
+   ]
+  },
+  {
+   "id": "south-america",
+   "prompt": "Name a country in South America",
+   "answers": [
+    {
+     "text": "Brazil",
+     "tier": 1
+    },
+    {
+     "text": "Argentina",
+     "tier": 1
+    },
+    {
+     "text": "Chile",
+     "tier": 2
+    },
+    {
+     "text": "Peru",
+     "tier": 2
+    },
+    {
+     "text": "Colombia",
+     "tier": 2
+    },
+    {
+     "text": "Venezuela",
+     "tier": 2
+    },
+    {
+     "text": "Ecuador",
+     "tier": 3
+    },
+    {
+     "text": "Bolivia",
+     "tier": 3
+    },
+    {
+     "text": "Uruguay",
+     "tier": 3
+    },
+    {
+     "text": "Paraguay",
+     "tier": 3
+    },
+    {
+     "text": "Guyana",
+     "tier": 4
+    },
+    {
+     "text": "Suriname",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "us-borders",
+   "prompt": "Name a US state that borders Canada (land or water)",
+   "answers": [
+    {
+     "text": "New York",
+     "tier": 1
+    },
+    {
+     "text": "Michigan",
+     "tier": 1
+    },
+    {
+     "text": "Washington",
+     "tier": 2
+    },
+    {
+     "text": "Alaska",
+     "tier": 2
+    },
+    {
+     "text": "Maine",
+     "tier": 2
+    },
+    {
+     "text": "Montana",
+     "tier": 3
+    },
+    {
+     "text": "North Dakota",
+     "tier": 3
+    },
+    {
+     "text": "Minnesota",
+     "tier": 3
+    },
+    {
+     "text": "Vermont",
+     "tier": 3
+    },
+    {
+     "text": "Idaho",
+     "tier": 4
+    },
+    {
+     "text": "New Hampshire",
+     "tier": 4
+    },
+    {
+     "text": "Ohio",
+     "tier": 4
+    },
+    {
+     "text": "Pennsylvania",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "avengers",
+   "prompt": "Name a member of the Avengers (comics or films)",
+   "answers": [
+    {
+     "text": "Iron Man",
+     "tier": 1,
+     "aliases": [
+      "Tony Stark"
+     ]
+    },
+    {
+     "text": "Captain America",
+     "tier": 1,
+     "aliases": [
+      "Steve Rogers"
+     ]
+    },
+    {
+     "text": "Thor",
+     "tier": 1
+    },
+    {
+     "text": "Hulk",
+     "tier": 1,
+     "aliases": [
+      "Bruce Banner",
+      "The Incredible Hulk"
+     ]
+    },
+    {
+     "text": "Spider-Man",
+     "tier": 1,
+     "aliases": [
+      "Spiderman",
+      "Peter Parker"
+     ]
+    },
+    {
+     "text": "Black Widow",
+     "tier": 2,
+     "aliases": [
+      "Natasha Romanoff"
+     ]
+    },
+    {
+     "text": "Hawkeye",
+     "tier": 2,
+     "aliases": [
+      "Clint Barton"
+     ]
+    },
+    {
+     "text": "Black Panther",
+     "tier": 2,
+     "aliases": [
+      "T'Challa"
+     ]
+    },
+    {
+     "text": "Doctor Strange",
+     "tier": 2,
+     "aliases": [
+      "Dr Strange"
+     ]
+    },
+    {
+     "text": "Scarlet Witch",
+     "tier": 3,
+     "aliases": [
+      "Wanda Maximoff",
+      "Wanda"
+     ]
+    },
+    {
+     "text": "Vision",
+     "tier": 3
+    },
+    {
+     "text": "Ant-Man",
+     "tier": 3,
+     "aliases": [
+      "Antman",
+      "Scott Lang",
+      "Hank Pym"
+     ]
+    },
+    {
+     "text": "Falcon",
+     "tier": 3,
+     "aliases": [
+      "Sam Wilson"
+     ]
+    },
+    {
+     "text": "Captain Marvel",
+     "tier": 3,
+     "aliases": [
+      "Carol Danvers"
+     ]
+    },
+    {
+     "text": "Wasp",
+     "tier": 4,
+     "aliases": [
+      "Janet van Dyne",
+      "Hope van Dyne"
+     ]
+    },
+    {
+     "text": "War Machine",
+     "tier": 4,
+     "aliases": [
+      "Rhodey",
+      "James Rhodes"
+     ]
+    },
+    {
+     "text": "Winter Soldier",
+     "tier": 4,
+     "aliases": [
+      "Bucky Barnes",
+      "Bucky"
+     ]
+    },
+    {
+     "text": "Quicksilver",
+     "tier": 4,
+     "aliases": [
+      "Pietro Maximoff"
+     ]
+    },
+    {
+     "text": "She-Hulk",
+     "tier": 4,
+     "aliases": [
+      "She Hulk"
+     ]
+    },
+    {
+     "text": "Wolverine",
+     "tier": 4
+    },
+    {
+     "text": "Beast",
+     "tier": 5
+    },
+    {
+     "text": "Hercules",
+     "tier": 5
+    },
+    {
+     "text": "Wonder Man",
+     "tier": 5
+    },
+    {
+     "text": "Moon Knight",
+     "tier": 5
+    },
+    {
+     "text": "Ms. Marvel",
+     "tier": 5,
+     "aliases": [
+      "Kamala Khan"
+     ]
+    },
+    {
+     "text": "Mockingbird",
+     "tier": 5
+    },
+    {
+     "text": "Sentry",
+     "tier": 5
+    },
+    {
+     "text": "Luke Cage",
+     "tier": 5
+    },
+    {
+     "text": "Jessica Jones",
+     "tier": 5
+    },
+    {
+     "text": "Black Knight",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "greek-gods",
+   "prompt": "Name a god or goddess from Greek mythology",
+   "answers": [
+    {
+     "text": "Zeus",
+     "tier": 1
+    },
+    {
+     "text": "Poseidon",
+     "tier": 1
+    },
+    {
+     "text": "Hades",
+     "tier": 1
+    },
+    {
+     "text": "Athena",
+     "tier": 1,
+     "aliases": [
+      "Athene"
+     ]
+    },
+    {
+     "text": "Aphrodite",
+     "tier": 1
+    },
+    {
+     "text": "Apollo",
+     "tier": 2
+    },
+    {
+     "text": "Artemis",
+     "tier": 2
+    },
+    {
+     "text": "Ares",
+     "tier": 2
+    },
+    {
+     "text": "Hera",
+     "tier": 2
+    },
+    {
+     "text": "Hermes",
+     "tier": 2
+    },
+    {
+     "text": "Hephaestus",
+     "tier": 3
+    },
+    {
+     "text": "Demeter",
+     "tier": 3
+    },
+    {
+     "text": "Dionysus",
+     "tier": 3
+    },
+    {
+     "text": "Persephone",
+     "tier": 3
+    },
+    {
+     "text": "Eros",
+     "tier": 3
+    },
+    {
+     "text": "Gaia",
+     "tier": 3,
+     "aliases": [
+      "Gaea"
+     ]
+    },
+    {
+     "text": "Cronus",
+     "tier": 3,
+     "aliases": [
+      "Kronos"
+     ]
+    },
+    {
+     "text": "Hestia",
+     "tier": 4
+    },
+    {
+     "text": "Nike",
+     "tier": 4
+    },
+    {
+     "text": "Pan",
+     "tier": 4
+    },
+    {
+     "text": "Helios",
+     "tier": 4
+    },
+    {
+     "text": "Hecate",
+     "tier": 4
+    },
+    {
+     "text": "Nemesis",
+     "tier": 4
+    },
+    {
+     "text": "Thanatos",
+     "tier": 4
+    },
+    {
+     "text": "Nyx",
+     "tier": 4
+    },
+    {
+     "text": "Rhea",
+     "tier": 4
+    },
+    {
+     "text": "Morpheus",
+     "tier": 4
+    },
+    {
+     "text": "Eris",
+     "tier": 4
+    },
+    {
+     "text": "Selene",
+     "tier": 5
+    },
+    {
+     "text": "Eos",
+     "tier": 5
+    },
+    {
+     "text": "Hypnos",
+     "tier": 5
+    },
+    {
+     "text": "Tyche",
+     "tier": 5
+    },
+    {
+     "text": "Iris",
+     "tier": 5
+    },
+    {
+     "text": "Asclepius",
+     "tier": 5
+    },
+    {
+     "text": "Hebe",
+     "tier": 5
+    },
+    {
+     "text": "Triton",
+     "tier": 5
+    },
+    {
+     "text": "Uranus",
+     "tier": 5,
+     "aliases": [
+      "Ouranos"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "orchestra",
+   "prompt": "Name an instrument in a symphony orchestra",
+   "answers": [
+    {
+     "text": "Violin",
+     "tier": 1
+    },
+    {
+     "text": "Cello",
+     "tier": 1
+    },
+    {
+     "text": "Flute",
+     "tier": 1
+    },
+    {
+     "text": "Trumpet",
+     "tier": 1
+    },
+    {
+     "text": "Piano",
+     "tier": 1
+    },
+    {
+     "text": "Viola",
+     "tier": 2
+    },
+    {
+     "text": "Double Bass",
+     "tier": 2,
+     "aliases": [
+      "Bass",
+      "Contrabass",
+      "Upright bass"
+     ]
+    },
+    {
+     "text": "Clarinet",
+     "tier": 2
+    },
+    {
+     "text": "Oboe",
+     "tier": 2
+    },
+    {
+     "text": "Trombone",
+     "tier": 2
+    },
+    {
+     "text": "French Horn",
+     "tier": 2,
+     "aliases": [
+      "Horn"
+     ]
+    },
+    {
+     "text": "Tuba",
+     "tier": 2
+    },
+    {
+     "text": "Harp",
+     "tier": 2
+    },
+    {
+     "text": "Bassoon",
+     "tier": 3
+    },
+    {
+     "text": "Timpani",
+     "tier": 3,
+     "aliases": [
+      "Kettle drum",
+      "Kettle drums"
+     ]
+    },
+    {
+     "text": "Piccolo",
+     "tier": 3
+    },
+    {
+     "text": "Cymbals",
+     "tier": 3,
+     "aliases": [
+      "Cymbal"
+     ]
+    },
+    {
+     "text": "Snare Drum",
+     "tier": 3
+    },
+    {
+     "text": "Triangle",
+     "tier": 3
+    },
+    {
+     "text": "Xylophone",
+     "tier": 3
+    },
+    {
+     "text": "Glockenspiel",
+     "tier": 4
+    },
+    {
+     "text": "Bass Drum",
+     "tier": 4
+    },
+    {
+     "text": "English Horn",
+     "tier": 4,
+     "aliases": [
+      "Cor anglais"
+     ]
+    },
+    {
+     "text": "Gong",
+     "tier": 4,
+     "aliases": [
+      "Tam-tam"
+     ]
+    },
+    {
+     "text": "Marimba",
+     "tier": 4
+    },
+    {
+     "text": "Organ",
+     "tier": 4
+    },
+    {
+     "text": "Celesta",
+     "tier": 5
+    },
+    {
+     "text": "Contrabassoon",
+     "tier": 5
+    },
+    {
+     "text": "Bass Clarinet",
+     "tier": 5
+    },
+    {
+     "text": "Tubular Bells",
+     "tier": 5,
+     "aliases": [
+      "Chimes"
+     ]
+    },
+    {
+     "text": "Harpsichord",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "dog-breeds",
+   "prompt": "Name a dog breed",
+   "answers": [
+    {
+     "text": "Labrador Retriever",
+     "tier": 1,
+     "aliases": [
+      "Labrador",
+      "Lab"
+     ]
+    },
+    {
+     "text": "Golden Retriever",
+     "tier": 1
+    },
+    {
+     "text": "German Shepherd",
+     "tier": 1
+    },
+    {
+     "text": "Poodle",
+     "tier": 1
+    },
+    {
+     "text": "Bulldog",
+     "tier": 1
+    },
+    {
+     "text": "Beagle",
+     "tier": 1
+    },
+    {
+     "text": "Chihuahua",
+     "tier": 1
+    },
+    {
+     "text": "Husky",
+     "tier": 1,
+     "aliases": [
+      "Siberian Husky"
+     ]
+    },
+    {
+     "text": "Pug",
+     "tier": 2
+    },
+    {
+     "text": "Dachshund",
+     "tier": 2,
+     "aliases": [
+      "Wiener dog"
+     ]
+    },
+    {
+     "text": "Boxer",
+     "tier": 2
+    },
+    {
+     "text": "Rottweiler",
+     "tier": 2
+    },
+    {
+     "text": "Corgi",
+     "tier": 2
+    },
+    {
+     "text": "Shih Tzu",
+     "tier": 2
+    },
+    {
+     "text": "Border Collie",
+     "tier": 2
+    },
+    {
+     "text": "Great Dane",
+     "tier": 2
+    },
+    {
+     "text": "Yorkshire Terrier",
+     "tier": 2,
+     "aliases": [
+      "Yorkie"
+     ]
+    },
+    {
+     "text": "Dalmatian",
+     "tier": 2
+    },
+    {
+     "text": "Pomeranian",
+     "tier": 2
+    },
+    {
+     "text": "Doberman",
+     "tier": 2,
+     "aliases": [
+      "Dobermann",
+      "Doberman Pinscher"
+     ]
+    },
+    {
+     "text": "Pit Bull",
+     "tier": 2,
+     "aliases": [
+      "Pitbull"
+     ]
+    },
+    {
+     "text": "Australian Shepherd",
+     "tier": 3
+    },
+    {
+     "text": "Bernese Mountain Dog",
+     "tier": 3
+    },
+    {
+     "text": "Saint Bernard",
+     "tier": 3,
+     "aliases": [
+      "St Bernard"
+     ]
+    },
+    {
+     "text": "Maltese",
+     "tier": 3
+    },
+    {
+     "text": "Shiba Inu",
+     "tier": 3
+    },
+    {
+     "text": "Greyhound",
+     "tier": 3
+    },
+    {
+     "text": "Cocker Spaniel",
+     "tier": 3
+    },
+    {
+     "text": "Samoyed",
+     "tier": 3
+    },
+    {
+     "text": "Newfoundland",
+     "tier": 3
+    },
+    {
+     "text": "Akita",
+     "tier": 3
+    },
+    {
+     "text": "Bichon Frise",
+     "tier": 3
+    },
+    {
+     "text": "Bloodhound",
+     "tier": 3
+    },
+    {
+     "text": "Mastiff",
+     "tier": 3
+    },
+    {
+     "text": "Schnauzer",
+     "tier": 3
+    },
+    {
+     "text": "Jack Russell Terrier",
+     "tier": 3,
+     "aliases": [
+      "Jack Russell"
+     ]
+    },
+    {
+     "text": "Collie",
+     "tier": 3
+    },
+    {
+     "text": "Basset Hound",
+     "tier": 3
+    },
+    {
+     "text": "Chow Chow",
+     "tier": 3
+    },
+    {
+     "text": "Alaskan Malamute",
+     "tier": 3,
+     "aliases": [
+      "Malamute"
+     ]
+    },
+    {
+     "text": "Cavalier King Charles Spaniel",
+     "tier": 3
+    },
+    {
+     "text": "Whippet",
+     "tier": 4
+    },
+    {
+     "text": "Weimaraner",
+     "tier": 4
+    },
+    {
+     "text": "Vizsla",
+     "tier": 4
+    },
+    {
+     "text": "Afghan Hound",
+     "tier": 4
+    },
+    {
+     "text": "Shar Pei",
+     "tier": 4
+    },
+    {
+     "text": "Basenji",
+     "tier": 4
+    },
+    {
+     "text": "Borzoi",
+     "tier": 4
+    },
+    {
+     "text": "Papillon",
+     "tier": 4
+    },
+    {
+     "text": "Bull Terrier",
+     "tier": 4
+    },
+    {
+     "text": "Irish Wolfhound",
+     "tier": 4
+    },
+    {
+     "text": "Nova Scotia Duck Tolling Retriever",
+     "tier": 5,
+     "aliases": [
+      "Toller"
+     ]
+    },
+    {
+     "text": "Leonberger",
+     "tier": 5
+    },
+    {
+     "text": "Komondor",
+     "tier": 5
+    },
+    {
+     "text": "Puli",
+     "tier": 5
+    },
+    {
+     "text": "Xoloitzcuintli",
+     "tier": 5,
+     "aliases": [
+      "Xolo"
+     ]
+    },
+    {
+     "text": "Otterhound",
+     "tier": 5
+    },
+    {
+     "text": "Lagotto Romagnolo",
+     "tier": 5
+    },
+    {
+     "text": "Chesapeake Bay Retriever",
+     "tier": 5
+    },
+    {
+     "text": "Keeshond",
+     "tier": 5
+    },
+    {
+     "text": "Saluki",
+     "tier": 5
+    },
+    {
+     "text": "Pharaoh Hound",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "ontario-cities",
+   "prompt": "Name a city in Ontario",
+   "answers": [
+    {
+     "text": "Toronto",
+     "tier": 1
+    },
+    {
+     "text": "Ottawa",
+     "tier": 1
+    },
+    {
+     "text": "Waterloo",
+     "tier": 1
+    },
+    {
+     "text": "Hamilton",
+     "tier": 2
+    },
+    {
+     "text": "Mississauga",
+     "tier": 2
+    },
+    {
+     "text": "London",
+     "tier": 2
+    },
+    {
+     "text": "Kitchener",
+     "tier": 2
+    },
+    {
+     "text": "Brampton",
+     "tier": 2
+    },
+    {
+     "text": "Windsor",
+     "tier": 2
+    },
+    {
+     "text": "Kingston",
+     "tier": 2
+    },
+    {
+     "text": "Guelph",
+     "tier": 2
+    },
+    {
+     "text": "Niagara Falls",
+     "tier": 2
+    },
+    {
+     "text": "Cambridge",
+     "tier": 2
+    },
+    {
+     "text": "Barrie",
+     "tier": 3
+    },
+    {
+     "text": "Sudbury",
+     "tier": 3,
+     "aliases": [
+      "Greater Sudbury"
+     ]
+    },
+    {
+     "text": "Thunder Bay",
+     "tier": 3
+    },
+    {
+     "text": "St. Catharines",
+     "tier": 3,
+     "aliases": [
+      "Saint Catharines"
+     ]
+    },
+    {
+     "text": "Oshawa",
+     "tier": 3
+    },
+    {
+     "text": "Markham",
+     "tier": 3
+    },
+    {
+     "text": "Vaughan",
+     "tier": 3
+    },
+    {
+     "text": "Burlington",
+     "tier": 3
+    },
+    {
+     "text": "Oakville",
+     "tier": 3
+    },
+    {
+     "text": "Peterborough",
+     "tier": 3
+    },
+    {
+     "text": "Sault Ste. Marie",
+     "tier": 3,
+     "aliases": [
+      "Sault Sainte Marie",
+      "The Soo"
+     ]
+    },
+    {
+     "text": "Brantford",
+     "tier": 3
+    },
+    {
+     "text": "Richmond Hill",
+     "tier": 3
+    },
+    {
+     "text": "Stratford",
+     "tier": 3
+    },
+    {
+     "text": "North Bay",
+     "tier": 4
+    },
+    {
+     "text": "Belleville",
+     "tier": 4
+    },
+    {
+     "text": "Sarnia",
+     "tier": 4
+    },
+    {
+     "text": "Timmins",
+     "tier": 4
+    },
+    {
+     "text": "Cornwall",
+     "tier": 4
+    },
+    {
+     "text": "Pickering",
+     "tier": 4
+    },
+    {
+     "text": "Welland",
+     "tier": 4
+    },
+    {
+     "text": "Woodstock",
+     "tier": 4
+    },
+    {
+     "text": "Orillia",
+     "tier": 4
+    },
+    {
+     "text": "Owen Sound",
+     "tier": 4
+    },
+    {
+     "text": "Chatham-Kent",
+     "tier": 4,
+     "aliases": [
+      "Chatham"
+     ]
+    },
+    {
+     "text": "Kenora",
+     "tier": 5
+    },
+    {
+     "text": "Kawartha Lakes",
+     "tier": 5
+    },
+    {
+     "text": "Quinte West",
+     "tier": 5
+    },
+    {
+     "text": "Brockville",
+     "tier": 5
+    },
+    {
+     "text": "Pembroke",
+     "tier": 5
+    },
+    {
+     "text": "Elliot Lake",
+     "tier": 5
+    },
+    {
+     "text": "Temiskaming Shores",
+     "tier": 5
+    },
+    {
+     "text": "Dryden",
+     "tier": 5
+    },
+    {
+     "text": "Port Colborne",
+     "tier": 5
+    },
+    {
+     "text": "Thorold",
+     "tier": 5
+    },
+    {
+     "text": "Clarence-Rockland",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "uw-faculties",
+   "prompt": "Name a faculty at the University of Waterloo",
+   "answers": [
+    {
+     "text": "Engineering",
+     "tier": 1
+    },
+    {
+     "text": "Mathematics",
+     "tier": 1,
+     "aliases": [
+      "Math",
+      "Maths"
+     ]
+    },
+    {
+     "text": "Science",
+     "tier": 2
+    },
+    {
+     "text": "Arts",
+     "tier": 2
+    },
+    {
+     "text": "Environment",
+     "tier": 3
+    },
+    {
+     "text": "Health",
+     "tier": 3,
+     "aliases": [
+      "Applied Health Sciences",
+      "AHS"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "uw-buildings",
+   "prompt": "Name a building on the University of Waterloo main campus (name or code)",
+   "answers": [
+    {
+     "text": "Davis Centre",
+     "tier": 1,
+     "aliases": [
+      "DC"
+     ]
+    },
+    {
+     "text": "Mathematics & Computer",
+     "tier": 1,
+     "aliases": [
+      "MC",
+      "Math and Computer"
+     ]
+    },
+    {
+     "text": "Student Life Centre",
+     "tier": 1,
+     "aliases": [
+      "SLC"
+     ]
+    },
+    {
+     "text": "E7",
+     "tier": 2,
+     "aliases": [
+      "Engineering 7"
+     ]
+    },
+    {
+     "text": "E5",
+     "tier": 2,
+     "aliases": [
+      "Engineering 5"
+     ]
+    },
+    {
+     "text": "Physical Activities Complex",
+     "tier": 2,
+     "aliases": [
+      "PAC"
+     ]
+    },
+    {
+     "text": "Dana Porter Library",
+     "tier": 2,
+     "aliases": [
+      "DP",
+      "Dana Porter"
+     ]
+    },
+    {
+     "text": "Rod Coutts Hall",
+     "tier": 2,
+     "aliases": [
+      "RCH"
+     ]
+    },
+    {
+     "text": "Village 1",
+     "tier": 2,
+     "aliases": [
+      "V1"
+     ]
+    },
+    {
+     "text": "Quantum-Nano Centre",
+     "tier": 3,
+     "aliases": [
+      "QNC",
+      "Mike & Ophelia Lazaridis Quantum-Nano Centre"
+     ]
+    },
+    {
+     "text": "Science Teaching Complex",
+     "tier": 3,
+     "aliases": [
+      "STC"
+     ]
+    },
+    {
+     "text": "M3",
+     "tier": 3,
+     "aliases": [
+      "Mathematics 3"
+     ]
+    },
+    {
+     "text": "Centre for Environmental and Information Technology",
+     "tier": 3,
+     "aliases": [
+      "EIT"
+     ]
+    },
+    {
+     "text": "Carl A. Pollock Hall",
+     "tier": 3,
+     "aliases": [
+      "CPH"
+     ]
+    },
+    {
+     "text": "E2",
+     "tier": 3,
+     "aliases": [
+      "Engineering 2"
+     ]
+    },
+    {
+     "text": "E1",
+     "tier": 3,
+     "aliases": [
+      "Engineering 1"
+     ]
+    },
+    {
+     "text": "Hagey Hall",
+     "tier": 3,
+     "aliases": [
+      "HH",
+      "J.G. Hagey Hall of the Humanities"
+     ]
+    },
+    {
+     "text": "Needles Hall",
+     "tier": 3,
+     "aliases": [
+      "NH"
+     ]
+    },
+    {
+     "text": "Columbia Icefield",
+     "tier": 3,
+     "aliases": [
+      "CIF"
+     ]
+    },
+    {
+     "text": "Ron Eydt Village",
+     "tier": 3,
+     "aliases": [
+      "REV"
+     ]
+    },
+    {
+     "text": "Douglas Wright Engineering",
+     "tier": 4,
+     "aliases": [
+      "DWE"
+     ]
+    },
+    {
+     "text": "E3",
+     "tier": 4,
+     "aliases": [
+      "Engineering 3"
+     ]
+    },
+    {
+     "text": "E6",
+     "tier": 4,
+     "aliases": [
+      "Engineering 6"
+     ]
+    },
+    {
+     "text": "EV1",
+     "tier": 4,
+     "aliases": [
+      "Environment 1"
+     ]
+    },
+    {
+     "text": "EV3",
+     "tier": 4,
+     "aliases": [
+      "Environment 3"
+     ]
+    },
+    {
+     "text": "Modern Languages",
+     "tier": 4,
+     "aliases": [
+      "ML"
+     ]
+    },
+    {
+     "text": "Arts Lecture Hall",
+     "tier": 4,
+     "aliases": [
+      "AL"
+     ]
+    },
+    {
+     "text": "Physics",
+     "tier": 4,
+     "aliases": [
+      "PHY"
+     ]
+    },
+    {
+     "text": "Earth Sciences & Chemistry",
+     "tier": 4,
+     "aliases": [
+      "ESC"
+     ]
+    },
+    {
+     "text": "South Campus Hall",
+     "tier": 4,
+     "aliases": [
+      "SCH"
+     ]
+    },
+    {
+     "text": "Tatham Centre",
+     "tier": 4,
+     "aliases": [
+      "TC"
+     ]
+    },
+    {
+     "text": "Mackenzie King Village",
+     "tier": 4,
+     "aliases": [
+      "MKV"
+     ]
+    },
+    {
+     "text": "UW Place",
+     "tier": 4,
+     "aliases": [
+      "UWP",
+      "University of Waterloo Place"
+     ]
+    },
+    {
+     "text": "Claudette Millar Hall",
+     "tier": 4,
+     "aliases": [
+      "CMH"
+     ]
+    },
+    {
+     "text": "Federation Hall",
+     "tier": 4,
+     "aliases": [
+      "Fed Hall"
+     ]
+    },
+    {
+     "text": "PAS",
+     "tier": 4,
+     "aliases": [
+      "Psychology, Anthropology, Sociology"
+     ]
+    },
+    {
+     "text": "EV2",
+     "tier": 5,
+     "aliases": [
+      "Environment 2"
+     ]
+    },
+    {
+     "text": "B1",
+     "tier": 5,
+     "aliases": [
+      "Biology 1"
+     ]
+    },
+    {
+     "text": "B2",
+     "tier": 5,
+     "aliases": [
+      "Biology 2"
+     ]
+    },
+    {
+     "text": "C2",
+     "tier": 5,
+     "aliases": [
+      "Chemistry 2"
+     ]
+    },
+    {
+     "text": "Optometry",
+     "tier": 5,
+     "aliases": [
+      "OPT"
+     ]
+    },
+    {
+     "text": "General Services Complex",
+     "tier": 5,
+     "aliases": [
+      "GSC"
+     ]
+    },
+    {
+     "text": "Graduate House",
+     "tier": 5,
+     "aliases": [
+      "Grad House"
+     ]
+    },
+    {
+     "text": "East Campus Hall",
+     "tier": 5,
+     "aliases": [
+      "ECH"
+     ]
+    },
+    {
+     "text": "Burt Matthews Hall",
+     "tier": 5,
+     "aliases": [
+      "BMH"
+     ]
+    },
+    {
+     "text": "Lyle Hallman Institute",
+     "tier": 5,
+     "aliases": [
+      "LHI"
+     ]
+    },
+    {
+     "text": "Conrad Grebel University College",
+     "tier": 5,
+     "aliases": [
+      "Conrad Grebel",
+      "Grebel"
+     ]
+    },
+    {
+     "text": "Renison University College",
+     "tier": 5,
+     "aliases": [
+      "Renison"
+     ]
+    },
+    {
+     "text": "St. Jerome's University",
+     "tier": 5,
+     "aliases": [
+      "St Jerome's",
+      "Saint Jerome's"
+     ]
+    },
+    {
+     "text": "United College",
+     "tier": 5,
+     "aliases": [
+      "St. Paul's"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "citrus",
+   "prompt": "Name a citrus fruit",
+   "answers": [
+    {
+     "text": "Orange",
+     "tier": 1
+    },
+    {
+     "text": "Lemon",
+     "tier": 1
+    },
+    {
+     "text": "Lime",
+     "tier": 1
+    },
+    {
+     "text": "Grapefruit",
+     "tier": 2
+    },
+    {
+     "text": "Tangerine",
+     "tier": 2
+    },
+    {
+     "text": "Mandarin",
+     "tier": 2
+    },
+    {
+     "text": "Clementine",
+     "tier": 2
+    },
+    {
+     "text": "Blood Orange",
+     "tier": 3
+    },
+    {
+     "text": "Pomelo",
+     "tier": 4,
+     "aliases": [
+      "Pummelo"
+     ]
+    },
+    {
+     "text": "Kumquat",
+     "tier": 4
+    },
+    {
+     "text": "Yuzu",
+     "tier": 4
+    },
+    {
+     "text": "Key Lime",
+     "tier": 4
+    },
+    {
+     "text": "Satsuma",
+     "tier": 4
+    },
+    {
+     "text": "Tangelo",
+     "tier": 4
+    },
+    {
+     "text": "Meyer Lemon",
+     "tier": 4
+    },
+    {
+     "text": "Bergamot",
+     "tier": 5
+    },
+    {
+     "text": "Citron",
+     "tier": 5
+    },
+    {
+     "text": "Ugli fruit",
+     "tier": 5
+    },
+    {
+     "text": "Calamansi",
+     "tier": 5,
+     "aliases": [
+      "Calamondin"
+     ]
+    },
+    {
+     "text": "Finger Lime",
+     "tier": 5
+    },
+    {
+     "text": "Sudachi",
+     "tier": 5
+    },
+    {
+     "text": "Makrut Lime",
+     "tier": 5,
+     "aliases": [
+      "Kaffir Lime"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "root-veg",
+   "prompt": "Name a vegetable that grows underground",
+   "answers": [
+    {
+     "text": "Carrot",
+     "tier": 1,
+     "aliases": [
+      "Carrots"
+     ]
+    },
+    {
+     "text": "Potato",
+     "tier": 1,
+     "aliases": [
+      "Potatoes"
+     ]
+    },
+    {
+     "text": "Onion",
+     "tier": 2
+    },
+    {
+     "text": "Beet",
+     "tier": 2,
+     "aliases": [
+      "Beetroot",
+      "Beets"
+     ]
+    },
+    {
+     "text": "Radish",
+     "tier": 2
+    },
+    {
+     "text": "Turnip",
+     "tier": 2
+    },
+    {
+     "text": "Sweet Potato",
+     "tier": 2
+    },
+    {
+     "text": "Garlic",
+     "tier": 2
+    },
+    {
+     "text": "Parsnip",
+     "tier": 3
+    },
+    {
+     "text": "Ginger",
+     "tier": 3
+    },
+    {
+     "text": "Yam",
+     "tier": 3
+    },
+    {
+     "text": "Shallot",
+     "tier": 3
+    },
+    {
+     "text": "Rutabaga",
+     "tier": 4,
+     "aliases": [
+      "Swede"
+     ]
+    },
+    {
+     "text": "Cassava",
+     "tier": 4,
+     "aliases": [
+      "Yuca",
+      "Manioc"
+     ]
+    },
+    {
+     "text": "Taro",
+     "tier": 4
+    },
+    {
+     "text": "Jicama",
+     "tier": 4
+    },
+    {
+     "text": "Daikon",
+     "tier": 4
+    },
+    {
+     "text": "Horseradish",
+     "tier": 4
+    },
+    {
+     "text": "Turmeric",
+     "tier": 4
+    },
+    {
+     "text": "Celeriac",
+     "tier": 5,
+     "aliases": [
+      "Celery root"
+     ]
+    },
+    {
+     "text": "Jerusalem Artichoke",
+     "tier": 5,
+     "aliases": [
+      "Sunchoke"
+     ]
+    },
+    {
+     "text": "Burdock",
+     "tier": 5
+    },
+    {
+     "text": "Salsify",
+     "tier": 5
+    },
+    {
+     "text": "Lotus Root",
+     "tier": 5
+    },
+    {
+     "text": "Water Chestnut",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "social-apps",
+   "prompt": "Name a social media platform or messaging app",
+   "answers": [
+    {
+     "text": "Instagram",
+     "tier": 1
+    },
+    {
+     "text": "Facebook",
+     "tier": 1
+    },
+    {
+     "text": "TikTok",
+     "tier": 1
+    },
+    {
+     "text": "Snapchat",
+     "tier": 1
+    },
+    {
+     "text": "Twitter",
+     "tier": 1,
+     "aliases": [
+      "X"
+     ]
+    },
+    {
+     "text": "Reddit",
+     "tier": 2
+    },
+    {
+     "text": "LinkedIn",
+     "tier": 2
+    },
+    {
+     "text": "YouTube",
+     "tier": 2
+    },
+    {
+     "text": "Pinterest",
+     "tier": 2
+    },
+    {
+     "text": "Discord",
+     "tier": 2
+    },
+    {
+     "text": "WhatsApp",
+     "tier": 2
+    },
+    {
+     "text": "Tumblr",
+     "tier": 3
+    },
+    {
+     "text": "Threads",
+     "tier": 3
+    },
+    {
+     "text": "BeReal",
+     "tier": 3
+    },
+    {
+     "text": "Bluesky",
+     "tier": 3
+    },
+    {
+     "text": "Telegram",
+     "tier": 3
+    },
+    {
+     "text": "WeChat",
+     "tier": 3
+    },
+    {
+     "text": "Twitch",
+     "tier": 3
+    },
+    {
+     "text": "Messenger",
+     "tier": 3,
+     "aliases": [
+      "Facebook Messenger"
+     ]
+    },
+    {
+     "text": "Mastodon",
+     "tier": 4
+    },
+    {
+     "text": "Signal",
+     "tier": 4
+    },
+    {
+     "text": "Weibo",
+     "tier": 4
+    },
+    {
+     "text": "Vine",
+     "tier": 4
+    },
+    {
+     "text": "MySpace",
+     "tier": 4
+    },
+    {
+     "text": "Kik",
+     "tier": 4
+    },
+    {
+     "text": "Clubhouse",
+     "tier": 4
+    },
+    {
+     "text": "Quora",
+     "tier": 4
+    },
+    {
+     "text": "Nextdoor",
+     "tier": 4
+    },
+    {
+     "text": "Google+",
+     "tier": 5,
+     "aliases": [
+      "Google Plus"
+     ]
+    },
+    {
+     "text": "Orkut",
+     "tier": 5
+    },
+    {
+     "text": "Friendster",
+     "tier": 5
+    },
+    {
+     "text": "Xiaohongshu",
+     "tier": 5,
+     "aliases": [
+      "RedNote",
+      "Little Red Book"
+     ]
+    },
+    {
+     "text": "Douyin",
+     "tier": 5
+    },
+    {
+     "text": "Flickr",
+     "tier": 5
+    },
+    {
+     "text": "VK",
+     "tier": 5,
+     "aliases": [
+      "VKontakte"
+     ]
+    },
+    {
+     "text": "Line",
+     "tier": 5
+    },
+    {
+     "text": "KakaoTalk",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "board-games",
+   "prompt": "Name a board game",
+   "answers": [
+    {
+     "text": "Monopoly",
+     "tier": 1
+    },
+    {
+     "text": "Chess",
+     "tier": 1
+    },
+    {
+     "text": "Scrabble",
+     "tier": 1
+    },
+    {
+     "text": "Checkers",
+     "tier": 1,
+     "aliases": [
+      "Draughts"
+     ]
+    },
+    {
+     "text": "Clue",
+     "tier": 2,
+     "aliases": [
+      "Cluedo"
+     ]
+    },
+    {
+     "text": "Risk",
+     "tier": 2
+    },
+    {
+     "text": "Catan",
+     "tier": 2,
+     "aliases": [
+      "Settlers of Catan"
+     ]
+    },
+    {
+     "text": "Sorry!",
+     "tier": 2,
+     "aliases": [
+      "Sorry"
+     ]
+    },
+    {
+     "text": "Battleship",
+     "tier": 2
+    },
+    {
+     "text": "Snakes and Ladders",
+     "tier": 2,
+     "aliases": [
+      "Chutes and Ladders"
+     ]
+    },
+    {
+     "text": "Candy Land",
+     "tier": 2,
+     "aliases": [
+      "Candyland"
+     ]
+    },
+    {
+     "text": "The Game of Life",
+     "tier": 2,
+     "aliases": [
+      "Life"
+     ]
+    },
+    {
+     "text": "Trouble",
+     "tier": 3
+    },
+    {
+     "text": "Connect Four",
+     "tier": 3,
+     "aliases": [
+      "Connect 4"
+     ]
+    },
+    {
+     "text": "Backgammon",
+     "tier": 3
+    },
+    {
+     "text": "Go",
+     "tier": 3,
+     "aliases": [
+      "Baduk",
+      "Weiqi"
+     ]
+    },
+    {
+     "text": "Ticket to Ride",
+     "tier": 3
+    },
+    {
+     "text": "Pandemic",
+     "tier": 3
+    },
+    {
+     "text": "Operation",
+     "tier": 3
+    },
+    {
+     "text": "Guess Who",
+     "tier": 3
+    },
+    {
+     "text": "Mouse Trap",
+     "tier": 3
+    },
+    {
+     "text": "Codenames",
+     "tier": 3
+    },
+    {
+     "text": "Trivial Pursuit",
+     "tier": 3
+    },
+    {
+     "text": "Pictionary",
+     "tier": 3
+    },
+    {
+     "text": "Chinese Checkers",
+     "tier": 3
+    },
+    {
+     "text": "Stratego",
+     "tier": 4
+    },
+    {
+     "text": "Othello",
+     "tier": 4,
+     "aliases": [
+      "Reversi"
+     ]
+    },
+    {
+     "text": "Carcassonne",
+     "tier": 4
+    },
+    {
+     "text": "Ludo",
+     "tier": 4,
+     "aliases": [
+      "Parcheesi",
+      "Pachisi"
+     ]
+    },
+    {
+     "text": "Terraforming Mars",
+     "tier": 4
+    },
+    {
+     "text": "Wingspan",
+     "tier": 4
+    },
+    {
+     "text": "Azul",
+     "tier": 4
+    },
+    {
+     "text": "Splendor",
+     "tier": 4
+    },
+    {
+     "text": "Mancala",
+     "tier": 4
+    },
+    {
+     "text": "Scattergories",
+     "tier": 4
+    },
+    {
+     "text": "Boggle",
+     "tier": 4
+    },
+    {
+     "text": "Hungry Hungry Hippos",
+     "tier": 4
+    },
+    {
+     "text": "Dominion",
+     "tier": 5
+    },
+    {
+     "text": "Twilight Imperium",
+     "tier": 5
+    },
+    {
+     "text": "Agricola",
+     "tier": 5
+    },
+    {
+     "text": "Shogi",
+     "tier": 5
+    },
+    {
+     "text": "Xiangqi",
+     "tier": 5,
+     "aliases": [
+      "Chinese Chess"
+     ]
+    },
+    {
+     "text": "Cranium",
+     "tier": 5
+    },
+    {
+     "text": "Diplomacy",
+     "tier": 5
+    },
+    {
+     "text": "Gloomhaven",
+     "tier": 5
+    },
+    {
+     "text": "Kingdomino",
+     "tier": 5
+    },
+    {
+     "text": "Axis & Allies",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "winter-olympics",
+   "prompt": "Name a Winter Olympic sport",
+   "answers": [
+    {
+     "text": "Ice Hockey",
+     "tier": 1,
+     "aliases": [
+      "Hockey"
+     ]
+    },
+    {
+     "text": "Figure Skating",
+     "tier": 1
+    },
+    {
+     "text": "Alpine Skiing",
+     "tier": 1,
+     "aliases": [
+      "Skiing",
+      "Downhill",
+      "Slalom"
+     ]
+    },
+    {
+     "text": "Snowboarding",
+     "tier": 1,
+     "aliases": [
+      "Snowboard"
+     ]
+    },
+    {
+     "text": "Curling",
+     "tier": 2
+    },
+    {
+     "text": "Bobsleigh",
+     "tier": 2,
+     "aliases": [
+      "Bobsled"
+     ]
+    },
+    {
+     "text": "Speed Skating",
+     "tier": 2
+    },
+    {
+     "text": "Ski Jumping",
+     "tier": 2
+    },
+    {
+     "text": "Luge",
+     "tier": 2
+    },
+    {
+     "text": "Cross-Country Skiing",
+     "tier": 2,
+     "aliases": [
+      "Cross Country"
+     ]
+    },
+    {
+     "text": "Biathlon",
+     "tier": 3
+    },
+    {
+     "text": "Skeleton",
+     "tier": 3
+    },
+    {
+     "text": "Short Track",
+     "tier": 3,
+     "aliases": [
+      "Short Track Speed Skating"
+     ]
+    },
+    {
+     "text": "Freestyle Skiing",
+     "tier": 3,
+     "aliases": [
+      "Moguls",
+      "Aerials",
+      "Ski Cross"
+     ]
+    },
+    {
+     "text": "Nordic Combined",
+     "tier": 4
+    },
+    {
+     "text": "Ski Mountaineering",
+     "tier": 5,
+     "aliases": [
+      "Skimo"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "clouds",
+   "prompt": "Name a type of cloud",
+   "answers": [
+    {
+     "text": "Cumulus",
+     "tier": 1
+    },
+    {
+     "text": "Cirrus",
+     "tier": 1
+    },
+    {
+     "text": "Stratus",
+     "tier": 1
+    },
+    {
+     "text": "Cumulonimbus",
+     "tier": 2
+    },
+    {
+     "text": "Nimbus",
+     "tier": 2
+    },
+    {
+     "text": "Altostratus",
+     "tier": 3
+    },
+    {
+     "text": "Altocumulus",
+     "tier": 3
+    },
+    {
+     "text": "Cirrostratus",
+     "tier": 3
+    },
+    {
+     "text": "Nimbostratus",
+     "tier": 3
+    },
+    {
+     "text": "Stratocumulus",
+     "tier": 3
+    },
+    {
+     "text": "Cirrocumulus",
+     "tier": 4
+    },
+    {
+     "text": "Lenticular",
+     "tier": 4
+    },
+    {
+     "text": "Contrail",
+     "tier": 4
+    },
+    {
+     "text": "Funnel cloud",
+     "tier": 4
+    },
+    {
+     "text": "Mammatus",
+     "tier": 5
+    },
+    {
+     "text": "Noctilucent",
+     "tier": 5
+    },
+    {
+     "text": "Kelvin-Helmholtz",
+     "tier": 5
+    },
+    {
+     "text": "Pileus",
+     "tier": 5
+    },
+    {
+     "text": "Arcus",
+     "tier": 5,
+     "aliases": [
+      "Shelf cloud"
+     ]
+    },
+    {
+     "text": "Wall cloud",
+     "tier": 5
+    },
+    {
+     "text": "Asperitas",
+     "tier": 5
+    },
+    {
+     "text": "Pyrocumulus",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "ca-pms",
+   "prompt": "Name a Canadian prime minister",
+   "answers": [
+    {
+     "text": "Justin Trudeau",
+     "tier": 1,
+     "aliases": [
+      "Trudeau"
+     ]
+    },
+    {
+     "text": "Mark Carney",
+     "tier": 1,
+     "aliases": [
+      "Carney"
+     ]
+    },
+    {
+     "text": "Stephen Harper",
+     "tier": 1,
+     "aliases": [
+      "Harper"
+     ]
+    },
+    {
+     "text": "John A. Macdonald",
+     "tier": 1,
+     "aliases": [
+      "Macdonald",
+      "John A"
+     ]
+    },
+    {
+     "text": "Pierre Trudeau",
+     "tier": 2,
+     "aliases": [
+      "Pierre Elliott Trudeau"
+     ]
+    },
+    {
+     "text": "Brian Mulroney",
+     "tier": 2,
+     "aliases": [
+      "Mulroney"
+     ]
+    },
+    {
+     "text": "Jean Chrétien",
+     "tier": 2,
+     "aliases": [
+      "Chretien"
+     ]
+    },
+    {
+     "text": "Paul Martin",
+     "tier": 3,
+     "aliases": [
+      "Martin"
+     ]
+    },
+    {
+     "text": "Kim Campbell",
+     "tier": 3,
+     "aliases": [
+      "Campbell"
+     ]
+    },
+    {
+     "text": "Lester B. Pearson",
+     "tier": 3,
+     "aliases": [
+      "Lester Pearson",
+      "Pearson"
+     ]
+    },
+    {
+     "text": "John Diefenbaker",
+     "tier": 3,
+     "aliases": [
+      "Diefenbaker"
+     ]
+    },
+    {
+     "text": "Wilfrid Laurier",
+     "tier": 3,
+     "aliases": [
+      "Laurier"
+     ]
+    },
+    {
+     "text": "William Lyon Mackenzie King",
+     "tier": 3,
+     "aliases": [
+      "Mackenzie King"
+     ]
+    },
+    {
+     "text": "Joe Clark",
+     "tier": 4,
+     "aliases": [
+      "Clark"
+     ]
+    },
+    {
+     "text": "John Turner",
+     "tier": 4,
+     "aliases": [
+      "Turner"
+     ]
+    },
+    {
+     "text": "Robert Borden",
+     "tier": 4,
+     "aliases": [
+      "Borden"
+     ]
+    },
+    {
+     "text": "R. B. Bennett",
+     "tier": 4,
+     "aliases": [
+      "Bennett"
+     ]
+    },
+    {
+     "text": "Louis St. Laurent",
+     "tier": 4,
+     "aliases": [
+      "St Laurent",
+      "Saint Laurent"
+     ]
+    },
+    {
+     "text": "Alexander Mackenzie",
+     "tier": 5
+    },
+    {
+     "text": "John Abbott",
+     "tier": 5,
+     "aliases": [
+      "Abbott"
+     ]
+    },
+    {
+     "text": "John Thompson",
+     "tier": 5,
+     "aliases": [
+      "Thompson"
+     ]
+    },
+    {
+     "text": "Mackenzie Bowell",
+     "tier": 5,
+     "aliases": [
+      "Bowell"
+     ]
+    },
+    {
+     "text": "Charles Tupper",
+     "tier": 5,
+     "aliases": [
+      "Tupper"
+     ]
+    },
+    {
+     "text": "Arthur Meighen",
+     "tier": 5,
+     "aliases": [
+      "Meighen"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ca-music",
+   "prompt": "Name a Canadian musician or band",
+   "answers": [
+    {
+     "text": "Drake",
+     "tier": 1
+    },
+    {
+     "text": "Justin Bieber",
+     "tier": 1,
+     "aliases": [
+      "Bieber"
+     ]
+    },
+    {
+     "text": "The Weeknd",
+     "tier": 1,
+     "aliases": [
+      "Weeknd"
+     ]
+    },
+    {
+     "text": "Celine Dion",
+     "tier": 1
+    },
+    {
+     "text": "Shania Twain",
+     "tier": 2
+    },
+    {
+     "text": "Avril Lavigne",
+     "tier": 2
+    },
+    {
+     "text": "Michael Bublé",
+     "tier": 2,
+     "aliases": [
+      "Buble"
+     ]
+    },
+    {
+     "text": "Shawn Mendes",
+     "tier": 2
+    },
+    {
+     "text": "Alanis Morissette",
+     "tier": 2
+    },
+    {
+     "text": "Nickelback",
+     "tier": 2
+    },
+    {
+     "text": "Bryan Adams",
+     "tier": 2
+    },
+    {
+     "text": "Joni Mitchell",
+     "tier": 3
+    },
+    {
+     "text": "Neil Young",
+     "tier": 3
+    },
+    {
+     "text": "Leonard Cohen",
+     "tier": 3
+    },
+    {
+     "text": "Rush",
+     "tier": 3
+    },
+    {
+     "text": "Arcade Fire",
+     "tier": 3
+    },
+    {
+     "text": "Carly Rae Jepsen",
+     "tier": 3
+    },
+    {
+     "text": "The Tragically Hip",
+     "tier": 3,
+     "aliases": [
+      "Tragically Hip",
+      "The Hip"
+     ]
+    },
+    {
+     "text": "Barenaked Ladies",
+     "tier": 3
+    },
+    {
+     "text": "Gordon Lightfoot",
+     "tier": 3
+    },
+    {
+     "text": "Tate McRae",
+     "tier": 3
+    },
+    {
+     "text": "Alessia Cara",
+     "tier": 3
+    },
+    {
+     "text": "Sarah McLachlan",
+     "tier": 3
+    },
+    {
+     "text": "Nelly Furtado",
+     "tier": 3
+    },
+    {
+     "text": "Deadmau5",
+     "tier": 3,
+     "aliases": [
+      "Deadmaus",
+      "Deadmouse"
+     ]
+    },
+    {
+     "text": "Sum 41",
+     "tier": 4
+    },
+    {
+     "text": "Grimes",
+     "tier": 4
+    },
+    {
+     "text": "Daniel Caesar",
+     "tier": 4
+    },
+    {
+     "text": "Feist",
+     "tier": 4
+    },
+    {
+     "text": "Simple Plan",
+     "tier": 4
+    },
+    {
+     "text": "Our Lady Peace",
+     "tier": 4
+    },
+    {
+     "text": "Stompin' Tom Connors",
+     "tier": 4,
+     "aliases": [
+      "Stompin Tom"
+     ]
+    },
+    {
+     "text": "Anne Murray",
+     "tier": 4
+    },
+    {
+     "text": "Bachman-Turner Overdrive",
+     "tier": 4,
+     "aliases": [
+      "BTO"
+     ]
+    },
+    {
+     "text": "The Guess Who",
+     "tier": 4
+    },
+    {
+     "text": "Arkells",
+     "tier": 4
+    },
+    {
+     "text": "Blue Rodeo",
+     "tier": 4
+    },
+    {
+     "text": "PartyNextDoor",
+     "tier": 4
+    },
+    {
+     "text": "Mac DeMarco",
+     "tier": 4
+    },
+    {
+     "text": "Billy Talent",
+     "tier": 4
+    },
+    {
+     "text": "Three Days Grace",
+     "tier": 4
+    },
+    {
+     "text": "Walk Off the Earth",
+     "tier": 4
+    },
+    {
+     "text": "Tegan and Sara",
+     "tier": 4
+    },
+    {
+     "text": "k.d. lang",
+     "tier": 4,
+     "aliases": [
+      "kd lang"
+     ]
+    },
+    {
+     "text": "Buffy Sainte-Marie",
+     "tier": 4
+    },
+    {
+     "text": "Jessie Reyez",
+     "tier": 4
+    },
+    {
+     "text": "Tory Lanez",
+     "tier": 4
+    },
+    {
+     "text": "Nav",
+     "tier": 4
+    },
+    {
+     "text": "Metric",
+     "tier": 5
+    },
+    {
+     "text": "Broken Social Scene",
+     "tier": 5
+    },
+    {
+     "text": "Kaytranada",
+     "tier": 5
+    },
+    {
+     "text": "Charlotte Day Wilson",
+     "tier": 5
+    },
+    {
+     "text": "Majid Jordan",
+     "tier": 5
+    },
+    {
+     "text": "Japandroids",
+     "tier": 5
+    },
+    {
+     "text": "Men Without Hats",
+     "tier": 5
+    },
+    {
+     "text": "Loverboy",
+     "tier": 5
+    },
+    {
+     "text": "Stars",
+     "tier": 5
+    },
+    {
+     "text": "Jann Arden",
+     "tier": 5
+    },
+    {
+     "text": "Charlotte Cardin",
+     "tier": 5
+    },
+    {
+     "text": "Kiesza",
+     "tier": 5
+    },
+    {
+     "text": "Glass Tiger",
+     "tier": 5
+    },
+    {
+     "text": "The Sheepdogs",
+     "tier": 5,
+     "aliases": [
+      "Sheepdogs"
+     ]
+    },
+    {
+     "text": "Godspeed You! Black Emperor",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "pasta",
+   "prompt": "Name a type of pasta",
+   "answers": [
+    {
+     "text": "Spaghetti",
+     "tier": 1
+    },
+    {
+     "text": "Penne",
+     "tier": 1
+    },
+    {
+     "text": "Macaroni",
+     "tier": 1
+    },
+    {
+     "text": "Lasagna",
+     "tier": 1,
+     "aliases": [
+      "Lasagne"
+     ]
+    },
+    {
+     "text": "Fettuccine",
+     "tier": 2,
+     "aliases": [
+      "Fettucine",
+      "Fettuccini"
+     ]
+    },
+    {
+     "text": "Ravioli",
+     "tier": 2
+    },
+    {
+     "text": "Linguine",
+     "tier": 2,
+     "aliases": [
+      "Linguini"
+     ]
+    },
+    {
+     "text": "Rigatoni",
+     "tier": 2
+    },
+    {
+     "text": "Fusilli",
+     "tier": 2
+    },
+    {
+     "text": "Farfalle",
+     "tier": 2,
+     "aliases": [
+      "Bow tie",
+      "Bowtie"
+     ]
+    },
+    {
+     "text": "Tortellini",
+     "tier": 2
+    },
+    {
+     "text": "Orzo",
+     "tier": 3
+    },
+    {
+     "text": "Rotini",
+     "tier": 3
+    },
+    {
+     "text": "Gnocchi",
+     "tier": 3
+    },
+    {
+     "text": "Angel Hair",
+     "tier": 3,
+     "aliases": [
+      "Capellini"
+     ]
+    },
+    {
+     "text": "Tagliatelle",
+     "tier": 3
+    },
+    {
+     "text": "Pappardelle",
+     "tier": 3
+    },
+    {
+     "text": "Cannelloni",
+     "tier": 3
+    },
+    {
+     "text": "Ziti",
+     "tier": 3
+    },
+    {
+     "text": "Vermicelli",
+     "tier": 3
+    },
+    {
+     "text": "Manicotti",
+     "tier": 4
+    },
+    {
+     "text": "Conchiglie",
+     "tier": 4,
+     "aliases": [
+      "Shells"
+     ]
+    },
+    {
+     "text": "Orecchiette",
+     "tier": 4
+    },
+    {
+     "text": "Bucatini",
+     "tier": 4
+    },
+    {
+     "text": "Ditalini",
+     "tier": 4
+    },
+    {
+     "text": "Cavatappi",
+     "tier": 4
+    },
+    {
+     "text": "Gemelli",
+     "tier": 4
+    },
+    {
+     "text": "Radiatori",
+     "tier": 5
+    },
+    {
+     "text": "Campanelle",
+     "tier": 5
+    },
+    {
+     "text": "Paccheri",
+     "tier": 5
+    },
+    {
+     "text": "Strozzapreti",
+     "tier": 5
+    },
+    {
+     "text": "Trofie",
+     "tier": 5
+    },
+    {
+     "text": "Casarecce",
+     "tier": 5
+    },
+    {
+     "text": "Agnolotti",
+     "tier": 5
+    },
+    {
+     "text": "Mafaldine",
+     "tier": 5
+    },
+    {
+     "text": "Fregola",
+     "tier": 5
+    },
+    {
+     "text": "Cavatelli",
+     "tier": 5
+    },
+    {
+     "text": "Anelli",
+     "tier": 5
+    },
+    {
+     "text": "Stelline",
+     "tier": 5
+    },
+    {
+     "text": "Lumache",
+     "tier": 5
+    },
+    {
+     "text": "Tortelloni",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "zodiac",
+   "prompt": "Name an animal of the Chinese zodiac",
+   "answers": [
+    {
+     "text": "Dragon",
+     "tier": 1
+    },
+    {
+     "text": "Rat",
+     "tier": 1
+    },
+    {
+     "text": "Tiger",
+     "tier": 1
+    },
+    {
+     "text": "Rabbit",
+     "tier": 2
+    },
+    {
+     "text": "Monkey",
+     "tier": 2
+    },
+    {
+     "text": "Snake",
+     "tier": 2
+    },
+    {
+     "text": "Horse",
+     "tier": 2
+    },
+    {
+     "text": "Dog",
+     "tier": 2
+    },
+    {
+     "text": "Ox",
+     "tier": 3
+    },
+    {
+     "text": "Pig",
+     "tier": 3,
+     "aliases": [
+      "Boar"
+     ]
+    },
+    {
+     "text": "Rooster",
+     "tier": 3,
+     "aliases": [
+      "Chicken"
+     ]
+    },
+    {
+     "text": "Goat",
+     "tier": 4,
+     "aliases": [
+      "Sheep",
+      "Ram"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "bond-actors",
+   "prompt": "Name an actor who has played James Bond in a film",
+   "answers": [
+    {
+     "text": "Sean Connery",
+     "tier": 1,
+     "aliases": [
+      "Connery"
+     ]
+    },
+    {
+     "text": "Daniel Craig",
+     "tier": 1,
+     "aliases": [
+      "Craig"
+     ]
+    },
+    {
+     "text": "Pierce Brosnan",
+     "tier": 1,
+     "aliases": [
+      "Brosnan"
+     ]
+    },
+    {
+     "text": "Roger Moore",
+     "tier": 2,
+     "aliases": [
+      "Moore"
+     ]
+    },
+    {
+     "text": "Timothy Dalton",
+     "tier": 3,
+     "aliases": [
+      "Dalton"
+     ]
+    },
+    {
+     "text": "George Lazenby",
+     "tier": 4,
+     "aliases": [
+      "Lazenby"
+     ]
+    },
+    {
+     "text": "David Niven",
+     "tier": 5,
+     "aliases": [
+      "Niven"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "marine-mammals",
+   "prompt": "Name a marine mammal",
+   "answers": [
+    {
+     "text": "Dolphin",
+     "tier": 1
+    },
+    {
+     "text": "Whale",
+     "tier": 1
+    },
+    {
+     "text": "Seal",
+     "tier": 1
+    },
+    {
+     "text": "Sea Lion",
+     "tier": 2
+    },
+    {
+     "text": "Walrus",
+     "tier": 2
+    },
+    {
+     "text": "Orca",
+     "tier": 2,
+     "aliases": [
+      "Killer Whale"
+     ]
+    },
+    {
+     "text": "Sea Otter",
+     "tier": 2,
+     "aliases": [
+      "Otter"
+     ]
+    },
+    {
+     "text": "Manatee",
+     "tier": 2,
+     "aliases": [
+      "Sea Cow"
+     ]
+    },
+    {
+     "text": "Blue Whale",
+     "tier": 2
+    },
+    {
+     "text": "Narwhal",
+     "tier": 3
+    },
+    {
+     "text": "Beluga",
+     "tier": 3,
+     "aliases": [
+      "Beluga Whale"
+     ]
+    },
+    {
+     "text": "Humpback Whale",
+     "tier": 3,
+     "aliases": [
+      "Humpback"
+     ]
+    },
+    {
+     "text": "Sperm Whale",
+     "tier": 3
+    },
+    {
+     "text": "Porpoise",
+     "tier": 3
+    },
+    {
+     "text": "Dugong",
+     "tier": 4
+    },
+    {
+     "text": "Polar Bear",
+     "tier": 4
+    },
+    {
+     "text": "Elephant Seal",
+     "tier": 4
+    },
+    {
+     "text": "Fur Seal",
+     "tier": 4
+    },
+    {
+     "text": "Grey Whale",
+     "tier": 4,
+     "aliases": [
+      "Gray Whale"
+     ]
+    },
+    {
+     "text": "Minke Whale",
+     "tier": 4
+    },
+    {
+     "text": "Bowhead Whale",
+     "tier": 5
+    },
+    {
+     "text": "Vaquita",
+     "tier": 5
+    },
+    {
+     "text": "Leopard Seal",
+     "tier": 5
+    },
+    {
+     "text": "Monk Seal",
+     "tier": 5
+    },
+    {
+     "text": "Right Whale",
+     "tier": 5
+    },
+    {
+     "text": "Fin Whale",
+     "tier": 5
+    },
+    {
+     "text": "Pilot Whale",
+     "tier": 5
+    },
+    {
+     "text": "Marine Otter",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "currencies",
+   "prompt": "Name a currency in use today",
+   "answers": [
+    {
+     "text": "Dollar",
+     "tier": 1
+    },
+    {
+     "text": "Euro",
+     "tier": 1
+    },
+    {
+     "text": "Pound",
+     "tier": 1,
+     "aliases": [
+      "Pound Sterling"
+     ]
+    },
+    {
+     "text": "Yen",
+     "tier": 1
+    },
+    {
+     "text": "Peso",
+     "tier": 2
+    },
+    {
+     "text": "Rupee",
+     "tier": 2
+    },
+    {
+     "text": "Yuan",
+     "tier": 2,
+     "aliases": [
+      "Renminbi"
+     ]
+    },
+    {
+     "text": "Franc",
+     "tier": 3,
+     "aliases": [
+      "Swiss Franc"
+     ]
+    },
+    {
+     "text": "Won",
+     "tier": 3
+    },
+    {
+     "text": "Ruble",
+     "tier": 3,
+     "aliases": [
+      "Rouble"
+     ]
+    },
+    {
+     "text": "Real",
+     "tier": 3
+    },
+    {
+     "text": "Rand",
+     "tier": 3
+    },
+    {
+     "text": "Krona",
+     "tier": 3
+    },
+    {
+     "text": "Lira",
+     "tier": 3
+    },
+    {
+     "text": "Krone",
+     "tier": 4
+    },
+    {
+     "text": "Dirham",
+     "tier": 4
+    },
+    {
+     "text": "Shekel",
+     "tier": 4
+    },
+    {
+     "text": "Baht",
+     "tier": 4
+    },
+    {
+     "text": "Dong",
+     "tier": 4
+    },
+    {
+     "text": "Rupiah",
+     "tier": 4
+    },
+    {
+     "text": "Ringgit",
+     "tier": 4
+    },
+    {
+     "text": "Zloty",
+     "tier": 4
+    },
+    {
+     "text": "Dinar",
+     "tier": 4
+    },
+    {
+     "text": "Riyal",
+     "tier": 4
+    },
+    {
+     "text": "Shilling",
+     "tier": 4
+    },
+    {
+     "text": "Forint",
+     "tier": 5
+    },
+    {
+     "text": "Naira",
+     "tier": 5
+    },
+    {
+     "text": "Kwacha",
+     "tier": 5
+    },
+    {
+     "text": "Lev",
+     "tier": 5
+    },
+    {
+     "text": "Lempira",
+     "tier": 5
+    },
+    {
+     "text": "Quetzal",
+     "tier": 5
+    },
+    {
+     "text": "Colón",
+     "tier": 5,
+     "aliases": [
+      "Colon"
+     ]
+    },
+    {
+     "text": "Bolívar",
+     "tier": 5,
+     "aliases": [
+      "Bolivar"
+     ]
+    },
+    {
+     "text": "Hryvnia",
+     "tier": 5
+    },
+    {
+     "text": "Tenge",
+     "tier": 5
+    },
+    {
+     "text": "Taka",
+     "tier": 5
+    },
+    {
+     "text": "Kyat",
+     "tier": 5
+    },
+    {
+     "text": "Kip",
+     "tier": 5
+    },
+    {
+     "text": "Rial",
+     "tier": 5
+    },
+    {
+     "text": "Cedi",
+     "tier": 5
+    },
+    {
+     "text": "Birr",
+     "tier": 5
+    },
+    {
+     "text": "Leu",
+     "tier": 5
+    },
+    {
+     "text": "Manat",
+     "tier": 5
+    },
+    {
+     "text": "Lari",
+     "tier": 5
+    },
+    {
+     "text": "Dram",
+     "tier": 5
+    },
+    {
+     "text": "Denar",
+     "tier": 5
+    },
+    {
+     "text": "Guaraní",
+     "tier": 5,
+     "aliases": [
+      "Guarani"
+     ]
+    },
+    {
+     "text": "Sol",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "computer-parts",
+   "prompt": "Name a part of a computer",
+   "answers": [
+    {
+     "text": "CPU",
+     "tier": 1,
+     "aliases": [
+      "Processor"
+     ]
+    },
+    {
+     "text": "RAM",
+     "tier": 1,
+     "aliases": [
+      "Memory"
+     ]
+    },
+    {
+     "text": "Motherboard",
+     "tier": 1
+    },
+    {
+     "text": "GPU",
+     "tier": 1,
+     "aliases": [
+      "Graphics Card"
+     ]
+    },
+    {
+     "text": "Keyboard",
+     "tier": 1
+    },
+    {
+     "text": "Mouse",
+     "tier": 1
+    },
+    {
+     "text": "Monitor",
+     "tier": 1,
+     "aliases": [
+      "Screen",
+      "Display"
+     ]
+    },
+    {
+     "text": "Hard Drive",
+     "tier": 2,
+     "aliases": [
+      "HDD",
+      "Hard Disk"
+     ]
+    },
+    {
+     "text": "SSD",
+     "tier": 2,
+     "aliases": [
+      "Solid State Drive"
+     ]
+    },
+    {
+     "text": "Power Supply",
+     "tier": 2,
+     "aliases": [
+      "PSU"
+     ]
+    },
+    {
+     "text": "Fan",
+     "tier": 3
+    },
+    {
+     "text": "Heat Sink",
+     "tier": 3,
+     "aliases": [
+      "Heatsink"
+     ]
+    },
+    {
+     "text": "Case",
+     "tier": 3,
+     "aliases": [
+      "Tower"
+     ]
+    },
+    {
+     "text": "Sound Card",
+     "tier": 3
+    },
+    {
+     "text": "Webcam",
+     "tier": 3
+    },
+    {
+     "text": "Speakers",
+     "tier": 3
+    },
+    {
+     "text": "Trackpad",
+     "tier": 3,
+     "aliases": [
+      "Touchpad"
+     ]
+    },
+    {
+     "text": "USB Port",
+     "tier": 3
+    },
+    {
+     "text": "Battery",
+     "tier": 3
+    },
+    {
+     "text": "Network Card",
+     "tier": 4,
+     "aliases": [
+      "NIC"
+     ]
+    },
+    {
+     "text": "BIOS",
+     "tier": 4
+    },
+    {
+     "text": "Optical Drive",
+     "tier": 4,
+     "aliases": [
+      "CD Drive",
+      "DVD Drive"
+     ]
+    },
+    {
+     "text": "Thermal Paste",
+     "tier": 4
+    },
+    {
+     "text": "Cache",
+     "tier": 5
+    },
+    {
+     "text": "ALU",
+     "tier": 5
+    },
+    {
+     "text": "Register",
+     "tier": 5
+    },
+    {
+     "text": "Northbridge",
+     "tier": 5
+    },
+    {
+     "text": "CMOS Battery",
+     "tier": 5
+    },
+    {
+     "text": "Bus",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "moons",
+   "prompt": "Name a moon in our solar system (other than Earth's)",
+   "answers": [
+    {
+     "text": "Titan",
+     "tier": 1
+    },
+    {
+     "text": "Europa",
+     "tier": 1
+    },
+    {
+     "text": "Ganymede",
+     "tier": 2
+    },
+    {
+     "text": "Io",
+     "tier": 2
+    },
+    {
+     "text": "Phobos",
+     "tier": 2
+    },
+    {
+     "text": "Callisto",
+     "tier": 3
+    },
+    {
+     "text": "Deimos",
+     "tier": 3
+    },
+    {
+     "text": "Enceladus",
+     "tier": 3
+    },
+    {
+     "text": "Triton",
+     "tier": 3
+    },
+    {
+     "text": "Charon",
+     "tier": 3
+    },
+    {
+     "text": "Miranda",
+     "tier": 4
+    },
+    {
+     "text": "Titania",
+     "tier": 4
+    },
+    {
+     "text": "Oberon",
+     "tier": 4
+    },
+    {
+     "text": "Mimas",
+     "tier": 4
+    },
+    {
+     "text": "Rhea",
+     "tier": 4
+    },
+    {
+     "text": "Iapetus",
+     "tier": 4
+    },
+    {
+     "text": "Dione",
+     "tier": 4
+    },
+    {
+     "text": "Tethys",
+     "tier": 4
+    },
+    {
+     "text": "Ariel",
+     "tier": 4
+    },
+    {
+     "text": "Hyperion",
+     "tier": 4
+    },
+    {
+     "text": "Phoebe",
+     "tier": 4
+    },
+    {
+     "text": "Umbriel",
+     "tier": 5
+    },
+    {
+     "text": "Amalthea",
+     "tier": 5
+    },
+    {
+     "text": "Proteus",
+     "tier": 5
+    },
+    {
+     "text": "Nereid",
+     "tier": 5
+    },
+    {
+     "text": "Puck",
+     "tier": 5
+    },
+    {
+     "text": "Pandora",
+     "tier": 5
+    },
+    {
+     "text": "Prometheus",
+     "tier": 5
+    },
+    {
+     "text": "Janus",
+     "tier": 5
+    },
+    {
+     "text": "Epimetheus",
+     "tier": 5
+    },
+    {
+     "text": "Metis",
+     "tier": 5
+    },
+    {
+     "text": "Thebe",
+     "tier": 5
+    },
+    {
+     "text": "Himalia",
+     "tier": 5
+    },
+    {
+     "text": "Larissa",
+     "tier": 5
+    },
+    {
+     "text": "Galatea",
+     "tier": 5
+    },
+    {
+     "text": "Nix",
+     "tier": 5
+    },
+    {
+     "text": "Hydra",
+     "tier": 5
+    },
+    {
+     "text": "Dysnomia",
+     "tier": 5
+    },
+    {
+     "text": "Cordelia",
+     "tier": 5
+    },
+    {
+     "text": "Ophelia",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "scientists",
+   "prompt": "Name a famous scientist (surname is enough)",
+   "answers": [
+    {
+     "text": "Albert Einstein",
+     "tier": 1,
+     "aliases": [
+      "Einstein"
+     ]
+    },
+    {
+     "text": "Isaac Newton",
+     "tier": 1,
+     "aliases": [
+      "Newton"
+     ]
+    },
+    {
+     "text": "Charles Darwin",
+     "tier": 1,
+     "aliases": [
+      "Darwin"
+     ]
+    },
+    {
+     "text": "Marie Curie",
+     "tier": 1,
+     "aliases": [
+      "Curie"
+     ]
+    },
+    {
+     "text": "Galileo Galilei",
+     "tier": 1,
+     "aliases": [
+      "Galileo"
+     ]
+    },
+    {
+     "text": "Nikola Tesla",
+     "tier": 2,
+     "aliases": [
+      "Tesla"
+     ]
+    },
+    {
+     "text": "Stephen Hawking",
+     "tier": 2,
+     "aliases": [
+      "Hawking"
+     ]
+    },
+    {
+     "text": "Thomas Edison",
+     "tier": 2,
+     "aliases": [
+      "Edison"
+     ]
+    },
+    {
+     "text": "Nicolaus Copernicus",
+     "tier": 3,
+     "aliases": [
+      "Copernicus"
+     ]
+    },
+    {
+     "text": "Johannes Kepler",
+     "tier": 3,
+     "aliases": [
+      "Kepler"
+     ]
+    },
+    {
+     "text": "Gregor Mendel",
+     "tier": 3,
+     "aliases": [
+      "Mendel"
+     ]
+    },
+    {
+     "text": "Louis Pasteur",
+     "tier": 3,
+     "aliases": [
+      "Pasteur"
+     ]
+    },
+    {
+     "text": "Michael Faraday",
+     "tier": 3,
+     "aliases": [
+      "Faraday"
+     ]
+    },
+    {
+     "text": "James Clerk Maxwell",
+     "tier": 3,
+     "aliases": [
+      "Maxwell"
+     ]
+    },
+    {
+     "text": "Niels Bohr",
+     "tier": 3,
+     "aliases": [
+      "Bohr"
+     ]
+    },
+    {
+     "text": "Werner Heisenberg",
+     "tier": 3,
+     "aliases": [
+      "Heisenberg"
+     ]
+    },
+    {
+     "text": "Erwin Schrödinger",
+     "tier": 3,
+     "aliases": [
+      "Schrodinger"
+     ]
+    },
+    {
+     "text": "Richard Feynman",
+     "tier": 3,
+     "aliases": [
+      "Feynman"
+     ]
+    },
+    {
+     "text": "Ada Lovelace",
+     "tier": 3,
+     "aliases": [
+      "Lovelace"
+     ]
+    },
+    {
+     "text": "Alan Turing",
+     "tier": 3,
+     "aliases": [
+      "Turing"
+     ]
+    },
+    {
+     "text": "Rosalind Franklin",
+     "tier": 3,
+     "aliases": [
+      "Franklin"
+     ]
+    },
+    {
+     "text": "Aristotle",
+     "tier": 3
+    },
+    {
+     "text": "Archimedes",
+     "tier": 3
+    },
+    {
+     "text": "Pythagoras",
+     "tier": 3
+    },
+    {
+     "text": "Dmitri Mendeleev",
+     "tier": 3,
+     "aliases": [
+      "Mendeleev"
+     ]
+    },
+    {
+     "text": "J. Robert Oppenheimer",
+     "tier": 3,
+     "aliases": [
+      "Oppenheimer"
+     ]
+    },
+    {
+     "text": "Jane Goodall",
+     "tier": 3,
+     "aliases": [
+      "Goodall"
+     ]
+    },
+    {
+     "text": "Carl Sagan",
+     "tier": 3,
+     "aliases": [
+      "Sagan"
+     ]
+    },
+    {
+     "text": "Neil deGrasse Tyson",
+     "tier": 3,
+     "aliases": [
+      "Tyson"
+     ]
+    },
+    {
+     "text": "Alexander Fleming",
+     "tier": 3,
+     "aliases": [
+      "Fleming"
+     ]
+    },
+    {
+     "text": "Leonhard Euler",
+     "tier": 4,
+     "aliases": [
+      "Euler"
+     ]
+    },
+    {
+     "text": "Carl Friedrich Gauss",
+     "tier": 4,
+     "aliases": [
+      "Gauss"
+     ]
+    },
+    {
+     "text": "Max Planck",
+     "tier": 4,
+     "aliases": [
+      "Planck"
+     ]
+    },
+    {
+     "text": "Ernest Rutherford",
+     "tier": 4,
+     "aliases": [
+      "Rutherford"
+     ]
+    },
+    {
+     "text": "Paul Dirac",
+     "tier": 4,
+     "aliases": [
+      "Dirac"
+     ]
+    },
+    {
+     "text": "Enrico Fermi",
+     "tier": 4,
+     "aliases": [
+      "Fermi"
+     ]
+    },
+    {
+     "text": "Antoine Lavoisier",
+     "tier": 4,
+     "aliases": [
+      "Lavoisier"
+     ]
+    },
+    {
+     "text": "Robert Boyle",
+     "tier": 4,
+     "aliases": [
+      "Boyle"
+     ]
+    },
+    {
+     "text": "Robert Hooke",
+     "tier": 4,
+     "aliases": [
+      "Hooke"
+     ]
+    },
+    {
+     "text": "Lise Meitner",
+     "tier": 4,
+     "aliases": [
+      "Meitner"
+     ]
+    },
+    {
+     "text": "Emmy Noether",
+     "tier": 4,
+     "aliases": [
+      "Noether"
+     ]
+    },
+    {
+     "text": "Frederick Banting",
+     "tier": 4,
+     "aliases": [
+      "Banting"
+     ]
+    },
+    {
+     "text": "Donna Strickland",
+     "tier": 4,
+     "aliases": [
+      "Strickland"
+     ]
+    },
+    {
+     "text": "Pierre Curie",
+     "tier": 4
+    },
+    {
+     "text": "James Watson",
+     "tier": 4,
+     "aliases": [
+      "Watson"
+     ]
+    },
+    {
+     "text": "Francis Crick",
+     "tier": 4,
+     "aliases": [
+      "Crick"
+     ]
+    },
+    {
+     "text": "Edwin Hubble",
+     "tier": 4,
+     "aliases": [
+      "Hubble"
+     ]
+    },
+    {
+     "text": "Srinivasa Ramanujan",
+     "tier": 4,
+     "aliases": [
+      "Ramanujan"
+     ]
+    },
+    {
+     "text": "Linus Pauling",
+     "tier": 4,
+     "aliases": [
+      "Pauling"
+     ]
+    },
+    {
+     "text": "Amedeo Avogadro",
+     "tier": 4,
+     "aliases": [
+      "Avogadro"
+     ]
+    },
+    {
+     "text": "Gottfried Leibniz",
+     "tier": 4,
+     "aliases": [
+      "Leibniz"
+     ]
+    },
+    {
+     "text": "René Descartes",
+     "tier": 4,
+     "aliases": [
+      "Descartes"
+     ]
+    },
+    {
+     "text": "Peter Higgs",
+     "tier": 4,
+     "aliases": [
+      "Higgs"
+     ]
+    },
+    {
+     "text": "John Dalton",
+     "tier": 4,
+     "aliases": [
+      "Dalton"
+     ]
+    },
+    {
+     "text": "Antonie van Leeuwenhoek",
+     "tier": 5,
+     "aliases": [
+      "Leeuwenhoek",
+      "van Leeuwenhoek"
+     ]
+    },
+    {
+     "text": "Heinrich Hertz",
+     "tier": 5,
+     "aliases": [
+      "Hertz"
+     ]
+    },
+    {
+     "text": "André-Marie Ampère",
+     "tier": 5,
+     "aliases": [
+      "Ampere"
+     ]
+    },
+    {
+     "text": "Alessandro Volta",
+     "tier": 5,
+     "aliases": [
+      "Volta"
+     ]
+    },
+    {
+     "text": "Georg Ohm",
+     "tier": 5,
+     "aliases": [
+      "Ohm"
+     ]
+    },
+    {
+     "text": "Hypatia",
+     "tier": 5
+    },
+    {
+     "text": "Al-Khwarizmi",
+     "tier": 5,
+     "aliases": [
+      "Khwarizmi"
+     ]
+    },
+    {
+     "text": "Ibn al-Haytham",
+     "tier": 5,
+     "aliases": [
+      "Alhazen"
+     ]
+    },
+    {
+     "text": "Subrahmanyan Chandrasekhar",
+     "tier": 5,
+     "aliases": [
+      "Chandrasekhar"
+     ]
+    },
+    {
+     "text": "Vera Rubin",
+     "tier": 5,
+     "aliases": [
+      "Rubin"
+     ]
+    },
+    {
+     "text": "Barbara McClintock",
+     "tier": 5,
+     "aliases": [
+      "McClintock"
+     ]
+    },
+    {
+     "text": "Tu Youyou",
+     "tier": 5
+    },
+    {
+     "text": "Lord Kelvin",
+     "tier": 5,
+     "aliases": [
+      "Kelvin",
+      "William Thomson"
+     ]
+    },
+    {
+     "text": "Arthur McDonald",
+     "tier": 5
+    },
+    {
+     "text": "Charles Best",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "cheeses",
+   "prompt": "Name a type of cheese",
+   "answers": [
+    {
+     "text": "Cheddar",
+     "tier": 1
+    },
+    {
+     "text": "Mozzarella",
+     "tier": 1
+    },
+    {
+     "text": "Parmesan",
+     "tier": 1,
+     "aliases": [
+      "Parmigiano-Reggiano",
+      "Parmigiano"
+     ]
+    },
+    {
+     "text": "Swiss",
+     "tier": 2
+    },
+    {
+     "text": "Brie",
+     "tier": 2
+    },
+    {
+     "text": "Gouda",
+     "tier": 2
+    },
+    {
+     "text": "Feta",
+     "tier": 2
+    },
+    {
+     "text": "Cream Cheese",
+     "tier": 2
+    },
+    {
+     "text": "Cottage Cheese",
+     "tier": 2
+    },
+    {
+     "text": "American",
+     "tier": 2
+    },
+    {
+     "text": "Blue Cheese",
+     "tier": 3,
+     "aliases": [
+      "Bleu cheese"
+     ]
+    },
+    {
+     "text": "Camembert",
+     "tier": 3
+    },
+    {
+     "text": "Provolone",
+     "tier": 3
+    },
+    {
+     "text": "Ricotta",
+     "tier": 3
+    },
+    {
+     "text": "Monterey Jack",
+     "tier": 3
+    },
+    {
+     "text": "Havarti",
+     "tier": 3
+    },
+    {
+     "text": "Gruyère",
+     "tier": 3,
+     "aliases": [
+      "Gruyere"
+     ]
+    },
+    {
+     "text": "Goat Cheese",
+     "tier": 3,
+     "aliases": [
+      "Chèvre"
+     ]
+    },
+    {
+     "text": "Halloumi",
+     "tier": 3
+    },
+    {
+     "text": "Gorgonzola",
+     "tier": 3
+    },
+    {
+     "text": "Mascarpone",
+     "tier": 3
+    },
+    {
+     "text": "Paneer",
+     "tier": 3
+    },
+    {
+     "text": "Burrata",
+     "tier": 3
+    },
+    {
+     "text": "Pepper Jack",
+     "tier": 3
+    },
+    {
+     "text": "Cheese Curds",
+     "tier": 3,
+     "aliases": [
+      "Curds"
+     ]
+    },
+    {
+     "text": "Colby",
+     "tier": 4
+    },
+    {
+     "text": "Roquefort",
+     "tier": 4
+    },
+    {
+     "text": "Stilton",
+     "tier": 4
+    },
+    {
+     "text": "Emmental",
+     "tier": 4,
+     "aliases": [
+      "Emmentaler"
+     ]
+    },
+    {
+     "text": "Manchego",
+     "tier": 4
+    },
+    {
+     "text": "Pecorino",
+     "tier": 4,
+     "aliases": [
+      "Pecorino Romano"
+     ]
+    },
+    {
+     "text": "Asiago",
+     "tier": 4
+    },
+    {
+     "text": "Fontina",
+     "tier": 4
+    },
+    {
+     "text": "Muenster",
+     "tier": 4,
+     "aliases": [
+      "Munster"
+     ]
+    },
+    {
+     "text": "Edam",
+     "tier": 4
+    },
+    {
+     "text": "Raclette",
+     "tier": 4
+    },
+    {
+     "text": "Queso Fresco",
+     "tier": 4
+    },
+    {
+     "text": "Jarlsberg",
+     "tier": 5
+    },
+    {
+     "text": "Taleggio",
+     "tier": 5
+    },
+    {
+     "text": "Comté",
+     "tier": 5
+    },
+    {
+     "text": "Oka",
+     "tier": 5
+    },
+    {
+     "text": "Limburger",
+     "tier": 5
+    },
+    {
+     "text": "Wensleydale",
+     "tier": 5
+    },
+    {
+     "text": "Reblochon",
+     "tier": 5
+    },
+    {
+     "text": "Époisses",
+     "tier": 5
+    },
+    {
+     "text": "Port Salut",
+     "tier": 5
+    },
+    {
+     "text": "Boursin",
+     "tier": 5
+    },
+    {
+     "text": "Cotija",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "ca-animals",
+   "prompt": "Name an animal native to Canada",
+   "answers": [
+    {
+     "text": "Moose",
+     "tier": 1
+    },
+    {
+     "text": "Beaver",
+     "tier": 1
+    },
+    {
+     "text": "Canada Goose",
+     "tier": 1,
+     "aliases": [
+      "Goose"
+     ]
+    },
+    {
+     "text": "Bear",
+     "tier": 1,
+     "aliases": [
+      "Black Bear"
+     ]
+    },
+    {
+     "text": "Polar Bear",
+     "tier": 2
+    },
+    {
+     "text": "Grizzly Bear",
+     "tier": 2,
+     "aliases": [
+      "Grizzly"
+     ]
+    },
+    {
+     "text": "Loon",
+     "tier": 2,
+     "aliases": [
+      "Common Loon"
+     ]
+    },
+    {
+     "text": "Caribou",
+     "tier": 2,
+     "aliases": [
+      "Reindeer"
+     ]
+    },
+    {
+     "text": "Raccoon",
+     "tier": 2
+    },
+    {
+     "text": "Wolf",
+     "tier": 2,
+     "aliases": [
+      "Grey Wolf",
+      "Gray Wolf"
+     ]
+    },
+    {
+     "text": "Squirrel",
+     "tier": 2
+    },
+    {
+     "text": "Red Fox",
+     "tier": 2,
+     "aliases": [
+      "Fox"
+     ]
+    },
+    {
+     "text": "White-tailed Deer",
+     "tier": 2,
+     "aliases": [
+      "Deer"
+     ]
+    },
+    {
+     "text": "Elk",
+     "tier": 3,
+     "aliases": [
+      "Wapiti"
+     ]
+    },
+    {
+     "text": "Coyote",
+     "tier": 3
+    },
+    {
+     "text": "Lynx",
+     "tier": 3,
+     "aliases": [
+      "Canada Lynx"
+     ]
+    },
+    {
+     "text": "Cougar",
+     "tier": 3,
+     "aliases": [
+      "Mountain Lion",
+      "Puma"
+     ]
+    },
+    {
+     "text": "Wolverine",
+     "tier": 3
+    },
+    {
+     "text": "Bison",
+     "tier": 3,
+     "aliases": [
+      "Buffalo"
+     ]
+    },
+    {
+     "text": "Porcupine",
+     "tier": 3
+    },
+    {
+     "text": "Skunk",
+     "tier": 3
+    },
+    {
+     "text": "Chipmunk",
+     "tier": 3
+    },
+    {
+     "text": "Arctic Fox",
+     "tier": 3
+    },
+    {
+     "text": "Snowy Owl",
+     "tier": 3
+    },
+    {
+     "text": "Bald Eagle",
+     "tier": 3
+    },
+    {
+     "text": "Groundhog",
+     "tier": 3,
+     "aliases": [
+      "Woodchuck"
+     ]
+    },
+    {
+     "text": "Otter",
+     "tier": 3,
+     "aliases": [
+      "River Otter"
+     ]
+    },
+    {
+     "text": "Blue Jay",
+     "tier": 3
+    },
+    {
+     "text": "Salmon",
+     "tier": 3
+    },
+    {
+     "text": "Beluga",
+     "tier": 4
+    },
+    {
+     "text": "Narwhal",
+     "tier": 4
+    },
+    {
+     "text": "Muskox",
+     "tier": 4,
+     "aliases": [
+      "Musk Ox"
+     ]
+    },
+    {
+     "text": "Mountain Goat",
+     "tier": 4
+    },
+    {
+     "text": "Bighorn Sheep",
+     "tier": 4
+    },
+    {
+     "text": "Marmot",
+     "tier": 4
+    },
+    {
+     "text": "Mink",
+     "tier": 4
+    },
+    {
+     "text": "Lemming",
+     "tier": 4
+    },
+    {
+     "text": "Badger",
+     "tier": 4
+    },
+    {
+     "text": "Puffin",
+     "tier": 4,
+     "aliases": [
+      "Atlantic Puffin"
+     ]
+    },
+    {
+     "text": "Chickadee",
+     "tier": 4
+    },
+    {
+     "text": "Walrus",
+     "tier": 4
+    },
+    {
+     "text": "Arctic Hare",
+     "tier": 4
+    },
+    {
+     "text": "Snowshoe Hare",
+     "tier": 4,
+     "aliases": [
+      "Hare"
+     ]
+    },
+    {
+     "text": "Fisher",
+     "tier": 5
+    },
+    {
+     "text": "Marten",
+     "tier": 5
+    },
+    {
+     "text": "Ermine",
+     "tier": 5,
+     "aliases": [
+      "Stoat"
+     ]
+    },
+    {
+     "text": "Pika",
+     "tier": 5
+    },
+    {
+     "text": "Canada Jay",
+     "tier": 5,
+     "aliases": [
+      "Gray Jay",
+      "Whisky Jack"
+     ]
+    },
+    {
+     "text": "Pronghorn",
+     "tier": 5
+    },
+    {
+     "text": "Ptarmigan",
+     "tier": 5
+    },
+    {
+     "text": "Rattlesnake",
+     "tier": 5,
+     "aliases": [
+      "Massasauga"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mario",
+   "prompt": "Name a character from the Super Mario games",
+   "answers": [
+    {
+     "text": "Mario",
+     "tier": 1
+    },
+    {
+     "text": "Luigi",
+     "tier": 1
+    },
+    {
+     "text": "Princess Peach",
+     "tier": 1,
+     "aliases": [
+      "Peach"
+     ]
+    },
+    {
+     "text": "Bowser",
+     "tier": 1
+    },
+    {
+     "text": "Yoshi",
+     "tier": 1
+    },
+    {
+     "text": "Toad",
+     "tier": 2
+    },
+    {
+     "text": "Wario",
+     "tier": 2
+    },
+    {
+     "text": "Waluigi",
+     "tier": 2
+    },
+    {
+     "text": "Donkey Kong",
+     "tier": 2,
+     "aliases": [
+      "DK"
+     ]
+    },
+    {
+     "text": "Princess Daisy",
+     "tier": 3,
+     "aliases": [
+      "Daisy"
+     ]
+    },
+    {
+     "text": "Rosalina",
+     "tier": 3
+    },
+    {
+     "text": "Koopa Troopa",
+     "tier": 3,
+     "aliases": [
+      "Koopa"
+     ]
+    },
+    {
+     "text": "Goomba",
+     "tier": 3
+    },
+    {
+     "text": "Shy Guy",
+     "tier": 3
+    },
+    {
+     "text": "Boo",
+     "tier": 3
+    },
+    {
+     "text": "Bowser Jr.",
+     "tier": 3,
+     "aliases": [
+      "Bowser Junior"
+     ]
+    },
+    {
+     "text": "Kamek",
+     "tier": 4,
+     "aliases": [
+      "Magikoopa"
+     ]
+    },
+    {
+     "text": "Birdo",
+     "tier": 4
+    },
+    {
+     "text": "Lakitu",
+     "tier": 4
+    },
+    {
+     "text": "Toadette",
+     "tier": 4
+    },
+    {
+     "text": "Diddy Kong",
+     "tier": 4
+    },
+    {
+     "text": "Dry Bones",
+     "tier": 4
+    },
+    {
+     "text": "King Boo",
+     "tier": 4
+    },
+    {
+     "text": "Piranha Plant",
+     "tier": 4
+    },
+    {
+     "text": "Chain Chomp",
+     "tier": 4
+    },
+    {
+     "text": "Bob-omb",
+     "tier": 4,
+     "aliases": [
+      "Bobomb"
+     ]
+    },
+    {
+     "text": "Pauline",
+     "tier": 4
+    },
+    {
+     "text": "Cappy",
+     "tier": 4
+    },
+    {
+     "text": "Wiggler",
+     "tier": 4
+    },
+    {
+     "text": "Bullet Bill",
+     "tier": 4
+    },
+    {
+     "text": "Blooper",
+     "tier": 5
+    },
+    {
+     "text": "Thwomp",
+     "tier": 5
+    },
+    {
+     "text": "Hammer Bro",
+     "tier": 5,
+     "aliases": [
+      "Hammer Brother"
+     ]
+    },
+    {
+     "text": "Nabbit",
+     "tier": 5
+    },
+    {
+     "text": "Petey Piranha",
+     "tier": 5
+    },
+    {
+     "text": "Toadsworth",
+     "tier": 5
+    },
+    {
+     "text": "Larry Koopa",
+     "tier": 5,
+     "aliases": [
+      "Larry"
+     ]
+    },
+    {
+     "text": "Morton Koopa",
+     "tier": 5,
+     "aliases": [
+      "Morton"
+     ]
+    },
+    {
+     "text": "Wendy O. Koopa",
+     "tier": 5,
+     "aliases": [
+      "Wendy"
+     ]
+    },
+    {
+     "text": "Iggy Koopa",
+     "tier": 5,
+     "aliases": [
+      "Iggy"
+     ]
+    },
+    {
+     "text": "Roy Koopa",
+     "tier": 5,
+     "aliases": [
+      "Roy"
+     ]
+    },
+    {
+     "text": "Lemmy Koopa",
+     "tier": 5,
+     "aliases": [
+      "Lemmy"
+     ]
+    },
+    {
+     "text": "Ludwig von Koopa",
+     "tier": 5,
+     "aliases": [
+      "Ludwig"
+     ]
+    },
+    {
+     "text": "Spiny",
+     "tier": 5
+    },
+    {
+     "text": "Cheep Cheep",
+     "tier": 5
+    },
+    {
+     "text": "Pokey",
+     "tier": 5
+    },
+    {
+     "text": "Fawful",
+     "tier": 5
+    },
+    {
+     "text": "Professor E. Gadd",
+     "tier": 5,
+     "aliases": [
+      "E. Gadd"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "organs",
+   "prompt": "Name an organ of the human body",
+   "answers": [
+    {
+     "text": "Heart",
+     "tier": 1
+    },
+    {
+     "text": "Brain",
+     "tier": 1
+    },
+    {
+     "text": "Lungs",
+     "tier": 1,
+     "aliases": [
+      "Lung"
+     ]
+    },
+    {
+     "text": "Liver",
+     "tier": 1
+    },
+    {
+     "text": "Kidney",
+     "tier": 1,
+     "aliases": [
+      "Kidneys"
+     ]
+    },
+    {
+     "text": "Stomach",
+     "tier": 1
+    },
+    {
+     "text": "Skin",
+     "tier": 2
+    },
+    {
+     "text": "Small Intestine",
+     "tier": 2
+    },
+    {
+     "text": "Large Intestine",
+     "tier": 2,
+     "aliases": [
+      "Colon"
+     ]
+    },
+    {
+     "text": "Pancreas",
+     "tier": 2
+    },
+    {
+     "text": "Bladder",
+     "tier": 2,
+     "aliases": [
+      "Urinary Bladder"
+     ]
+    },
+    {
+     "text": "Eye",
+     "tier": 2,
+     "aliases": [
+      "Eyes"
+     ]
+    },
+    {
+     "text": "Spleen",
+     "tier": 3
+    },
+    {
+     "text": "Gallbladder",
+     "tier": 3,
+     "aliases": [
+      "Gall bladder"
+     ]
+    },
+    {
+     "text": "Appendix",
+     "tier": 3
+    },
+    {
+     "text": "Thyroid",
+     "tier": 3,
+     "aliases": [
+      "Thyroid gland"
+     ]
+    },
+    {
+     "text": "Esophagus",
+     "tier": 3,
+     "aliases": [
+      "Oesophagus"
+     ]
+    },
+    {
+     "text": "Tongue",
+     "tier": 3
+    },
+    {
+     "text": "Uterus",
+     "tier": 3,
+     "aliases": [
+      "Womb"
+     ]
+    },
+    {
+     "text": "Ovaries",
+     "tier": 4,
+     "aliases": [
+      "Ovary"
+     ]
+    },
+    {
+     "text": "Testes",
+     "tier": 4,
+     "aliases": [
+      "Testicles"
+     ]
+    },
+    {
+     "text": "Prostate",
+     "tier": 4
+    },
+    {
+     "text": "Adrenal Glands",
+     "tier": 4,
+     "aliases": [
+      "Adrenal Gland"
+     ]
+    },
+    {
+     "text": "Thymus",
+     "tier": 4
+    },
+    {
+     "text": "Pituitary Gland",
+     "tier": 4,
+     "aliases": [
+      "Pituitary"
+     ]
+    },
+    {
+     "text": "Larynx",
+     "tier": 4,
+     "aliases": [
+      "Voice box"
+     ]
+    },
+    {
+     "text": "Trachea",
+     "tier": 4,
+     "aliases": [
+      "Windpipe"
+     ]
+    },
+    {
+     "text": "Diaphragm",
+     "tier": 4
+    },
+    {
+     "text": "Rectum",
+     "tier": 4
+    },
+    {
+     "text": "Tonsils",
+     "tier": 4
+    },
+    {
+     "text": "Pineal Gland",
+     "tier": 5,
+     "aliases": [
+      "Pineal"
+     ]
+    },
+    {
+     "text": "Duodenum",
+     "tier": 5
+    },
+    {
+     "text": "Hypothalamus",
+     "tier": 5
+    },
+    {
+     "text": "Lymph Nodes",
+     "tier": 5,
+     "aliases": [
+      "Lymph node"
+     ]
+    },
+    {
+     "text": "Mesentery",
+     "tier": 5
+    },
+    {
+     "text": "Placenta",
+     "tier": 5
+    }
+   ]
+  },
+  {
+   "id": "sports-equipment-hockey",
+   "prompt": "Name a piece of hockey equipment",
+   "answers": [
+    {
+     "text": "Stick",
+     "tier": 1,
+     "aliases": [
+      "Hockey Stick"
+     ]
+    },
+    {
+     "text": "Skates",
+     "tier": 1
+    },
+    {
+     "text": "Helmet",
+     "tier": 1
+    },
+    {
+     "text": "Puck",
+     "tier": 1
+    },
+    {
+     "text": "Gloves",
+     "tier": 2
+    },
+    {
+     "text": "Shin Pads",
+     "tier": 2,
+     "aliases": [
+      "Shin Guards"
+     ]
+    },
+    {
+     "text": "Mouthguard",
+     "tier": 2
+    },
+    {
+     "text": "Jersey",
+     "tier": 2
+    },
+    {
+     "text": "Shoulder Pads",
+     "tier": 2
+    },
+    {
+     "text": "Elbow Pads",
+     "tier": 3
+    },
+    {
+     "text": "Neck Guard",
+     "tier": 3
+    },
+    {
+     "text": "Visor",
+     "tier": 3
+    },
+    {
+     "text": "Cage",
+     "tier": 3,
+     "aliases": [
+      "Face cage"
+     ]
+    },
+    {
+     "text": "Pants",
+     "tier": 3,
+     "aliases": [
+      "Breezers"
+     ]
+    },
+    {
+     "text": "Jock",
+     "tier": 3,
+     "aliases": [
+      "Jockstrap",
+      "Cup"
+     ]
+    },
+    {
+     "text": "Blocker",
+     "tier": 3
+    },
+    {
+     "text": "Goalie Pads",
+     "tier": 3,
+     "aliases": [
+      "Leg pads"
+     ]
+    },
+    {
+     "text": "Trapper",
+     "tier": 4,
+     "aliases": [
+      "Catcher"
+     ]
+    },
+    {
+     "text": "Chest Protector",
+     "tier": 4
+    },
+    {
+     "text": "Tape",
+     "tier": 4,
+     "aliases": [
+      "Stick tape"
+     ]
+    },
+    {
+     "text": "Socks",
+     "tier": 4
+    },
+    {
+     "text": "Garter Belt",
+     "tier": 4,
+     "aliases": [
+      "Garter"
+     ]
+    },
+    {
+     "text": "Skate Guards",
+     "tier": 4
+    },
+    {
+     "text": "Laces",
+     "tier": 5
+    },
+    {
+     "text": "Suspenders",
+     "tier": 5
+    },
+    {
+     "text": "Hockey Bag",
+     "tier": 5
+    }
+   ]
+  }
+ ]
+}

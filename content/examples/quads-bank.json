@@ -1,0 +1,20 @@
+{
+  "categories": [
+    { "id": "fruits", "name": "Fruits", "difficulty": 1, "family": "food", "words": ["APPLE", "BANANA", "MANGO", "PEAR", "KIWI", "GRAPE", "PEACH", "PLUM", "LEMON"] },
+    { "id": "planets", "name": "Planets", "difficulty": 1, "family": "space", "words": ["MERCURY", "VENUS", "EARTH", "MARS", "JUPITER", "SATURN", "URANUS", "NEPTUNE"] },
+    { "id": "chess-pieces", "name": "Chess pieces", "difficulty": 1, "family": "games", "words": ["KING", "QUEEN", "BISHOP", "KNIGHT", "ROOK", "PAWN"] },
+    { "id": "provinces", "name": "Canadian provinces", "difficulty": 1, "family": "geography", "words": ["ONTARIO", "QUEBEC", "ALBERTA", "MANITOBA", "YUKON", "NUNAVUT"] },
+    { "id": "string-instruments", "name": "String instruments", "difficulty": 2, "family": "music", "words": ["VIOLIN", "CELLO", "HARP", "BANJO", "UKULELE", "SITAR", "MANDOLIN", "VIOLA"] },
+    { "id": "pasta", "name": "Pasta shapes", "difficulty": 2, "family": "food", "words": ["PENNE", "ORZO", "FUSILLI", "RIGATONI", "FARFALLE", "ZITI", "GNOCCHI", "LINGUINE"] },
+    { "id": "card-games", "name": "Card games", "difficulty": 2, "family": "games", "words": ["POKER", "RUMMY", "HEARTS", "EUCHRE", "CRIBBAGE", "SNAP", "BRIDGE", "SOLITAIRE"] },
+    { "id": "rivers", "name": "Rivers", "difficulty": 2, "family": "geography", "words": ["NILE", "AMAZON", "DANUBE", "THAMES", "YANGTZE", "FRASER", "SEINE", "GANGES"] },
+    { "id": "shades-of-blue", "name": "Shades of blue", "difficulty": 3, "family": "colours", "words": ["NAVY", "TEAL", "COBALT", "AZURE", "CYAN", "INDIGO", "SAPPHIRE", "CERULEAN"] },
+    { "id": "units-of-time", "name": "Units of time", "difficulty": 3, "family": "measures", "words": ["SECOND", "MINUTE", "HOUR", "DECADE", "CENTURY", "EON", "FORTNIGHT", "MILLENNIUM"] },
+    { "id": "greek-letters", "name": "Greek letters", "difficulty": 3, "family": "alphabet", "words": ["ALPHA", "BETA", "GAMMA", "DELTA", "SIGMA", "OMEGA", "THETA", "LAMBDA"] },
+    { "id": "bones", "name": "Bones", "difficulty": 3, "family": "body", "words": ["FEMUR", "TIBIA", "ULNA", "RADIUS", "SKULL", "PELVIS", "PATELLA", "STERNUM"] },
+    { "id": "ball-blank", "name": "___ BALL", "difficulty": 4, "family": "wordplay-ball", "words": ["BASKET", "FOOT", "SNOW", "EYE", "MEAT", "FIRE", "DODGE", "HAND"] },
+    { "id": "letter-sounds", "name": "Sound like letters", "difficulty": 4, "family": "wordplay-sounds", "words": ["SEA", "TEA", "EYE", "WHY", "YOU", "BEE", "JAY", "QUEUE"] },
+    { "id": "fire-blank", "name": "FIRE ___", "difficulty": 4, "family": "wordplay-fire", "words": ["WORKS", "PLACE", "FLY", "WALL", "MAN", "ARM", "WOOD", "TRUCK"] },
+    { "id": "bear-blank", "name": "___ BEAR", "difficulty": 4, "family": "wordplay-bear", "words": ["POLAR", "TEDDY", "GRIZZLY", "GUMMY", "BROWN", "BLACK", "KOALA", "PANDA"] }
+  ]
+}

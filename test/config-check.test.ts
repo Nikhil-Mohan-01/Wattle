@@ -14,12 +14,13 @@ const good = {
   TRUSTED_IP_HEADER: "cf-connecting-ip",
   DATABASE_URL: "postgresql://u:p@db.example:6543/postgres",
   CRON_SECRET: "z".repeat(32),
+  CONTENT_KEY: Buffer.alloc(32, 7).toString("base64"),
 };
 
 function rootWithContent() {
   const root = mkdtempSync(path.join(tmpdir(), "wattle-cfg-"));
-  mkdirSync(path.join(root, "content", "private"), { recursive: true });
-  for (const f of ["quads.json", "deepcut.json"]) writeFileSync(path.join(root, "content", "private", f), "[]");
+  mkdirSync(path.join(root, "content", "encrypted"), { recursive: true });
+  for (const f of ["quads-bank.json", "deepcut-bank.json"]) writeFileSync(path.join(root, "content", "encrypted", `${f}.enc`), "{}");
   return root;
 }
 
@@ -36,6 +37,11 @@ describe("production config check", () => {
     expect(errors.join("\n")).toMatch(/SMTP_URL/);
     const http = checkProductionConfig({ ...good, BETTER_AUTH_URL: "http://wattle.example" }, rootWithContent());
     expect(http.errors).toContain("BETTER_AUTH_URL must use https.");
+  });
+
+  it("requires the content key when encrypted banks are deployed", () => {
+    const { errors } = checkProductionConfig({ ...good, CONTENT_KEY: "" }, rootWithContent());
+    expect(errors.join()).toMatch(/CONTENT_KEY/);
   });
 
   it("requires a Postgres database", () => {
@@ -57,6 +63,6 @@ describe("production config check", () => {
     const all = warnings.join("\n");
     expect(all).toMatch(/TRUSTED_IP_HEADER/);
     expect(all).toMatch(/CRON_SECRET/);
-    expect(all).toMatch(/content\/private\/quads.json/);
+    expect(all).toMatch(/quads-bank.json/);
   });
 });

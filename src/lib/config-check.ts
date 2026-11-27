@@ -5,8 +5,8 @@ export type ConfigReport = { errors: string[]; warnings: string[] };
 
 type Env = Record<string, string | undefined>;
 
-/** Content files that hold answers and should be private in production. */
-const PRIVATE_CONTENT = ["quads.json", "deepcut.json"];
+/** Content banks that hold answers; in production they come from content/encrypted/. */
+const BANKS = ["quads-bank.json", "deepcut-bank.json"];
 
 /**
  * Checks production settings. Errors are settings the app can't run safely
@@ -54,10 +54,15 @@ export function checkProductionConfig(env: Env, root = process.cwd()): ConfigRep
   }
   if (env.WATTLE_DEV_DATE) warnings.push("WATTLE_DEV_DATE is set but ignored in production.");
 
-  for (const file of PRIVATE_CONTENT) {
-    if (!existsSync(path.join(root, "content", "private", file))) {
-      warnings.push(`content/private/${file} is missing; using the public example puzzles.`);
-    }
+  const encrypted = BANKS.filter((f) => existsSync(path.join(root, "content", "encrypted", `${f}.enc`)));
+  if (encrypted.length > 0 && Buffer.from(env.CONTENT_KEY ?? "", "base64").length !== 32) {
+    errors.push("CONTENT_KEY must be set (32 bytes, base64) to decrypt the puzzle banks.");
+  }
+  for (const file of BANKS) {
+    const present = ["encrypted", "private"].some((dir) =>
+      existsSync(path.join(root, "content", dir, dir === "encrypted" ? `${file}.enc` : file)),
+    );
+    if (!present) warnings.push(`No ${file} bank found; using the public example content.`);
   }
 
   return { errors, warnings };

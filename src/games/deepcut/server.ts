@@ -1,5 +1,8 @@
 import "server-only";
-import { loadContent } from "@/lib/content";
+import { sql } from "drizzle-orm";
+import { queryRows } from "@/db/client";
+import { contentSource, loadContent } from "@/lib/content";
+import { applyLearnedTiers, expandBank } from "./bank";
 import { pickFresh } from "@/lib/rng";
 import type { GameModule } from "../types";
 import { answerKey, answerKeys, matchAnswer, MAX_INPUT_LENGTH, type DeepCutAnswer, type Tier } from "./match";
@@ -59,9 +62,9 @@ function fail(where: string, msg: string): never {
 }
 
 /** Checks the content file and returns it typed. Throws with a clear message on bad data. */
-export function validateContent(raw: unknown): DeepCutPrompt[] {
+export function validateContent(raw: unknown, minCount = PROMPT_COUNT): DeepCutPrompt[] {
   if (!Array.isArray(raw)) fail("file", "expected an array of prompts");
-  if (raw.length < PROMPT_COUNT) fail("file", `needs at least ${PROMPT_COUNT} prompts`);
+  if (raw.length < minCount) fail("file", `needs at least ${minCount} prompts`);
   const ids = new Set<string>();
 
   return raw.map((entry, i): DeepCutPrompt => {
@@ -101,10 +104,47 @@ export function validateContent(raw: unknown): DeepCutPrompt[] {
   });
 }
 
+const BANK_FILE = "deepcut-bank.json";
 let cache: DeepCutPrompt[] | null = null;
-function prompts(): DeepCutPrompt[] {
-  cache ??= validateContent(loadContent<unknown>("deepcut.json"));
+
+/**
+ * The prompt pool: expanded from the bank (datasets + templates) when there
+ * is one, otherwise the hand-written prompt list.
+ */
+export function prompts(): DeepCutPrompt[] {
+  if (cache) return cache;
+  if (contentSource(BANK_FILE)) {
+    const { prompts: pool, skipped } = expandBank(loadContent<unknown>(BANK_FILE), (p) => validateContent([p], 1)[0]);
+    if (skipped.length) console.warn(`[deepcut] Skipped ${skipped.length} bank prompts (too small or invalid).`);
+    if (pool.length < PROMPT_COUNT) throw new Error(`[deepcut] The bank has only ${pool.length} usable prompts.`);
+    cache = pool;
+  } else {
+    cache = validateContent(loadContent<unknown>("deepcut.json"));
+  }
   return cache;
+}
+
+/**
+ * How often each correct answer has been given to these prompts, from
+ * finished, unflagged plays. Used to re-tier answers by real rarity.
+ */
+export async function answerCounts(promptIds: string[]): Promise<Map<string, Map<string, number>>> {
+  const rows = await queryRows<{ pid: string; answer: string; n: number }>(sql`
+    select r->>'promptId' as pid, r->>'answer' as answer, count(*) as n
+    from play p cross join lateral jsonb_array_elements(p.state->'results') r
+    where p.game_id = 'deepcut'
+      and p.status = 'done'
+      and (p.flags is null or jsonb_typeof(p.flags) <> 'array' or jsonb_array_length(p.flags) = 0)
+      and r->>'outcome' = 'correct'
+      and r->>'promptId' in (${sql.join(promptIds.map((id) => sql`${id}`), sql`, `)})
+    group by 1, 2`);
+  const out = new Map<string, Map<string, number>>();
+  for (const r of rows) {
+    const m = out.get(r.pid) ?? new Map<string, number>();
+    m.set(r.answer, Number(r.n));
+    out.set(r.pid, m);
+  }
+  return out;
 }
 
 /** Prompt ids from recent content ids ("a,b,c"), newest first. */
@@ -155,7 +195,7 @@ export const deepcut: GameModule<DeepCutPuzzle, DeepCutState, DeepCutMove, DeepC
   id: "deepcut",
   minPlausibleMs: 7_000,
 
-  generate({ rng, recentlyUsed }) {
+  async generate({ rng, recentlyUsed }) {
     const pool = prompts();
     const used = recentPromptIds(recentlyUsed);
     const chosen: DeepCutPrompt[] = [];
@@ -163,13 +203,17 @@ export const deepcut: GameModule<DeepCutPuzzle, DeepCutState, DeepCutMove, DeepC
       const remaining = pool.filter((p) => !chosen.includes(p));
       chosen.push(pickFresh(rng, remaining, used));
     }
+    // Once enough students have answered a prompt before, their answers
+    // decide its rarity tiers instead of the bank's estimates.
+    const counts = await answerCounts(chosen.map((p) => p.id));
+    const tuned = chosen.map((p) => applyLearnedTiers(p, counts.get(p.id) ?? new Map()));
     return {
       contentId: chosen
         .map((p) => p.id)
         .sort()
         .join(","),
       // A copy, so the frozen puzzle doesn't change if the content file does.
-      puzzle: { prompts: structuredClone(chosen) },
+      puzzle: { prompts: structuredClone(tuned) },
     };
   },
 

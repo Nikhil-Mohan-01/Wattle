@@ -25,6 +25,7 @@ You don't run migrations by hand: every **production** deploy on Vercel applies 
 | `PUZZLE_SECRET` | Output of `openssl rand -base64 32`. Keep it stable: changing it changes future puzzles. |
 | `CRON_SECRET` | Output of `openssl rand -base64 32`. Vercel sends it to the daily job. |
 | `TRUSTED_IP_HEADER` | `x-real-ip` (Vercel sets this to the real client IP) |
+| `CONTENT_KEY` | The key that decrypts the puzzle banks in `content/encrypted/` (it's in your `.env.local`) |
 | `SMTP_URL`, `EMAIL_FROM` | **Required.** Students verify their email with a code. Use an email provider such as Resend, sending from your domain. |
 | `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | Optional "Continue with Microsoft"; see the README |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Optional "Continue with Google"; see the README |
@@ -55,12 +56,7 @@ Sign-in only works on the production domain, not on preview deployment URLs.
 
 ## 4. Puzzle content
 
-The example puzzles in `content/examples/` are public on GitHub. For real use, put the real files on the server (not in git) at:
-
-- `content/private/quads.json`
-- `content/private/deepcut.json`
-
-Check them before deploying with `npm run content:check`. Honk, Hot & Cold and Sharp need no private content.
+Puzzles generate themselves daily. The Quads and Deep Cut banks are committed encrypted in `content/encrypted/`, and the server decrypts them with `CONTENT_KEY`. See [content.md](content.md) for how to edit them.
 
 ## Checklist before inviting students
 
@@ -68,6 +64,6 @@ Check them before deploying with `npm run content:check`. Honk, Hot & Cold and S
 - [ ] Running the daily job from **Settings → Cron Jobs** returns the day's puzzle as ready.
 - [ ] A code email arrives in a `@uwaterloo.ca` inbox (not junk), and signing in with it works.
 - [ ] Microsoft and Google sign-in (if enabled) work, and then ask for a student email.
-- [ ] Real puzzle content is in place, and `npm run content:check` passes.
+- [ ] `CONTENT_KEY` is set on Vercel, and `npm run content:check` passes locally.
 - [ ] You have a backup plan: Supabase's free plan has no automatic backups, but `pg_dump` with the direct connection URL works.
 - [ ] The security reviewer has retested the open findings.

@@ -1,5 +1,6 @@
 import "server-only";
-import { loadContent } from "@/lib/content";
+import { contentSource, loadContent } from "@/lib/content";
+import { generateFromBank, validateQuadsBank, type QuadsBank } from "./bank";
 import { pickFresh } from "@/lib/rng";
 import type { GameModule } from "../types";
 import type { Difficulty, QuadsGroup, QuadsMove, QuadsResult, QuadsView } from "./types";
@@ -61,6 +62,13 @@ function validatePuzzle(raw: unknown, index: number): ContentPuzzle {
   return { id, groups: out };
 }
 
+const BANK_FILE = "quads-bank.json";
+let bankCache: QuadsBank | null = null;
+function quadsBank(): QuadsBank {
+  bankCache ??= validateQuadsBank(loadContent<unknown>(BANK_FILE));
+  return bankCache;
+}
+
 /** Loads and validates every puzzle. Exported for tests. */
 export function loadQuadsContent(): ContentPuzzle[] {
   return validateQuadsContent(loadContent<unknown>("quads.json"));
@@ -96,7 +104,11 @@ export const quads: GameModule<QuadsPuzzle, QuadsState, QuadsMove, QuadsView> = 
   id: "quads",
 
   generate: ({ rng, recentlyUsed }) => {
-    const chosen = pickFresh(rng, loadQuadsContent(), recentlyUsed);
+    // Generated from the category bank when there is one; otherwise one of
+    // the hand-written puzzles.
+    const chosen: ContentPuzzle = contentSource(BANK_FILE)
+      ? validateQuadsContent([generateFromBank(quadsBank(), rng, recentlyUsed)])[0]
+      : pickFresh(rng, loadQuadsContent(), recentlyUsed);
     // The board order is fixed per puzzle and never follows the grouping.
     const order = rng.shuffle(chosen.groups.flatMap((g) => g.words));
     return { contentId: chosen.id, puzzle: { ...chosen, order } };

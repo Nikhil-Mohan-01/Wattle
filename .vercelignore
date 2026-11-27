@@ -1,0 +1,4 @@
+# Plain-text puzzle banks never leave this machine
+content/private/
+.env*
+data/

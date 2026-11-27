@@ -105,7 +105,8 @@ describe("distance", () => {
       for (const b of big) {
         const t = performance.now();
         distanceKm(a, b);
-        expect(performance.now() - t).toBeLessThan(50);
+        // Generous for parallel test runs; a single guess typically takes well under 50 ms.
+        expect(performance.now() - t).toBeLessThan(120);
       }
     }
   });

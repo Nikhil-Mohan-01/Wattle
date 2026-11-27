@@ -37,8 +37,12 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["@electric-sql/pglite"],
   // Files the game servers read from disk at runtime; make sure serverless
   // deployments (Vercel) ship them with the functions that need them.
+  // Plain-text banks stay on the developer's machine; never ship them.
+  outputFileTracingExcludes: {
+    "/**": ["./content/private/**"],
+  },
   outputFileTracingIncludes: {
-    "/api/**": ["./node_modules/word-list/words.txt", "./content/**/*.json"],
+    "/api/**": ["./node_modules/word-list/words.txt", "./content/examples/*.json", "./content/encrypted/*.enc"],
   },
   cacheComponents: true,
   partialPrefetching: true,

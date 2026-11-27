@@ -14,7 +14,10 @@
     "content:check": "vitest run test/content.test.ts",
     "db:server": "node scripts/migrate-local.mjs && pglite-server --db=./data/pglite --port=5433 --max-connections=10",
     "db:migrate:local": "node scripts/migrate-local.mjs",
-    "vercel-build": "node scripts/migrate.mjs && next build"
+    "vercel-build": "node scripts/migrate.mjs && next build",
+    "content:key": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/content.mjs key",
+    "content:encrypt": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/content.mjs encrypt",
+    "content:decrypt": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/content.mjs decrypt"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.17",

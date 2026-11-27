@@ -1,37 +1,46 @@
-// Validates puzzle content files. Runs on the committed examples always, and
-// on content/private/ files when they exist (`npm run content:check`).
+// Validates the puzzle banks (`npm run content:check`). Always checks the
+// public examples; also checks content/private/ banks when they exist, and
+// reports how much variety they give.
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { validateContent as validateDeepCut } from "@/games/deepcut/server";
+import { expandBank } from "@/games/deepcut/bank";
+import { validateContent } from "@/games/deepcut/server";
+import { generateFromBank, validateQuadsBank } from "@/games/quads/bank";
 import { validateQuadsContent } from "@/games/quads/server";
-
-const FILES = [
-  { file: "quads.json", validate: validateQuadsContent, perWeek: 1, unit: "puzzles" },
-  { file: "deepcut.json", validate: validateDeepCut, perWeek: 7, unit: "prompts" },
-] as const;
+import { seededRng } from "@/lib/rng";
 
 const read = (dir: string, file: string) =>
   JSON.parse(readFileSync(path.join(process.cwd(), "content", dir, file), "utf8")) as unknown;
+const hasPrivate = (file: string) => existsSync(path.join(process.cwd(), "content", "private", file));
 
-for (const { file, validate, perWeek, unit } of FILES) {
-  describe(file, () => {
-    it("example content is valid", () => {
-      expect(validate(read("examples", file)).length).toBeGreaterThan(0);
+for (const dir of ["examples", "private"] as const) {
+  describe(`${dir} quads-bank.json`, () => {
+    it.runIf(dir === "examples" || hasPrivate("quads-bank.json"))("is valid and generates good boards", () => {
+      const bank = validateQuadsBank(read(dir, "quads-bank.json"));
+      const boards = new Set<string>();
+      let recent: string[] = [];
+      for (let day = 0; day < 200; day++) {
+        const p = generateFromBank(bank, seededRng("check", String(day)), recent);
+        validateQuadsContent([p]);
+        boards.add(p.id);
+        recent = [p.id, ...recent];
+      }
+      const byDifficulty = [1, 2, 3, 4].map((d) => bank.categories.filter((c) => c.difficulty === d).length);
+      console.log(
+        `[content] ${dir} quads: ${bank.categories.length} categories (by difficulty ${byDifficulty.join("/")}), ` +
+          `${boards.size} distinct boards in 200 days`,
+      );
+      expect(boards.size).toBeGreaterThan(dir === "examples" ? 20 : 190);
     });
+  });
 
-    const priv = path.join(process.cwd(), "content", "private", file);
-    it.runIf(existsSync(priv))("private content is valid and not just the public examples", () => {
-      const items = validate(read("private", file)) as { id: string }[];
-      const weeks = Math.floor(items.length / perWeek);
-      console.log(`[content] ${file}: ${items.length} ${unit} ≈ ${weeks} weeks before repeats`);
-
-      // Puzzles copied from the public examples (even with a new id) would
-      // have public answers.
-      const body = (item: { id: string }) => JSON.stringify({ ...item, id: undefined });
-      const examples = new Set((validate(read("examples", file)) as { id: string }[]).map(body));
-      const leaked = items.filter((item) => examples.has(body(item)));
-      expect(leaked.map((i) => i.id), "copied from public examples").toEqual([]);
+  describe(`${dir} deepcut-bank.json`, () => {
+    it.runIf(dir === "examples" || hasPrivate("deepcut-bank.json"))("expands to enough prompts", () => {
+      const { prompts, skipped } = expandBank(read(dir, "deepcut-bank.json"), (p) => validateContent([p], 1)[0]);
+      const weeks = Math.floor(prompts.length / 7);
+      console.log(`[content] ${dir} deepcut: ${prompts.length} prompts (~${weeks} weeks), ${skipped.length} skipped`);
+      expect(prompts.length).toBeGreaterThanOrEqual(dir === "examples" ? 7 : 300);
     });
   });
 }
